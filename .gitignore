@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local test output (Playwright screenshots)
+artifacts/
+build/
+coverage/
+*.tsbuildinfo
+
+# Environment files: only the committed template is allowed
+.env
+.env.*
+!.env.example
+
+# Local data (SQLite databases, runtime state)
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Key material must never be committed
+.secrets/
+*.pem
+*.key
+*.p12
+keystore*/
+
+# Logs
+*.log
+logs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
