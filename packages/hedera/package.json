@@ -1,0 +1,23 @@
+{
+  "name": "@agent-economy/hedera",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hedera integration: Mirror Node verification, facilitator discovery, x402 client/server, payment guard, account tooling.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./sdk": "./src/sdk.ts",
+    "./units": "./src/units.ts",
+    "./x402": "./src/x402.ts",
+    "./x402-server": "./src/x402-server.ts"
+  },
+  "dependencies": {
+    "@hiero-ledger/sdk": "2.85.0",
+    "@x402/core": "2.28.0",
+    "@x402/fetch": "2.28.0",
+    "@x402/hedera": "2.28.0",
+    "@x402/hono": "2.28.0",
+    "hono": "^4.9.0"
+  }
+}
