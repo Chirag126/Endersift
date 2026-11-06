@@ -1,0 +1,14 @@
+{
+  "name": "@agent-economy/zg",
+  "version": "0.1.0",
+  "private": true,
+  "description": "0G Private Computer integration: Router client (OpenAI-compatible) with x_0g_trace parsing, balance reads and a deterministic per-call cost cap.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "4.6.7"
+  }
+}
