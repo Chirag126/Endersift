@@ -1,0 +1,23 @@
+{
+  "name": "@agent-economy/holder-probe",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase 5 probe: can a 0G holder's Privy session (0G's app ID, localhost only) reach their Router balance and credits? Read-only.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@privy-io/react-auth": "^3.16.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "vite": "^7.1.0"
+  }
+}
