@@ -1,0 +1,136 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Format, lint, typecheck, test, env template
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          # setup-node v5 auto-enables pnpm caching when package.json declares
+          # packageManager, which fails while no lockfile is committed.
+          package-manager-cache: ${{ hashFiles('pnpm-lock.yaml') != '' }}
+
+      - name: Require a committed lockfile
+        shell: bash
+        run: |
+          if [ ! -f pnpm-lock.yaml ]; then
+            echo "::error title=Missing lockfile::pnpm-lock.yaml is not committed. Run the 'Regenerate lockfile' workflow on this branch."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: .github/scripts/run-annotated.sh "pnpm install" pnpm install --frozen-lockfile
+
+      - name: Format check
+        run: .github/scripts/run-annotated.sh "format:check" pnpm format:check
+      - name: Show formatting diff (only when the format check failed)
+        if: failure()
+        run: |
+          pnpm exec prettier --write --log-level warn .
+          git --no-pager diff --stat
+          git --no-pager diff
+          # Also as an annotation, so the diff is visible without opening the log.
+          diff=$(git --no-pager diff --unified=1 | head -c 20000 | sed -e 's/%/%25/g' | sed -e ':a;N;$!ba;s/\n/%0A/g')
+          echo "::error title=Prettier wants these changes::$diff"
+      - name: Lint
+        run: .github/scripts/run-annotated.sh "lint" pnpm lint
+      - name: Typecheck
+        run: .github/scripts/run-annotated.sh "typecheck" pnpm typecheck
+      - name: Unit tests
+        env:
+          ANNOTATE_SUCCESS_TAIL: '9'
+        run: .github/scripts/run-annotated.sh "test" pnpm test
+      - name: Env template check
+        run: .github/scripts/run-annotated.sh "env:example:check" pnpm env:example:check
+      - name: Secret scan (tracked files)
+        run: .github/scripts/run-annotated.sh "secrets:scan" pnpm secrets:scan
+
+  web:
+    name: Web build and Playwright smoke (MOCK API)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: ${{ hashFiles('pnpm-lock.yaml') != '' }}
+
+      - name: Install dependencies
+        run: .github/scripts/run-annotated.sh "pnpm install" pnpm install --frozen-lockfile
+      - name: Web build
+        run: .github/scripts/run-annotated.sh "web:build" pnpm web:build
+      - name: Install Chromium for Playwright
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Web smoke (Playwright, MOCK API, nothing real is spent)
+        run: .github/scripts/run-annotated.sh "web:smoke" pnpm web:smoke
+      - name: Keep the smoke screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-smoke-screenshots
+          path: artifacts/web-smoke/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  gitleaks:
+    name: Secret scan (gitleaks, full history)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: 8.24.2
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks (pinned, checksum-verified)
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
+          tarball="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -sSfL -o "$tarball" "$base/$tarball"
+          curl -sSfL -o checksums.txt "$base/gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          grep " ${tarball}\$" checksums.txt | sha256sum --check -
+          tar -xzf "$tarball" gitleaks
+          sudo mv gitleaks /usr/local/bin/gitleaks
+          rm -f "$tarball" checksums.txt
+          gitleaks version
+
+      - name: Scan full git history
+        shell: bash
+        run: |
+          set -uo pipefail
+          gitleaks git --config .gitleaks.toml --redact --exit-code 1 \
+            --report-format json --report-path "$RUNNER_TEMP/gitleaks.json" .
+          status=$?
+          if [ "$status" -ne 0 ] && [ -s "$RUNNER_TEMP/gitleaks.json" ]; then
+            # One annotation per finding: location and rule only (secrets are redacted).
+            jq -r '.[] | "::error title=gitleaks \(.RuleID)::\(.File):\(.StartLine) in commit \(.Commit[0:7]) - \(.Description)"' \
+              "$RUNNER_TEMP/gitleaks.json"
+          fi
+          exit "$status"

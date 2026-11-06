@@ -1,0 +1,183 @@
+# Render Blueprint (plan row 33, D-062). Two free web services:
+#
+#   threat-intel-agent       the agent: API, scheduler and the web app on one origin
+#   threat-intel-providers   the x402 data providers (kev, cve, osv) that the agent buys from
+#
+# Free plan facts this file is built around (render.com/docs/free, checked 2026-10-28):
+#   - a service sleeps after 15 minutes without inbound traffic and takes about a minute to wake;
+#   - there is no disk: the SQLite database is wiped on every restart, redeploy or sleep;
+#   - 750 free instance hours per month for the whole workspace.
+# How the agent stays safe with that: docs/deployment.md.
+#
+# Secrets are never in this file. Every `sync: false` entry is asked for once, in the Render
+# dashboard, when the Blueprint is created. Everything else here is public configuration
+# (account IDs, the ENS name and the HCS topic are already published in docs/evidence).
+
+services:
+  - type: web
+    name: threat-intel-agent
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: corepack enable && pnpm install --frozen-lockfile --ignore-scripts --production=false && pnpm web:build
+    startCommand: node --disable-warning=ExperimentalWarning apps/server/src/main.ts
+    healthCheckPath: /api/health
+    # a deploy during a task lets it finish (it may be mid-payment) before the old instance stops
+    maxShutdownDelaySeconds: 120
+    autoDeployTrigger: checksPass
+    envVars:
+      # runtime
+      - key: NODE_VERSION
+        value: '22'
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: PORT
+        value: '10000'
+      - key: SERVER_PORT
+        value: '10000'
+      - key: API_TRUST_PROXY_HOPS
+        value: '1'
+      # deployment without a disk (D-062)
+      - key: DATABASE_PATH
+        value: ./data/agent-economy.db
+      - key: DATABASE_EPHEMERAL
+        value: 'true'
+      - key: WEB_DIST_DIR
+        value: apps/web/dist
+      - key: PROVIDER_WAKE_SEC
+        value: '180'
+      # the web app wakes the provider host from the visitor's browser (D-085)
+      - key: PROVIDER_WAKE_ORIGIN
+        value: https://threat-intel-providers.onrender.com
+      - key: DAILY_BRIEF_WATCHLIST
+        value: OpenSSL, lodash@4.17.21 (npm)
+      - key: DAILY_BRIEF_RUN_AFTER
+        value: '00:15'
+      - key: DAILY_BRIEF_BUDGET_TINYBARS
+        value: '300000'
+      - key: DEMO_ACCESS_CODE
+        sync: false
+      # Hedera: the payer (testnet) and the HCS audit topic
+      - key: HEDERA_NETWORK
+        value: testnet
+      - key: HEDERA_MIRROR_NODE_URL
+        value: https://testnet.mirrornode.hedera.com
+      - key: HEDERA_PAYER_ACCOUNT_ID
+        value: 0.0.11044318
+      - key: HEDERA_PAYER_KEY_TYPE
+        value: ecdsa
+      - key: HEDERA_PAYER_PRIVATE_KEY
+        sync: false
+      - key: HCS_TOPIC_ID
+        value: 0.0.11201005
+      # x402 and the spending firewall
+      - key: X402_FACILITATOR_URL
+        value: https://api.testnet.blocky402.com
+      - key: X402_FALLBACK_FACILITATOR_URL
+        value: https://x402.org/facilitator
+      - key: X402_NETWORK
+        value: hedera:testnet
+      - key: X402_ASSET
+        value: 0.0.0
+      - key: X402_MAX_PAYMENT_TINYBARS
+        value: '1000000'
+      - key: X402_RUN_BUDGET_TINYBARS
+        value: '3000000'
+      - key: X402_DAILY_BUDGET_TINYBARS
+        value: '10000000'
+      - key: X402_MAX_PAYMENTS_PER_RUN
+        value: '10'
+      - key: X402_SNAPSHOT_MAX_AGE_SEC
+        value: '600'
+      # ENS on Sepolia (read-only: the admin key is never deployed)
+      - key: ENS_CHAIN
+        value: sepolia
+      - key: ENS_PARENT_NAME
+        value: chirag126.eth
+      - key: ENS_DISCOVERY_FROM_BLOCK
+        value: '11999808'
+      - key: ETH_RPC_URL
+        sync: false
+      # 0G Private Computer, mainnet (D-080; the management key is never deployed)
+      - key: ZG_NETWORK
+        value: mainnet
+      - key: ZG_ROUTER_BASE_URL
+        value: https://router-api.0g.ai/v1
+      # 0gm-1.0-35b-a3b came back on 2026-11-06 but its upstream failed again (D-088);
+      # qwen2.5-vl-72b-instruct is verified end to end (D-081)
+      - key: ZG_MODEL
+        value: qwen2.5-vl-72b-instruct
+      - key: ZG_OUTPUT_LIMIT
+        value: '256'
+      - key: ZG_MAX_CALL_COST_NEURON
+        value: '5000000000000000'
+      # 0.1 0G a day while voice is off (D-088); 0.6 0G covers two voice clips at their worst case
+      - key: ZG_DAILY_CAP_NEURON
+        value: '100000000000000000'
+      - key: ZG_TIMEOUT_MS
+        value: '60000'
+      - key: ZG_SNAPSHOT_INTERVAL_MIN
+        value: '60'
+      # the voice task (D-076): off while 0G's Whisper upstream answers 502 (D-088). To turn it on:
+      # whisper-large-v3, ZG_STT_MAX_NEURON=284000000000000000 (one clip may bill up to 448 units
+      # of 0.00063 0G, ~0.28 0G, reserved per clip) and ZG_DAILY_CAP_NEURON of at least 0.6 0G
+      - key: ZG_STT_MODEL
+        value: 'off'
+      - key: ZG_STT_MAX_NEURON
+        value: '1000000000000000'
+      - key: ZG_API_KEY
+        sync: false
+
+  - type: web
+    name: threat-intel-providers
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: corepack enable && pnpm install --frozen-lockfile --ignore-scripts
+    startCommand: node apps/providers/src/server.ts
+    healthCheckPath: /health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: '10000'
+      - key: PROVIDERS_PORT
+        value: '10000'
+      # this service's own https URL, exactly as Render shows it (no trailing slash); the ENS
+      # records must point here before it can start (docs/deployment.md, step 3)
+      - key: PROVIDERS_PUBLIC_URL
+        sync: false
+      - key: HEDERA_NETWORK
+        value: testnet
+      - key: HEDERA_MIRROR_NODE_URL
+        value: https://testnet.mirrornode.hedera.com
+      # payout accounts: public, the same as each agent's ENS x402.payTo record
+      - key: HEDERA_PROVIDER_ACCOUNTS
+        value: kev:0.0.11044329,cve:0.0.11183141,osv:0.0.11183142
+      - key: X402_FACILITATOR_URL
+        value: https://api.testnet.blocky402.com
+      - key: X402_FALLBACK_FACILITATOR_URL
+        value: https://x402.org/facilitator
+      - key: X402_NETWORK
+        value: hedera:testnet
+      - key: X402_ASSET
+        value: 0.0.0
+      # the USDC lane (plan row 37, D-064): /v1/<label>/ping-usdc at 0.01 USDC (Circle, HTS)
+      - key: X402_USDC_PING_ATOMIC
+        value: '10000'
+      - key: ENS_CHAIN
+        value: sepolia
+      - key: ENS_PARENT_NAME
+        value: chirag126.eth
+      - key: ENS_DISCOVERY_FROM_BLOCK
+        value: '11999808'
+      - key: ETH_RPC_URL
+        sync: false
+      # optional: 50 NVD requests per 30 s instead of 5 (leave empty if you have none)
+      - key: NVD_API_KEY
+        sync: false
