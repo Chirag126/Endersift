@@ -1,0 +1,17 @@
+Threat-intel agent (hedera-ens-0g-agent-economy)
+
+Third-party material distributed with the web app:
+
+- Silkscreen font (apps/web/src/assets/fonts/silkscreen-*.woff2), Copyright 2001 The Silkscreen
+  Project Authors, licensed under the SIL Open Font License 1.1
+  (apps/web/src/assets/fonts/Silkscreen-OFL.txt). Subset to Latin; the font name is unchanged in
+  the files and exposed to CSS as "EnderPay Pixel".
+
+The EnderPay theme's pixel textures are original procedural CSS/SVG tiles. Its visual approach was
+informed by Block UI (https://github.com/malilion/BlockUI, Apache-2.0); no Block UI code, icons or
+textures are included. EnderPay is not affiliated with Mojang or Microsoft.
+
+- EnderPay click sound (apps/web/public/audio/enderpay-click.mp3): supplied by the project owner
+  as `minecraft_click.mp3` and committed at their decision; its licence is the owner's
+  responsibility. No music files are included: the EnderPay track names refer to C418's works,
+  which must be added locally by whoever has the right to use them.
