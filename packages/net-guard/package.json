@@ -1,0 +1,11 @@
+{
+  "name": "@agent-economy/net-guard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SSRF-safe outbound HTTP: https only, every resolved address public, connection pinned to the checked address, no redirects, byte and time caps. Dependency-free (node:dns, node:https).",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
