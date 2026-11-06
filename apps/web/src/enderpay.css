@@ -1,0 +1,1064 @@
+/*
+ * EnderPay theme (Phase UI toggle, D-071): a block-game look for the same app.
+ * Stone panels with bevelled edges, square blocks for buttons and timeline
+ * marks, inventory-slot inputs and identifiers, a pixel font (Silkscreen,
+ * SIL OFL 1.1, assets/fonts/Silkscreen-OFL.txt) for headings, navigation and
+ * controls, and the system font for body text and data. Textures are original
+ * procedural 16 x 16 pixel tiles (no game assets). Everything is scoped to
+ * :root[data-theme='enderpay']; Classic and Electric never see it. Status
+ * colours keep their meaning: green success, amber warning, red failure.
+ */
+@font-face {
+  font-family: 'EnderPay Pixel';
+  src: url('./assets/fonts/silkscreen-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EnderPay Pixel';
+  src: url('./assets/fonts/silkscreen-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root[data-theme='enderpay'] {
+  color-scheme: dark;
+  --pixel: 'EnderPay Pixel', var(--mono);
+  /* the world: deepslate canvas, stone panels, dark inventory slots */
+  --paper: #1d1d1f;
+  --surface: #48494a;
+  --surface-raised: #535456;
+  --slot: #232325;
+  --ink: #ffffff;
+  --ink-muted: #d0d1d4;
+  --rule: #313233;
+  --rule-strong: #1e1e1f;
+  --tint: rgba(255, 255, 255, 0.07);
+  --rail: #313233;
+  --rail-ink: #f0f0f0;
+  --rail-muted: #b1b2b5;
+  /* ender purple for identifiers and links; green blocks for primary actions */
+  --proof: #d4b6ff;
+  --proof-soft: #2a1f38;
+  --ender: #9a6bd6;
+  --ender-light: #be9bec;
+  --grass: #3c8527;
+  --grass-light: #52a535;
+  --grass-dark: #1d4d13;
+  --bevel-light: rgba(255, 255, 255, 0.22);
+  --bevel-dark: rgba(0, 0, 0, 0.45);
+  --outline: #111112;
+  /* semantic states: unchanged meaning */
+  --good: #6cdb4a;
+  --good-soft: #17330f;
+  --warn: #ffcc33;
+  --warn-soft: #3a2f0c;
+  --bad: #ff5c5c;
+  --bad-soft: #3d1515;
+  --focus: #ffffff;
+  --primary: var(--grass);
+  --primary-ink: #ffffff;
+  --primary-hover: var(--grass-light);
+  --danger-ink: #ffffff;
+  --rail-hover: rgba(255, 255, 255, 0.06);
+  --rail-current: #48494a;
+  --rail-accent: var(--ender);
+  --rail-rule: #1e1e1f;
+  --rail-chip: #58585a;
+  --backdrop: rgba(0, 0, 0, 0.7);
+  --button-border: var(--outline);
+  --button-radius: 0;
+  --primary-radius: 0;
+  --radius-s: 0;
+  --radius-m: 0;
+  --statusbar-bg: #e6e8eb;
+  --serif: var(--pixel);
+  --ep-tex-deepslate: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%232b2b2e' d='M0 0h1v1h-1zM6 0h1v1h-1zM10 0h1v1h-1zM13 0h1v1h-1zM15 0h1v1h-1zM1 1h1v1h-1zM6 2h2v1h-2zM10 2h1v1h-1zM13 2h1v1h-1zM0 3h1v1h-1zM8 3h1v1h-1zM12 3h1v1h-1zM15 3h1v1h-1zM8 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM6 5h3v1h-3zM0 6h1v1h-1zM2 6h1v1h-1zM4 6h1v1h-1zM6 6h1v1h-1zM11 6h1v1h-1zM14 6h1v1h-1zM1 7h1v1h-1zM4 7h2v1h-2zM7 7h1v1h-1zM11 7h1v1h-1zM15 7h1v1h-1zM0 8h3v1h-3zM4 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM1 9h1v1h-1zM3 9h1v1h-1zM10 9h1v1h-1zM13 10h1v1h-1zM4 11h1v1h-1zM6 11h1v1h-1zM10 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM1 13h1v1h-1zM1 15h1v1h-1zM9 15h2v1h-2zM14 15h1v1h-1z'/%3E%3Cpath fill='%23262628' d='M1 0h4v1h-4zM7 0h1v1h-1zM9 0h1v1h-1zM11 0h2v1h-2zM14 0h1v1h-1zM0 1h1v1h-1zM2 1h2v1h-2zM5 1h2v1h-2zM8 1h2v1h-2zM11 1h1v1h-1zM15 1h1v1h-1zM0 2h3v1h-3zM9 2h1v1h-1zM11 2h2v1h-2zM14 2h1v1h-1zM1 3h2v1h-2zM5 3h3v1h-3zM9 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM1 4h1v1h-1zM15 4h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM9 5h1v1h-1zM13 5h3v1h-3zM1 6h1v1h-1zM3 6h1v1h-1zM5 6h1v1h-1zM8 6h3v1h-3zM12 6h1v1h-1zM15 6h1v1h-1zM6 7h1v1h-1zM8 7h3v1h-3zM13 7h2v1h-2zM5 8h1v1h-1zM9 8h1v1h-1zM11 8h2v1h-2zM14 8h2v1h-2zM0 9h1v1h-1zM2 9h1v1h-1zM4 9h2v1h-2zM8 9h1v1h-1zM13 9h2v1h-2zM6 10h1v1h-1zM3 11h1v1h-1zM7 11h1v1h-1zM11 11h1v1h-1zM1 12h2v1h-2zM4 12h2v1h-2zM7 12h6v1h-6zM15 12h1v1h-1zM0 13h1v1h-1zM3 13h1v1h-1zM5 13h2v1h-2zM8 13h1v1h-1zM10 13h1v1h-1zM12 13h2v1h-2zM1 14h1v1h-1zM4 14h1v1h-1zM6 14h2v1h-2zM9 14h2v1h-2zM12 14h1v1h-1zM15 14h1v1h-1zM0 15h1v1h-1zM4 15h1v1h-1zM7 15h2v1h-2zM11 15h3v1h-3zM15 15h1v1h-1z'/%3E%3Cpath fill='%23222224' d='M5 0h1v1h-1zM8 0h1v1h-1zM7 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM3 2h2v1h-2zM8 2h1v1h-1zM3 3h2v1h-2zM10 3h1v1h-1zM0 5h1v1h-1zM4 5h1v1h-1zM10 5h2v1h-2zM7 6h1v1h-1zM2 7h2v1h-2zM12 7h1v1h-1zM7 8h1v1h-1zM13 8h1v1h-1zM6 9h1v1h-1zM9 9h1v1h-1zM11 9h2v1h-2zM15 9h1v1h-1zM0 11h2v1h-2zM5 11h1v1h-1zM8 11h2v1h-2zM12 11h1v1h-1zM14 11h1v1h-1zM13 12h2v1h-2zM2 13h1v1h-1zM9 13h1v1h-1zM11 13h1v1h-1zM14 13h2v1h-2zM0 14h1v1h-1zM2 14h2v1h-2zM5 14h1v1h-1zM8 14h1v1h-1zM11 14h1v1h-1zM13 14h2v1h-2zM2 15h1v1h-1zM5 15h1v1h-1z'/%3E%3Cpath fill='%23303033' d='M4 1h1v1h-1zM13 1h1v1h-1zM5 2h1v1h-1zM15 2h1v1h-1zM14 3h1v1h-1zM12 5h1v1h-1zM13 6h1v1h-1zM0 7h1v1h-1zM3 8h1v1h-1zM7 9h1v1h-1zM2 11h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1z'/%3E%3Cpath fill='%231f1f21' d='M0 4h1v1h-1zM2 4h6v1h-6zM9 4h6v1h-6zM0 10h6v1h-6zM7 10h6v1h-6zM14 10h2v1h-2z'/%3E%3C/svg%3E");
+  --ep-tex-stone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%234a4b4d' d='M0 0h1v1h-1zM2 0h2v1h-2zM7 0h3v1h-3zM11 0h1v1h-1zM13 0h1v1h-1zM4 1h1v1h-1zM7 1h2v1h-2zM12 1h1v1h-1zM14 1h2v1h-2zM1 2h1v1h-1zM4 2h1v1h-1zM8 2h1v1h-1zM13 2h1v1h-1zM3 3h1v1h-1zM8 3h2v1h-2zM0 4h3v1h-3zM5 4h1v1h-1zM7 4h2v1h-2zM10 4h1v1h-1zM12 4h2v1h-2zM0 5h2v1h-2zM4 5h1v1h-1zM10 5h5v1h-5zM0 6h2v1h-2zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h2v1h-2zM13 6h1v1h-1zM0 7h1v1h-1zM6 7h1v1h-1zM10 7h3v1h-3zM1 8h2v1h-2zM7 8h2v1h-2zM12 8h1v1h-1zM1 9h1v1h-1zM5 9h1v1h-1zM11 9h1v1h-1zM15 9h1v1h-1zM1 10h1v1h-1zM5 10h3v1h-3zM0 11h1v1h-1zM2 11h2v1h-2zM10 11h1v1h-1zM5 12h2v1h-2zM11 12h1v1h-1zM1 13h1v1h-1zM3 13h3v1h-3zM7 13h1v1h-1zM9 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM0 14h1v1h-1zM2 14h1v1h-1zM4 14h3v1h-3zM8 14h1v1h-1zM13 14h2v1h-2zM1 15h1v1h-1zM4 15h1v1h-1zM9 15h2v1h-2zM13 15h3v1h-3z'/%3E%3Cpath fill='%2345464a' d='M1 0h1v1h-1zM6 0h1v1h-1zM12 0h1v1h-1zM15 0h1v1h-1zM0 1h1v1h-1zM3 1h1v1h-1zM10 1h2v1h-2zM13 1h1v1h-1zM2 2h2v1h-2zM6 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM15 2h1v1h-1zM0 3h1v1h-1zM6 3h1v1h-1zM10 3h5v1h-5zM6 4h1v1h-1zM11 4h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM8 5h2v1h-2zM3 6h1v1h-1zM12 6h1v1h-1zM15 6h1v1h-1zM2 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM14 7h1v1h-1zM4 8h3v1h-3zM13 8h3v1h-3zM0 9h1v1h-1zM8 9h3v1h-3zM13 9h2v1h-2zM11 10h3v1h-3zM15 10h1v1h-1zM1 11h1v1h-1zM4 11h1v1h-1zM8 11h1v1h-1zM11 11h1v1h-1zM14 11h2v1h-2zM8 12h1v1h-1zM10 12h1v1h-1zM12 12h2v1h-2zM15 12h1v1h-1zM2 13h1v1h-1zM13 13h2v1h-2zM9 14h2v1h-2zM0 15h1v1h-1zM2 15h1v1h-1zM6 15h1v1h-1zM12 15h1v1h-1z'/%3E%3Cpath fill='%23505153' d='M4 0h2v1h-2zM14 0h1v1h-1zM1 1h2v1h-2zM5 1h2v1h-2zM9 1h1v1h-1zM0 2h1v1h-1zM7 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM1 3h2v1h-2zM4 3h2v1h-2zM7 3h1v1h-1zM15 3h1v1h-1zM4 4h1v1h-1zM9 4h1v1h-1zM15 4h1v1h-1zM2 5h1v1h-1zM6 5h1v1h-1zM2 6h1v1h-1zM7 6h1v1h-1zM9 6h1v1h-1zM1 7h1v1h-1zM8 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM3 8h1v1h-1zM9 8h3v1h-3zM2 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM0 10h1v1h-1zM2 10h3v1h-3zM8 10h2v1h-2zM6 11h1v1h-1zM9 11h1v1h-1zM12 11h2v1h-2zM0 12h5v1h-5zM7 12h1v1h-1zM9 12h1v1h-1zM14 12h1v1h-1zM0 13h1v1h-1zM6 13h1v1h-1zM11 13h1v1h-1zM1 14h1v1h-1zM7 14h1v1h-1zM11 14h2v1h-2zM15 14h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1z'/%3E%3Cpath fill='%2356575a' d='M10 0h1v1h-1zM5 2h1v1h-1zM10 2h1v1h-1zM3 4h1v1h-1zM14 4h1v1h-1zM7 5h1v1h-1zM15 5h1v1h-1zM14 6h1v1h-1zM3 7h2v1h-2zM0 8h1v1h-1zM3 9h1v1h-1zM7 9h1v1h-1zM12 9h1v1h-1zM10 10h1v1h-1zM14 10h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM8 13h1v1h-1zM10 13h1v1h-1zM3 14h1v1h-1zM5 15h1v1h-1zM8 15h1v1h-1zM11 15h1v1h-1z'/%3E%3C/svg%3E");
+  --ep-tex-grass: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%236fae46' d='M0 0h3v1h-3zM5 0h1v1h-1zM8 0h4v1h-4zM14 0h2v1h-2zM5 1h2v1h-2zM10 1h1v1h-1zM12 1h1v1h-1zM14 1h2v1h-2zM4 2h2v1h-2zM7 2h1v1h-1zM5 3h1v1h-1zM9 3h1v1h-1zM12 3h1v1h-1zM7 4h1v1h-1zM12 4h1v1h-1z'/%3E%3Cpath fill='%235a9a38' d='M3 0h2v1h-2zM6 0h2v1h-2zM13 0h1v1h-1zM0 1h2v1h-2zM7 1h3v1h-3zM11 1h1v1h-1zM1 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h2v1h-2zM14 2h1v1h-1zM1 3h4v1h-4zM6 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM8 4h1v1h-1zM10 4h2v1h-2zM7 5h1v1h-1zM12 5h1v1h-1z'/%3E%3Cpath fill='%233f7a2a' d='M12 0h1v1h-1zM2 1h3v1h-3zM13 1h1v1h-1zM0 2h1v1h-1zM9 2h1v1h-1zM12 2h2v1h-2zM15 2h1v1h-1zM0 3h1v1h-1zM7 3h1v1h-1zM10 3h1v1h-1zM13 3h3v1h-3zM0 4h1v1h-1z'/%3E%3Cpath fill='%236b4a30' d='M1 4h1v1h-1zM3 4h3v1h-3zM13 4h1v1h-1zM4 5h2v1h-2zM9 5h1v1h-1zM11 5h1v1h-1zM15 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM8 6h1v1h-1zM10 6h2v1h-2zM0 7h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM10 8h2v1h-2zM14 8h2v1h-2zM1 9h1v1h-1zM3 9h1v1h-1zM6 9h1v1h-1zM10 9h3v1h-3zM15 9h1v1h-1zM2 10h4v1h-4zM7 10h1v1h-1zM10 10h1v1h-1zM14 10h1v1h-1zM2 11h1v1h-1zM6 11h1v1h-1zM11 11h1v1h-1zM14 11h2v1h-2zM0 12h4v1h-4zM13 12h1v1h-1zM0 13h1v1h-1zM4 13h1v1h-1zM11 13h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM10 14h1v1h-1zM12 14h1v1h-1zM14 14h2v1h-2zM3 15h2v1h-2zM7 15h1v1h-1zM11 15h1v1h-1zM13 15h2v1h-2z'/%3E%3Cpath fill='%2386603f' d='M2 4h1v1h-1zM0 5h1v1h-1zM2 5h1v1h-1zM8 5h1v1h-1zM13 5h2v1h-2zM13 6h1v1h-1zM1 7h1v1h-1zM4 7h1v1h-1zM9 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM2 9h1v1h-1zM9 9h1v1h-1zM14 9h1v1h-1zM1 10h1v1h-1zM0 11h1v1h-1zM7 12h1v1h-1zM9 12h1v1h-1zM15 12h1v1h-1zM13 13h1v1h-1zM2 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1z'/%3E%3Cpath fill='%237a5638' d='M6 4h1v1h-1zM9 4h1v1h-1zM14 4h2v1h-2zM1 5h1v1h-1zM3 5h1v1h-1zM6 5h1v1h-1zM10 5h1v1h-1zM1 6h2v1h-2zM4 6h1v1h-1zM6 6h2v1h-2zM12 6h1v1h-1zM14 6h2v1h-2zM3 7h1v1h-1zM5 7h2v1h-2zM11 7h5v1h-5zM4 8h3v1h-3zM8 8h2v1h-2zM12 8h1v1h-1zM0 9h1v1h-1zM4 9h2v1h-2zM7 9h1v1h-1zM13 9h1v1h-1zM6 10h1v1h-1zM8 10h2v1h-2zM11 10h3v1h-3zM3 11h3v1h-3zM8 11h2v1h-2zM12 11h2v1h-2zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM11 12h2v1h-2zM14 12h1v1h-1zM1 13h3v1h-3zM5 13h3v1h-3zM9 13h2v1h-2zM12 13h1v1h-1zM14 13h2v1h-2zM0 14h3v1h-3zM4 14h1v1h-1zM6 14h4v1h-4zM13 14h1v1h-1zM0 15h2v1h-2zM5 15h1v1h-1zM8 15h1v1h-1zM12 15h1v1h-1zM15 15h1v1h-1z'/%3E%3Cpath fill='%235d4029' d='M5 6h1v1h-1zM9 6h1v1h-1zM7 7h1v1h-1zM2 8h1v1h-1zM13 8h1v1h-1zM8 9h1v1h-1zM0 10h1v1h-1zM15 10h1v1h-1zM1 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM5 12h1v1h-1zM10 12h1v1h-1zM8 13h1v1h-1zM11 14h1v1h-1zM9 15h1v1h-1z'/%3E%3C/svg%3E");
+  --ep-tex-obsidian: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%231c1424' d='M0 0h7v1h-7zM8 0h3v1h-3zM14 0h1v1h-1zM1 1h4v1h-4zM7 1h1v1h-1zM9 1h1v1h-1zM14 1h2v1h-2zM0 2h2v1h-2zM3 2h3v1h-3zM7 2h2v1h-2zM10 2h1v1h-1zM13 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h1v1h-1zM12 3h2v1h-2zM15 3h1v1h-1zM0 4h1v1h-1zM2 4h2v1h-2zM12 4h1v1h-1zM0 5h1v1h-1zM7 5h1v1h-1zM9 5h3v1h-3zM13 5h1v1h-1zM15 5h1v1h-1zM0 6h2v1h-2zM3 6h2v1h-2zM6 6h1v1h-1zM9 6h2v1h-2zM12 6h2v1h-2zM15 6h1v1h-1zM6 7h1v1h-1zM8 7h1v1h-1zM12 7h3v1h-3zM0 8h2v1h-2zM4 8h1v1h-1zM6 8h1v1h-1zM10 8h2v1h-2zM13 8h3v1h-3zM0 9h1v1h-1zM3 9h1v1h-1zM6 9h3v1h-3zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h2v1h-2zM0 10h1v1h-1zM5 10h2v1h-2zM8 10h1v1h-1zM12 10h1v1h-1zM14 10h2v1h-2zM0 11h1v1h-1zM2 11h1v1h-1zM4 11h1v1h-1zM6 11h1v1h-1zM10 11h1v1h-1zM12 11h1v1h-1zM14 11h2v1h-2zM0 12h1v1h-1zM6 12h1v1h-1zM8 12h4v1h-4zM13 12h3v1h-3zM0 13h2v1h-2zM4 13h1v1h-1zM6 13h1v1h-1zM11 13h2v1h-2zM14 13h2v1h-2zM0 14h2v1h-2zM3 14h3v1h-3zM7 14h1v1h-1zM9 14h5v1h-5zM1 15h2v1h-2zM4 15h1v1h-1zM6 15h2v1h-2zM10 15h5v1h-5z'/%3E%3Cpath fill='%23241a30' d='M7 0h1v1h-1zM11 0h1v1h-1zM15 0h1v1h-1zM5 1h1v1h-1zM10 1h3v1h-3zM6 2h1v1h-1zM12 2h1v1h-1zM14 2h2v1h-2zM1 3h1v1h-1zM5 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM5 4h1v1h-1zM9 4h2v1h-2zM1 5h1v1h-1zM4 5h2v1h-2zM12 5h1v1h-1zM14 5h1v1h-1zM5 6h1v1h-1zM8 6h1v1h-1zM1 7h2v1h-2zM4 7h1v1h-1zM10 7h2v1h-2zM15 7h1v1h-1zM3 8h1v1h-1zM7 8h1v1h-1zM9 8h1v1h-1zM12 8h1v1h-1zM2 9h1v1h-1zM5 9h1v1h-1zM9 9h1v1h-1zM2 10h1v1h-1zM7 10h1v1h-1zM9 10h1v1h-1zM11 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM7 11h1v1h-1zM11 11h1v1h-1zM4 12h1v1h-1zM7 12h1v1h-1zM12 12h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM8 13h1v1h-1zM13 13h1v1h-1zM2 14h1v1h-1zM8 14h1v1h-1zM14 14h1v1h-1zM0 15h1v1h-1zM5 15h1v1h-1zM15 15h1v1h-1z'/%3E%3Cpath fill='%233b2a52' d='M12 0h1v1h-1zM0 1h1v1h-1zM8 1h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM4 4h1v1h-1zM7 4h2v1h-2zM3 5h1v1h-1zM11 6h1v1h-1zM3 7h1v1h-1zM8 8h1v1h-1zM11 9h1v1h-1zM10 10h1v1h-1zM8 11h1v1h-1zM2 12h1v1h-1zM10 13h1v1h-1zM3 15h1v1h-1zM9 15h1v1h-1z'/%3E%3Cpath fill='%232e2140' d='M13 0h1v1h-1zM6 1h1v1h-1zM13 1h1v1h-1zM2 2h1v1h-1zM7 3h2v1h-2zM10 3h2v1h-2zM6 4h1v1h-1zM11 4h1v1h-1zM13 4h3v1h-3zM2 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM2 6h1v1h-1zM7 6h1v1h-1zM14 6h1v1h-1zM0 7h1v1h-1zM5 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM2 8h1v1h-1zM5 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM13 9h1v1h-1zM1 10h1v1h-1zM3 10h2v1h-2zM1 11h1v1h-1zM5 11h1v1h-1zM9 11h1v1h-1zM13 11h1v1h-1zM1 12h1v1h-1zM3 12h1v1h-1zM5 12h1v1h-1zM2 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM6 14h1v1h-1zM15 14h1v1h-1zM8 15h1v1h-1z'/%3E%3C/svg%3E");
+  --ep-tex-endstone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%23e2e3ad' d='M0 0h1v1h-1zM4 0h1v1h-1zM7 0h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM13 1h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM15 2h1v1h-1zM13 3h1v1h-1zM5 5h1v1h-1zM12 5h1v1h-1zM4 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM2 7h1v1h-1zM10 7h1v1h-1zM13 7h1v1h-1zM1 8h1v1h-1zM15 8h1v1h-1zM6 9h1v1h-1zM11 9h3v1h-3zM1 10h2v1h-2zM13 10h1v1h-1zM6 11h1v1h-1zM14 11h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM9 12h1v1h-1zM0 13h1v1h-1zM5 13h2v1h-2zM10 13h1v1h-1zM12 13h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM15 15h1v1h-1z'/%3E%3Cpath fill='%23c3c488' d='M1 0h1v1h-1zM3 0h1v1h-1zM12 1h1v1h-1zM14 1h2v1h-2zM3 2h1v1h-1zM8 2h1v1h-1zM12 2h1v1h-1zM1 4h1v1h-1zM7 4h1v1h-1zM14 4h2v1h-2zM10 5h1v1h-1zM15 5h1v1h-1zM2 6h1v1h-1zM9 6h1v1h-1zM5 7h2v1h-2zM0 8h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM14 12h1v1h-1zM7 13h1v1h-1zM5 15h1v1h-1zM9 15h1v1h-1z'/%3E%3Cpath fill='%23d8d9a0' d='M2 0h1v1h-1zM6 0h1v1h-1zM9 0h4v1h-4zM14 0h2v1h-2zM1 1h4v1h-4zM11 1h1v1h-1zM0 2h3v1h-3zM7 2h1v1h-1zM14 2h1v1h-1zM1 3h4v1h-4zM9 3h1v1h-1zM11 3h1v1h-1zM14 3h2v1h-2zM0 4h1v1h-1zM3 4h1v1h-1zM5 4h2v1h-2zM8 4h6v1h-6zM2 5h2v1h-2zM6 5h2v1h-2zM9 5h1v1h-1zM0 6h2v1h-2zM6 6h2v1h-2zM12 6h1v1h-1zM0 7h2v1h-2zM4 7h1v1h-1zM8 7h2v1h-2zM11 7h2v1h-2zM14 7h1v1h-1zM2 8h1v1h-1zM4 8h6v1h-6zM11 8h2v1h-2zM14 8h1v1h-1zM0 9h2v1h-2zM4 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM14 9h2v1h-2zM0 10h1v1h-1zM4 10h2v1h-2zM7 10h2v1h-2zM10 10h3v1h-3zM14 10h2v1h-2zM0 11h4v1h-4zM9 11h1v1h-1zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM3 12h1v1h-1zM7 12h1v1h-1zM12 12h2v1h-2zM15 12h1v1h-1zM3 13h2v1h-2zM8 13h2v1h-2zM11 13h1v1h-1zM14 13h2v1h-2zM2 14h1v1h-1zM5 14h1v1h-1zM9 14h4v1h-4zM15 14h1v1h-1zM4 15h1v1h-1zM12 15h1v1h-1z'/%3E%3Cpath fill='%23cfd094' d='M5 0h1v1h-1zM8 0h1v1h-1zM13 0h1v1h-1zM0 1h1v1h-1zM5 1h3v1h-3zM9 1h1v1h-1zM5 2h1v1h-1zM9 2h1v1h-1zM11 2h1v1h-1zM0 3h1v1h-1zM5 3h4v1h-4zM10 3h1v1h-1zM12 3h1v1h-1zM2 4h1v1h-1zM4 4h1v1h-1zM0 5h2v1h-2zM4 5h1v1h-1zM8 5h1v1h-1zM11 5h1v1h-1zM13 5h2v1h-2zM3 6h1v1h-1zM5 6h1v1h-1zM11 6h1v1h-1zM14 6h2v1h-2zM3 7h1v1h-1zM7 7h1v1h-1zM15 7h1v1h-1zM3 8h1v1h-1zM10 8h1v1h-1zM13 8h1v1h-1zM2 9h1v1h-1zM9 9h1v1h-1zM3 10h1v1h-1zM6 10h1v1h-1zM9 10h1v1h-1zM4 11h2v1h-2zM7 11h2v1h-2zM10 11h1v1h-1zM12 11h1v1h-1zM0 12h2v1h-2zM4 12h2v1h-2zM8 12h1v1h-1zM10 12h2v1h-2zM1 13h2v1h-2zM13 13h1v1h-1zM0 14h2v1h-2zM3 14h2v1h-2zM7 14h1v1h-1zM13 14h2v1h-2zM0 15h4v1h-4zM7 15h2v1h-2zM11 15h1v1h-1zM13 15h2v1h-2z'/%3E%3C/svg%3E");
+  --ep-tex-purpur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%23a679cf' d='M0 0h1v1h-1zM3 0h1v1h-1zM8 0h1v1h-1zM2 1h1v1h-1zM15 1h1v1h-1zM8 2h1v1h-1zM14 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM10 3h1v1h-1zM13 3h1v1h-1zM4 5h1v1h-1zM4 6h1v1h-1zM12 7h1v1h-1zM14 7h2v1h-2zM15 8h1v1h-1zM4 9h1v1h-1zM12 9h1v1h-1zM9 10h1v1h-1zM14 10h1v1h-1zM4 11h1v1h-1zM8 11h1v1h-1zM2 12h2v1h-2zM11 12h1v1h-1zM2 13h1v1h-1zM6 13h1v1h-1zM10 13h1v1h-1zM12 15h1v1h-1z'/%3E%3Cpath fill='%239a6bc4' d='M1 0h1v1h-1zM10 0h1v1h-1zM0 1h1v1h-1zM3 1h3v1h-3zM7 1h1v1h-1zM10 1h2v1h-2zM4 2h2v1h-2zM10 2h3v1h-3zM6 3h2v1h-2zM11 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM4 4h2v1h-2zM9 4h1v1h-1zM13 4h2v1h-2zM0 5h1v1h-1zM2 5h1v1h-1zM6 5h1v1h-1zM10 5h4v1h-4zM0 6h2v1h-2zM3 6h1v1h-1zM5 6h1v1h-1zM8 6h1v1h-1zM11 6h1v1h-1zM14 6h2v1h-2zM3 7h1v1h-1zM11 7h1v1h-1zM0 8h1v1h-1zM4 8h3v1h-3zM8 8h2v1h-2zM11 8h1v1h-1zM14 8h1v1h-1zM0 9h1v1h-1zM6 9h1v1h-1zM13 9h1v1h-1zM7 10h2v1h-2zM15 10h1v1h-1zM0 11h2v1h-2zM3 11h1v1h-1zM1 12h1v1h-1zM5 12h1v1h-1zM10 12h1v1h-1zM1 13h1v1h-1zM4 13h1v1h-1zM7 13h2v1h-2zM11 13h1v1h-1zM14 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h5v1h-5zM1 15h1v1h-1zM7 15h1v1h-1zM9 15h2v1h-2zM14 15h1v1h-1z'/%3E%3Cpath fill='%238f5fb8' d='M2 0h1v1h-1zM6 0h1v1h-1zM9 0h1v1h-1zM11 0h2v1h-2zM15 0h1v1h-1zM1 1h1v1h-1zM8 1h1v1h-1zM12 1h2v1h-2zM0 2h4v1h-4zM6 2h1v1h-1zM9 2h1v1h-1zM13 2h1v1h-1zM15 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM5 3h1v1h-1zM8 3h1v1h-1zM12 3h1v1h-1zM15 3h1v1h-1zM3 4h1v1h-1zM7 4h2v1h-2zM10 4h2v1h-2zM15 4h1v1h-1zM8 5h2v1h-2zM6 6h1v1h-1zM12 6h2v1h-2zM2 7h1v1h-1zM6 7h3v1h-3zM13 7h1v1h-1zM1 8h1v1h-1zM7 8h1v1h-1zM10 8h1v1h-1zM12 8h1v1h-1zM1 9h1v1h-1zM5 9h1v1h-1zM7 9h3v1h-3zM11 9h1v1h-1zM14 9h1v1h-1zM0 10h5v1h-5zM6 10h1v1h-1zM10 10h4v1h-4zM2 11h1v1h-1zM10 11h6v1h-6zM0 12h1v1h-1zM4 12h1v1h-1zM6 12h2v1h-2zM9 12h1v1h-1zM12 12h1v1h-1zM15 12h1v1h-1zM0 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM9 13h1v1h-1zM12 13h1v1h-1zM15 13h1v1h-1zM3 14h1v1h-1zM11 14h3v1h-3zM15 14h1v1h-1zM0 15h1v1h-1zM3 15h4v1h-4zM8 15h1v1h-1zM11 15h1v1h-1z'/%3E%3Cpath fill='%2383539f' d='M4 0h2v1h-2zM7 0h1v1h-1zM13 0h2v1h-2zM6 1h1v1h-1zM9 1h1v1h-1zM14 1h1v1h-1zM7 2h1v1h-1zM9 3h1v1h-1zM14 3h1v1h-1zM1 4h1v1h-1zM6 4h1v1h-1zM12 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM14 5h2v1h-2zM2 6h1v1h-1zM7 6h1v1h-1zM9 6h2v1h-2zM0 7h2v1h-2zM4 7h2v1h-2zM9 7h2v1h-2zM2 8h2v1h-2zM13 8h1v1h-1zM2 9h2v1h-2zM10 9h1v1h-1zM15 9h1v1h-1zM5 10h1v1h-1zM5 11h3v1h-3zM9 11h1v1h-1zM8 12h1v1h-1zM13 12h2v1h-2zM13 13h1v1h-1zM0 14h2v1h-2zM5 14h1v1h-1zM14 14h1v1h-1zM2 15h1v1h-1zM13 15h1v1h-1zM15 15h1v1h-1z'/%3E%3C/svg%3E");
+}
+
+/* ── the world and its frame ─────────────────────────────────────────── */
+:root[data-theme='enderpay'] body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(10, 10, 12, 0.55), rgba(10, 10, 12, 0.55)), var(--ep-tex-deepslate);
+  background-size:
+    auto,
+    64px 64px;
+  image-rendering: pixelated;
+  background-attachment: fixed;
+}
+:root[data-theme='enderpay'] .shell {
+  background: linear-gradient(
+    90deg,
+    var(--rail) 15rem,
+    var(--outline) 15rem,
+    var(--outline) calc(15rem + 3px),
+    transparent calc(15rem + 3px)
+  );
+}
+:root[data-theme='enderpay'] h1,
+:root[data-theme='enderpay'] h2,
+:root[data-theme='enderpay'] h3,
+:root[data-theme='enderpay'] legend,
+:root[data-theme='enderpay'] .brand-name {
+  font-family: var(--pixel);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+}
+:root[data-theme='enderpay'] h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+}
+:root[data-theme='enderpay'] h2 {
+  font-size: 1.125rem;
+  text-transform: uppercase;
+}
+:root[data-theme='enderpay'] h3 {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+:root[data-theme='enderpay'] a {
+  color: var(--proof);
+  text-decoration-color: rgba(212, 182, 255, 0.5);
+}
+:root[data-theme='enderpay'] a:hover {
+  color: #ffffff;
+  text-decoration-color: #ffffff;
+}
+:root[data-theme='enderpay'] :focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+/* the rail: a dark menu column with block items, like a settings screen */
+:root[data-theme='enderpay'] .rail {
+  background: var(--rail);
+  gap: 1.5rem;
+}
+:root[data-theme='enderpay'] .brand {
+  padding: 0.75rem;
+  background: var(--slot);
+  box-shadow:
+    inset 2px 2px 0 var(--bevel-dark),
+    inset -2px -2px 0 var(--bevel-light);
+  outline: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .brand-name {
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+:root[data-theme='enderpay'] .brand-name::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background: var(--ep-tex-purpur);
+  background-size: 16px 16px;
+  outline: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .brand-sub {
+  color: var(--ender-light);
+  font-size: 0.8rem;
+}
+:root[data-theme='enderpay'] .rail nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--pixel);
+  font-size: 0.8rem;
+  padding: 0.55rem 0.7rem;
+  border-left: none;
+  color: var(--rail-ink);
+  transition: background-color 80ms steps(2);
+}
+:root[data-theme='enderpay'] .rail nav a::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  background: var(--ep-tex-stone);
+  background-size: 12px 12px;
+  outline: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .rail nav a[aria-current='page'] {
+  background: var(--rail-current);
+  font-weight: 400;
+  box-shadow:
+    inset 2px 2px 0 var(--bevel-light),
+    inset -2px -2px 0 var(--bevel-dark),
+    inset 4px 0 0 var(--ender);
+}
+:root[data-theme='enderpay'] .rail nav a[aria-current='page']::before {
+  background-image: var(--ep-tex-grass);
+}
+:root[data-theme='enderpay'] .rail nav ul + ul {
+  border-top: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .networks li {
+  font-family: var(--pixel);
+  font-size: 0.7rem;
+  border-radius: 0;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  color: var(--rail-muted);
+}
+
+/* the status bar: the light title bar of a menu screen */
+:root[data-theme='enderpay'] .statusbar {
+  color: #1e1e1f;
+  border-bottom: 3px solid var(--outline);
+  box-shadow: inset 0 -3px 0 #b1b2b5;
+  font-family: var(--pixel);
+  font-size: 0.75rem;
+}
+:root[data-theme='enderpay'] .statusbar .hint {
+  color: #48494a;
+}
+:root[data-theme='enderpay'] .statusbar .status {
+  outline: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .statusbar-approval {
+  color: #8a5a00;
+}
+:root[data-theme='enderpay'] .statusbar-paused {
+  color: #b01e1e;
+}
+:root[data-theme='enderpay'] .mode {
+  border-radius: 0;
+  border-width: 2px;
+}
+:root[data-theme='enderpay'] .mode-live {
+  color: var(--grass-dark);
+  background: #c8f0b4;
+}
+
+/* page heads */
+:root[data-theme='enderpay'] .page-head {
+  border-bottom: 3px solid var(--outline);
+  box-shadow: 0 3px 0 rgba(255, 255, 255, 0.06);
+}
+:root[data-theme='enderpay'] .page-intro {
+  color: var(--ink-muted);
+}
+
+/* ── panels: stone blocks with a bevel and a black outline ───────────── */
+:root[data-theme='enderpay'] .panel,
+:root[data-theme='enderpay'] .state,
+:root[data-theme='enderpay'] .provider,
+:root[data-theme='enderpay'] .table-wrap,
+:root[data-theme='enderpay'] .run-list,
+:root[data-theme='enderpay'] .proven,
+:root[data-theme='enderpay'] .capabilities,
+:root[data-theme='enderpay'] .killswitch,
+:root[data-theme='enderpay'] .access,
+:root[data-theme='enderpay'] .schedule-card,
+:root[data-theme='enderpay'] .approval-mode,
+:root[data-theme='enderpay'] .provider-caps,
+:root[data-theme='enderpay'] .setup-list li,
+:root[data-theme='enderpay'] .run-card,
+:root[data-theme='enderpay'] .logs,
+:root[data-theme='enderpay'] .approval-prompt,
+:root[data-theme='enderpay'] .composer,
+:root[data-theme='enderpay'] .empty,
+:root[data-theme='enderpay'] .drawer {
+  background: var(--surface);
+  border: none;
+  outline: 3px solid var(--outline);
+  outline-offset: 0;
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark);
+}
+:root[data-theme='enderpay'] .composer {
+  padding: 1.25rem 1.4rem 1.4rem;
+}
+:root[data-theme='enderpay'] .page > section,
+:root[data-theme='enderpay'] .page > .split,
+:root[data-theme='enderpay'] .page > .panel,
+:root[data-theme='enderpay'] .page > .table-wrap,
+:root[data-theme='enderpay'] .page > .killswitch,
+:root[data-theme='enderpay'] .page > .empty,
+:root[data-theme='enderpay'] .page > div {
+  margin-top: 2.25rem;
+}
+:root[data-theme='enderpay'] .panel-head,
+:root[data-theme='enderpay'] .run-card-head {
+  margin: -1.1rem -1.25rem 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #3a3b3d;
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset 0 -3px 0 var(--outline);
+}
+:root[data-theme='enderpay'] .run-card-head {
+  margin: -1.25rem -1.4rem 1.1rem;
+  padding: 0.85rem 1.4rem;
+}
+:root[data-theme='enderpay'] .provider,
+:root[data-theme='enderpay'] .run-card,
+:root[data-theme='enderpay'] .schedule-card {
+  transition: transform 80ms steps(2);
+}
+:root[data-theme='enderpay'] .provider:hover,
+:root[data-theme='enderpay'] .run-card:hover {
+  outline-color: #ffffff;
+}
+:root[data-theme='enderpay'] .provider h2 {
+  font-size: 0.95rem;
+  text-transform: none;
+}
+:root[data-theme='enderpay'] .state {
+  border-left: none;
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 var(--good);
+  padding-left: 2rem;
+}
+:root[data-theme='enderpay'] .state-executing,
+:root[data-theme='enderpay'] .state-waiting,
+:root[data-theme='enderpay'] .state-approval {
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 var(--warn);
+}
+:root[data-theme='enderpay'] .state-blocked,
+:root[data-theme='enderpay'] .state-unreachable {
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 var(--bad);
+}
+:root[data-theme='enderpay'] .state-headline {
+  font-size: 1.75rem;
+}
+:root[data-theme='enderpay'] .state-facts,
+:root[data-theme='enderpay'] .side-list li,
+:root[data-theme='enderpay'] .rules li,
+:root[data-theme='enderpay'] .history-list li,
+:root[data-theme='enderpay'] .layers li,
+:root[data-theme='enderpay'] .proof-list li,
+:root[data-theme='enderpay'] .run-proofs,
+:root[data-theme='enderpay'] .capability,
+:root[data-theme='enderpay'] .proven li,
+:root[data-theme='enderpay'] .run-list li,
+:root[data-theme='enderpay'] .log,
+:root[data-theme='enderpay'] .step {
+  border-color: rgba(0, 0, 0, 0.45);
+}
+:root[data-theme='enderpay'] .state-facts dt,
+:root[data-theme='enderpay'] .provider dt,
+:root[data-theme='enderpay'] .facts dt,
+:root[data-theme='enderpay'] .proof-label,
+:root[data-theme='enderpay'] .run-proofs h3,
+:root[data-theme='enderpay'] .split-side h3,
+:root[data-theme='enderpay'] .theme-switch-label {
+  font-family: var(--pixel);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: #bfc0c3;
+  text-shadow: none;
+  letter-spacing: 0;
+}
+:root[data-theme='enderpay'] .split-side {
+  border-left: 3px solid var(--outline);
+}
+:root[data-theme='enderpay'] .rules li::before {
+  width: 6px;
+  height: 6px;
+  top: 0.95rem;
+  background: var(--ender-light);
+}
+:root[data-theme='enderpay'] .steps li::marker {
+  font-family: var(--pixel);
+  color: var(--ender-light);
+}
+:root[data-theme='enderpay'] .notice,
+:root[data-theme='enderpay'] .gaps,
+:root[data-theme='enderpay'] .proof-banner,
+:root[data-theme='enderpay'] .changes {
+  border-radius: 0;
+  outline: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .notice-info,
+:root[data-theme='enderpay'] .proof-banner,
+:root[data-theme='enderpay'] .changes {
+  background: var(--proof-soft);
+  border-color: var(--ender);
+}
+:root[data-theme='enderpay'] .empty {
+  border-style: solid;
+}
+
+/* ── status labels: square chips, same colours and shapes ────────────── */
+:root[data-theme='enderpay'] .status {
+  border-radius: 0;
+  font-family: var(--pixel);
+  font-size: 0.7rem;
+  font-weight: 400;
+  padding: 0.2rem 0.5rem 0.2rem 0.4rem;
+  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.35);
+}
+:root[data-theme='enderpay'] .status-good .status-mark,
+:root[data-theme='enderpay'] .status-warn .status-mark {
+  border-radius: 0;
+}
+:root[data-theme='enderpay'] .status-neutral {
+  color: #e2e3e6;
+  background: #2b2b2d;
+}
+:root[data-theme='enderpay'] .status-neutral .status-mark {
+  border-color: #e2e3e6;
+}
+:root[data-theme='enderpay'] .source,
+:root[data-theme='enderpay'] .chips li {
+  border-radius: 0;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  font-family: var(--pixel);
+  font-size: 0.66rem;
+  color: var(--ink-muted);
+}
+:root[data-theme='enderpay'] .source-owner {
+  color: var(--ender-light);
+}
+
+/* ── tables: an inventory screen ─────────────────────────────────────── */
+:root[data-theme='enderpay'] table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+:root[data-theme='enderpay'] thead th {
+  background: #313233;
+  color: #ffffff;
+  font-family: var(--pixel);
+  font-size: 0.68rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  border-bottom: 3px solid var(--outline);
+}
+:root[data-theme='enderpay'] td,
+:root[data-theme='enderpay'] th {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.35);
+}
+:root[data-theme='enderpay'] tbody tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.1);
+}
+:root[data-theme='enderpay'] tbody tr:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+:root[data-theme='enderpay'] tbody tr:hover > :first-child {
+  box-shadow: inset 4px 0 0 var(--ender);
+}
+:root[data-theme='enderpay'] .table-wrap .proof-id {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+:root[data-theme='enderpay'] .cell-sub,
+:root[data-theme='enderpay'] .unit {
+  color: #c3c4c7;
+}
+
+/* ── identifiers: inventory slots ────────────────────────────────────── */
+:root[data-theme='enderpay'] .proof-id {
+  background: var(--slot);
+  color: var(--proof);
+  border-radius: 0;
+  border: none;
+  box-shadow:
+    inset 2px 2px 0 rgba(0, 0, 0, 0.6),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.12);
+  padding: 0.15rem 0.45rem;
+}
+:root[data-theme='enderpay'] a.proof-id:hover {
+  background: #33264a;
+  color: #ffffff;
+  text-decoration: none;
+}
+:root[data-theme='enderpay'] .proof-copy,
+:root[data-theme='enderpay'] .json-copy {
+  font-family: var(--pixel);
+  font-size: 0.62rem;
+  border-radius: 0;
+  border: 2px solid var(--outline);
+  background: #d0d1d4;
+  color: #1e1e1f;
+  box-shadow: inset 0 -2px 0 #8c8d90;
+  padding: 0.05rem 0.35rem;
+}
+:root[data-theme='enderpay'] .proof-copy:hover,
+:root[data-theme='enderpay'] .json-copy:hover {
+  background: #ffffff;
+  color: #1e1e1f;
+}
+
+/* ── the trail and the stage track: square blocks on a stone line ───── */
+:root[data-theme='enderpay'] .step::before {
+  width: 4px;
+  left: calc(1.125rem - 2px);
+  background: #2b2b2d;
+}
+:root[data-theme='enderpay'] .step-seq {
+  border-radius: 0;
+  font-family: var(--pixel);
+  font-size: 0.72rem;
+  font-weight: 400;
+  background: #6b6c6f;
+  color: #ffffff;
+  border: 3px solid var(--outline);
+  box-shadow:
+    inset 2px 2px 0 var(--bevel-light),
+    inset -2px -2px 0 var(--bevel-dark);
+}
+:root[data-theme='enderpay'] .step-good .step-seq {
+  background: var(--grass);
+  border-color: var(--outline);
+  color: #ffffff;
+}
+:root[data-theme='enderpay'] .step-warn .step-seq {
+  background: #b88a12;
+  border-color: var(--outline);
+  color: #ffffff;
+}
+:root[data-theme='enderpay'] .step-bad .step-seq {
+  background: #b52a24;
+  border-color: var(--outline);
+  color: #ffffff;
+}
+:root[data-theme='enderpay'] .step-title {
+  font-weight: 650;
+}
+:root[data-theme='enderpay'] .step-time,
+:root[data-theme='enderpay'] .log-time {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #bfc0c3;
+}
+:root[data-theme='enderpay'] .track-stage::before {
+  height: 4px;
+  top: 0.5rem;
+  background: #2b2b2d;
+}
+:root[data-theme='enderpay'] .track-done::before {
+  background: var(--good);
+}
+:root[data-theme='enderpay'] .track-mark {
+  border-radius: 0;
+  border: 3px solid var(--outline);
+  background: #6b6c6f;
+}
+:root[data-theme='enderpay'] .track-done .track-mark {
+  background: var(--grass);
+  border-color: var(--outline);
+}
+:root[data-theme='enderpay'] .track-done .track-mark::after {
+  border-color: #ffffff;
+  left: 0.22rem;
+  top: 0.02rem;
+}
+:root[data-theme='enderpay'] .track-partial .track-mark {
+  border-color: var(--outline);
+  background: linear-gradient(90deg, var(--warn) 50%, #6b6c6f 50%);
+}
+:root[data-theme='enderpay'] .track-failed .track-mark {
+  border-color: var(--outline);
+  background: var(--bad);
+}
+:root[data-theme='enderpay'] .track-name {
+  font-family: var(--pixel);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+/* ── logs and outputs ────────────────────────────────────────────────── */
+:root[data-theme='enderpay'] .log-line:hover,
+:root[data-theme='enderpay'] .log-line[aria-expanded='true'] {
+  background: rgba(255, 255, 255, 0.07);
+}
+:root[data-theme='enderpay'] .log-stage {
+  justify-self: start;
+  font-family: var(--pixel);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  color: var(--ender-light);
+  background: var(--slot);
+  border: 2px solid var(--outline);
+  padding: 0.05rem 0.4rem;
+}
+:root[data-theme='enderpay'] .log-toggle {
+  font-family: var(--pixel);
+  font-size: 0.66rem;
+  color: var(--proof);
+}
+:root[data-theme='enderpay'] .json pre,
+:root[data-theme='enderpay'] .brief pre {
+  background: #121213;
+  color: #e7dcff;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset 3px 3px 0 rgba(0, 0, 0, 0.7),
+    inset -3px -3px 0 rgba(255, 255, 255, 0.08);
+}
+:root[data-theme='enderpay'] .drawer {
+  outline: none;
+  border-left: 3px solid var(--outline);
+}
+:root[data-theme='enderpay'] .drawer-head {
+  background: #e6e8eb;
+  color: #1e1e1f;
+  margin: -1.25rem -1.5rem 1rem;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 3px solid var(--outline);
+}
+:root[data-theme='enderpay'] .drawer-head h2 {
+  color: #1e1e1f;
+  text-shadow: none;
+}
+:root[data-theme='enderpay'] details > summary {
+  font-family: var(--pixel);
+  font-size: 0.72rem;
+  color: var(--proof);
+}
+:root[data-theme='enderpay'] .brief-section,
+:root[data-theme='enderpay'] .history {
+  border-top: 3px solid var(--outline);
+}
+
+/* ── buttons: blocks that press down ─────────────────────────────────── */
+:root[data-theme='enderpay'] .button {
+  font-family: var(--pixel);
+  font-weight: 400;
+  font-size: 0.8rem;
+  text-transform: none;
+  padding: 0.65rem 1.1rem 0.8rem;
+  background: #d0d1d4;
+  color: #1e1e1f;
+  border: 2px solid var(--outline);
+  box-shadow:
+    inset 0 -4px 0 #58585a,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    transform 60ms steps(1),
+    background-color 60ms steps(1);
+}
+:root[data-theme='enderpay'] .button:hover:not(:disabled) {
+  background: #e6e8eb;
+}
+:root[data-theme='enderpay'] .button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 -2px 0 #58585a,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.6);
+}
+:root[data-theme='enderpay'] .button-primary {
+  background: var(--grass);
+  color: #ffffff;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.5rem 0.95rem;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+  box-shadow:
+    inset 0 -4px 0 var(--grass-dark),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+}
+:root[data-theme='enderpay'] .button-primary:hover:not(:disabled) {
+  background: var(--grass-light);
+}
+:root[data-theme='enderpay'] .button-primary:active:not(:disabled) {
+  box-shadow:
+    inset 0 -2px 0 var(--grass-dark),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+}
+:root[data-theme='enderpay'] a.button-primary,
+:root[data-theme='enderpay'] a.button-primary:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+:root[data-theme='enderpay'] .button-danger,
+:root[data-theme='enderpay'] .confirm .button-danger {
+  background: #b52a24;
+  color: #ffffff;
+  border-color: var(--outline);
+  box-shadow:
+    inset 0 -4px 0 #6e1410,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.25);
+}
+:root[data-theme='enderpay'] .button-danger:hover:not(:disabled) {
+  background: #d23a33;
+  color: #ffffff;
+}
+:root[data-theme='enderpay'] .button:disabled,
+:root[data-theme='enderpay'] .button.is-disabled {
+  opacity: 1;
+  background: #6b6c6f;
+  color: #a5a6a9;
+  text-shadow: none;
+  box-shadow: inset 0 -4px 0 #48494a;
+  cursor: not-allowed;
+}
+:root[data-theme='enderpay'] .button-quiet {
+  font-family: var(--pixel);
+  font-size: 0.72rem;
+  color: var(--proof);
+}
+:root[data-theme='enderpay'] .button-quiet:hover {
+  color: #ffffff;
+}
+
+/* ── inputs: inventory slots; radio cards: menu toggles ──────────────── */
+:root[data-theme='enderpay'] input,
+:root[data-theme='enderpay'] textarea {
+  background: var(--slot);
+  color: #ffffff;
+  border: 2px solid var(--outline);
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 rgba(0, 0, 0, 0.6),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.1);
+}
+:root[data-theme='enderpay'] input:focus,
+:root[data-theme='enderpay'] textarea:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 0;
+  border-color: var(--outline);
+}
+:root[data-theme='enderpay'] input::placeholder,
+:root[data-theme='enderpay'] textarea::placeholder {
+  color: #8c8d90;
+}
+:root[data-theme='enderpay'] input[aria-invalid='true'] {
+  border-color: var(--bad);
+  outline: 2px solid var(--bad);
+}
+:root[data-theme='enderpay'] input[type='radio'],
+:root[data-theme='enderpay'] input[type='checkbox'],
+:root[data-theme='enderpay'] .segment input {
+  accent-color: var(--grass);
+}
+:root[data-theme='enderpay'] label {
+  font-weight: 650;
+}
+:root[data-theme='enderpay'] .segment {
+  border-radius: 0;
+  border: 2px solid var(--outline);
+  background: #3a3b3d;
+  box-shadow:
+    inset 2px 2px 0 var(--bevel-light),
+    inset -2px -2px 0 var(--bevel-dark);
+}
+:root[data-theme='enderpay'] .segment-on {
+  border: 2px solid var(--outline);
+  padding: 0.8rem 1rem 0.8rem 2.4rem;
+  background: #2f4a22;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.2),
+    inset -2px -2px 0 var(--bevel-dark),
+    inset 0 0 0 4px var(--grass);
+}
+:root[data-theme='enderpay'] .segment-title {
+  font-family: var(--pixel);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+:root[data-theme='enderpay'] .unit-label {
+  font-family: var(--pixel);
+  font-size: 0.72rem;
+}
+
+/* meters: an experience bar */
+:root[data-theme='enderpay'] .meter-track {
+  height: 0.75rem;
+  border-radius: 0;
+  background: #121213;
+  outline: 2px solid var(--outline);
+}
+:root[data-theme='enderpay'] .meter-fill {
+  background: repeating-linear-gradient(90deg, var(--good) 0 14px, #4ab52f 14px 16px);
+}
+:root[data-theme='enderpay'] .meter-high .meter-fill {
+  background: repeating-linear-gradient(90deg, var(--warn) 0 14px, #c79a1b 14px 16px);
+}
+:root[data-theme='enderpay'] .meter-head {
+  font-family: var(--pixel);
+  font-size: 0.7rem;
+}
+
+/* ── page specifics ──────────────────────────────────────────────────── */
+:root[data-theme='enderpay'] .killswitch:not(.killswitch-on) {
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 var(--good);
+  padding-left: 2rem;
+}
+:root[data-theme='enderpay'] .killswitch-on {
+  outline: 3px solid var(--bad);
+  background:
+    repeating-linear-gradient(-45deg, var(--bad-soft) 0 12px, transparent 12px 24px), var(--surface);
+}
+:root[data-theme='enderpay'] .killswitch h2 {
+  font-size: 1.25rem;
+}
+:root[data-theme='enderpay'] .approval-prompt {
+  outline-color: var(--warn);
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 var(--warn);
+}
+:root[data-theme='enderpay'] .approval-clock {
+  font-family: var(--pixel);
+  font-size: 0.75rem;
+}
+:root[data-theme='enderpay'] .schedule-card {
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 var(--good);
+  border-left: none;
+}
+:root[data-theme='enderpay'] .schedule-off {
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset -3px -3px 0 var(--bevel-dark),
+    inset 8px 0 0 #6b6c6f;
+}
+:root[data-theme='enderpay'] .big-figure {
+  font-family: var(--pixel);
+  font-weight: 400;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+}
+:root[data-theme='enderpay'] .money {
+  font-variant-numeric: tabular-nums;
+}
+
+/* the theme switch: three menu blocks */
+:root[data-theme='enderpay'] .theme-switch {
+  border-radius: 0;
+  border: 2px solid var(--outline);
+  background: var(--slot);
+  padding: 0.25rem;
+  gap: 0.25rem;
+}
+:root[data-theme='enderpay'] .theme-option {
+  border-radius: 0;
+  font-family: var(--pixel);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: #d0d1d4;
+  padding: 0.4rem 0.7rem 0.5rem;
+}
+:root[data-theme='enderpay'] .theme-option:hover {
+  background: #3a3b3d;
+}
+:root[data-theme='enderpay'] .theme-option-on,
+:root[data-theme='enderpay'] .theme-option-on:hover {
+  background: var(--grass);
+  color: #ffffff;
+  box-shadow:
+    inset 0 -3px 0 var(--grass-dark),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Overview: the title screen */
+:root[data-theme='enderpay'] .kicker {
+  display: inline-block;
+  margin: 0 0 0.75rem;
+  font-family: var(--pixel);
+  font-size: 0.8rem;
+  color: #ffff55;
+  text-shadow: 2px 2px 0 #3f3f15;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+:root[data-theme='enderpay'] .page-head-hero h1 {
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+}
+:root[data-theme='enderpay'] .page-head-hero .page-intro {
+  max-width: 56ch;
+}
+:root[data-theme='enderpay'] .page-head-hero {
+  padding-bottom: 1.75rem;
+}
+
+@media (max-width: 760px) {
+  :root[data-theme='enderpay'] .shell {
+    background: none;
+  }
+  :root[data-theme='enderpay'] .rail {
+    border-bottom: 3px solid var(--outline);
+  }
+  :root[data-theme='enderpay'] h1 {
+    font-size: 1.6rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme='enderpay'] *,
+  :root[data-theme='enderpay'] *::before,
+  :root[data-theme='enderpay'] *::after {
+    transition: none !important;
+  }
+  :root[data-theme='enderpay'] .button:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* fieldset titles: a header bar inside the panel, not text across its edge */
+:root[data-theme='enderpay'] .approval-mode legend,
+:root[data-theme='enderpay'] .provider-caps legend {
+  float: left;
+  width: calc(100% + 2.4rem);
+  margin: -1rem -1.2rem 0.85rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  background: #3a3b3d;
+  box-shadow:
+    inset 3px 3px 0 var(--bevel-light),
+    inset 0 -3px 0 var(--outline);
+}
+:root[data-theme='enderpay'] .approval-mode legend + *,
+:root[data-theme='enderpay'] .provider-caps legend + * {
+  clear: both;
+}
+
+/* the mock label stays legible on the light title bar */
+:root[data-theme='enderpay'] .statusbar .mode-mock {
+  color: #1e1e1f;
+  background: #ffcc33;
+  border-color: var(--outline);
+}
+
+/* ── voice task and the 0G card (D-076) ──────────────────────────────── */
+:root[data-theme='enderpay'] .voice-receipt,
+:root[data-theme='enderpay'] .zg-why {
+  background: var(--surface);
+  border: 2px solid var(--outline);
+  border-radius: 0;
+  box-shadow:
+    inset 2px 2px 0 var(--bevel-light),
+    inset -2px -2px 0 var(--bevel-dark);
+}
+:root[data-theme='enderpay'] .voice-receipt {
+  border-left: 6px solid var(--grass);
+}
+:root[data-theme='enderpay'] .zg-why {
+  border-left: 6px solid var(--ender);
+}
+:root[data-theme='enderpay'] .voice-file input[type='file'] {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: inherit;
+}
+:root[data-theme='enderpay'] .voice-file input[type='file']::file-selector-button {
+  font-family: var(--pixel);
+  font-size: 0.75rem;
+  padding: 0.45rem 0.8rem 0.6rem;
+  background: #d0d1d4;
+  color: #1e1e1f;
+  border: 2px solid var(--outline);
+  border-radius: 0;
+  box-shadow:
+    inset 0 -4px 0 #58585a,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.6);
+}
+:root[data-theme='enderpay'] .voice-live {
+  color: var(--bad);
+}
+
+/* ── EnderPay sound controls in the title bar (commit 2, D-072) ──────── */
+:root[data-theme='enderpay'] .audio-controls {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+:root[data-theme='enderpay'] .audio-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.5rem 0.35rem;
+  font-family: var(--pixel);
+  font-size: 0.66rem;
+  color: #1e1e1f;
+  background: #d0d1d4;
+  border: 2px solid var(--outline);
+  border-radius: 0;
+  box-shadow:
+    inset 0 -3px 0 #8c8d90,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: background-color 60ms steps(1);
+}
+:root[data-theme='enderpay'] .audio-button:hover {
+  background: #ffffff;
+}
+:root[data-theme='enderpay'] .audio-button:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 -1px 0 #8c8d90,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.6);
+}
+:root[data-theme='enderpay'] .audio-button[aria-pressed='true'] {
+  background: var(--grass);
+  color: #ffffff;
+  box-shadow:
+    inset 0 -3px 0 var(--grass-dark),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+}
+:root[data-theme='enderpay'] .audio-button[aria-pressed='true']:hover {
+  background: var(--grass-light);
+}
+/* honest state: blocked or not installed is amber, never shown as playing */
+:root[data-theme='enderpay'] .audio-button.audio-blocked[aria-pressed='true'],
+:root[data-theme='enderpay'] .audio-button.audio-missing[aria-pressed='true'] {
+  background: #ffcc33;
+  color: #1e1e1f;
+  box-shadow:
+    inset 0 -3px 0 #a37f0e,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.4);
+}
+:root[data-theme='enderpay'] .audio-button:focus-visible {
+  outline: 2px solid #1e1e1f;
+  outline-offset: 2px;
+}
+:root[data-theme='enderpay'] .audio-volume input {
+  width: 5.5rem;
+  padding: 0;
+  height: 1rem;
+  accent-color: var(--grass);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+:root[data-theme='enderpay'] .audio-volume input:disabled {
+  opacity: 0.4;
+}
+@media (max-width: 760px) {
+  :root[data-theme='enderpay'] .audio-controls {
+    margin-left: 0;
+  }
+  :root[data-theme='enderpay'] .audio-volume {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme='enderpay'] .audio-button:active {
+    transform: none;
+  }
+}
