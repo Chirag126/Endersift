@@ -1,0 +1,16 @@
+{
+  "name": "@agent-economy/server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent server: fail-fast configuration, SQLite persistence (node:sqlite), the inference ledger, the payment state machine, the orchestrator, the HTTP API with a live event stream, and the production wiring.",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@agent-economy/core": "workspace:*",
+    "@agent-economy/ens": "workspace:*",
+    "@agent-economy/hedera": "workspace:*",
+    "@agent-economy/net-guard": "workspace:*",
+    "@agent-economy/policy": "workspace:*",
+    "@agent-economy/zg": "workspace:*"
+  }
+}
