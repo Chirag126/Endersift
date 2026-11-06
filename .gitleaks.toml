@@ -1,0 +1,65 @@
+# gitleaks configuration: default ruleset plus rules specific to this project's
+# credentials. Runs over the full git history in CI (.github/workflows/ci.yml).
+
+title = "hedera-ens-0g-agent-economy"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "hedera-der-private-key"
+description = "DER-encoded Hedera ECDSA (secp256k1) or ED25519 private key"
+regex = '''(?i)(?:3030020100300706052b8104000a|302e020100300506032b6570)04220420[0-9a-f]{64}'''
+keywords = ["3030020100300706052b8104000a", "302e020100300506032b6570"]
+
+[[rules]]
+id = "env-credential-assignment"
+description = "Credential-named environment variable assigned a literal value"
+regex = '''(?m)^[ \t]*(?:export[ \t]+)?[A-Z0-9_]*(?:PRIVATE_KEY|API_KEY|MANAGEMENT_KEY|ACCESS_TOKEN|AUTH_TOKEN|ACCESS_CODE)[ \t]*=[ \t]*["']?([^\s"'<$#]{12,})'''
+secretGroup = 1
+keywords = ["private_key", "api_key", "management_key", "access_token", "auth_token", "access_code"]
+
+[[rules]]
+id = "rpc-url-with-key"
+description = "Ethereum RPC URL embedding a provider API key"
+regex = '''(?:alchemy\.com/v2/[A-Za-z0-9_-]{16,}|infura\.io/v3/[0-9a-f]{32})'''
+keywords = ["alchemy.com/v2/", "infura.io/v3/"]
+
+[[rules]]
+id = "zg-router-key"
+description = "0G Router API key (sk-) or management key (mk-)"
+regex = '''(?:^|[^A-Za-z0-9_-])((?:sk|mk)-[A-Za-z0-9_-]{24,})'''
+secretGroup = 1
+keywords = ["sk-", "mk-"]
+
+# Public Ethereum addresses (exactly 20 bytes) are never secrets, but the
+# default generic-api-key rule flags them when the field name contains words
+# like "token" (e.g. "paymentToken": "0x240b...", ENS evidence, D-028).
+# 32-byte values (private keys, but also tx hashes) are deliberately NOT
+# allowlisted, so key-shaped hex is still caught.
+[allowlist]
+description = "public EVM addresses"
+regexTarget = "secret"
+regexes = ['''^0x[0-9a-fA-F]{40}$''']
+
+
+# Payment idempotency keys (D-042) are sha256 digests of public purchase data
+# (run, provider, capability, URL), stored in payment evidence. The default
+# generic-api-key rule flags them because the field name contains "key". This
+# extends that rule with one allowlist: exactly this field name with exactly
+# 64 lowercase hex characters. Any other key-like value is still reported.
+[[rules]]
+id = "generic-api-key"
+[[rules.allowlists]]
+description = "payment idempotency keys (sha256 of public purchase data)"
+regexTarget = "match"
+regexes = ['''^idempotencyKey"\s*:\s*"[0-9a-f]{64}"$''']
+
+# render.yaml (D-062) lists environment variable NAMES as `- key: X402_FACILITATOR_URL`; the
+# generic rule reads the name as a key value. Exactly this shape is allowed: `key:` followed by
+# an upper-case variable name and nothing else. Values in render.yaml are never secrets (secrets
+# are `sync: false`, enforced by scripts/test/render-blueprint.test.ts).
+[[rules.allowlists]]
+description = "render.yaml environment variable names"
+regexTarget = "match"
+regexes = ['''^key:\s*[A-Z][A-Z0-9_]*$''']
