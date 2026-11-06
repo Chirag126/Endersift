@@ -1,0 +1,28 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+# pnpm 10 blocks dependency lifecycle scripts by default. Allow-list them
+# explicitly here, one by one, with a reason, when a dependency needs one.
+onlyBuiltDependencies:
+  - simple-git-hooks
+
+# Install scripts we deliberately do NOT run (silences pnpm's warning and
+# records the decision): protobufjs's postinstall only checks/installs its CLI
+# dependencies; the runtime used by @hiero-ledger/sdk works without it (the SDK
+# tests that load protobufjs pass with the script blocked).
+ignoredBuiltDependencies:
+  - protobufjs
+
+# @hiero-ledger/cryptography@1.19.0 (pulled in by the pinned @hiero-ledger/sdk,
+# see docs/decisions.md D-010) depends on react-native-get-random-values, whose
+# required `react-native` peer makes pnpm auto-install React Native, Babel and
+# Metro into this Node-only project. Upstream removed that dependency in July
+# 2026 (hiero-sdk-js #4233), after the SDK version we must use. Marking the peer
+# optional stops the auto-install; Node never loads the React Native entry point.
+# Remove this once @x402/hedera moves to an SDK with the fixed cryptography.
+packageExtensions:
+  react-native-get-random-values:
+    peerDependenciesMeta:
+      react-native:
+        optional: true
