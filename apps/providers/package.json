@@ -1,0 +1,19 @@
+{
+  "name": "@agent-economy/providers",
+  "version": "0.1.0",
+  "private": true,
+  "description": "x402-protected provider services, paid in HBAR and settled on Hedera through a listed facilitator.",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@agent-economy/core": "workspace:*",
+    "@agent-economy/ens": "workspace:*",
+    "@agent-economy/hedera": "workspace:*",
+    "@agent-economy/net-guard": "workspace:*",
+    "@hono/node-server": "^1.19.0",
+    "@x402/core": "2.28.0",
+    "@x402/hedera": "2.28.0",
+    "@x402/hono": "2.28.0",
+    "hono": "^4.9.0"
+  }
+}
