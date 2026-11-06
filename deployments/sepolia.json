@@ -1,0 +1,117 @@
+{
+  "kind": "ens-deployment",
+  "version": 1,
+  "chain": "sepolia",
+  "chainId": 11155111,
+  "parent": "chirag126.eth",
+  "admin": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+  "contracts": {
+    "ethRegistry": "0xd4ebcbbdf463c9c45784603db0ddd499bc44a8b4",
+    "universalResolver": "0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe",
+    "verifiableFactory": "0xda70306c98e97ece36f997a21368e53298572991",
+    "userRegistryImpl": "0x9bd8a88719068d09ecee662f36c0e3856708366a",
+    "permissionedResolverImpl": "0x115eb53f0c60696633855f90b138178fb40b2b2c"
+  },
+  "subregistry": "0x3F54Fcd9ea71D96db6e66aaecCB5B20c3C003758",
+  "agents": [
+    {
+      "label": "kev",
+      "name": "kev.chirag126.eth",
+      "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+      "expiry": "1824574308",
+      "operator": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "operatorKeys": [
+        "agent.endpoint",
+        "agent.capabilities",
+        "agent.price",
+        "agent.status",
+        "agent-context",
+        "agent-endpoint[x402]",
+        "description"
+      ],
+      "adminKeys": [
+        "x402.payTo",
+        "x402.network",
+        "x402.asset"
+      ],
+      "records": {
+        "agent.endpoint": "https://threat-intel-providers.onrender.com/v1/kev",
+        "agent.capabilities": "known-exploited-vulns,ransomware-use",
+        "agent.price": "100000",
+        "x402.payTo": "0.0.11044329",
+        "x402.network": "hedera:testnet",
+        "x402.asset": "0.0.0",
+        "agent.status": "active",
+        "agent-context": "Source: CISA Known Exploited Vulnerabilities catalog (cisa.gov/known-exploited-vulnerabilities-catalog).\nReturns: KEV entries added or changed since a date, with vendor, product, due date and ransomware use.\nLicense: public domain (US government work).\nPayment: x402 exact scheme on Hedera; see x402.* records. Pay only the account in x402.payTo.",
+        "agent-endpoint[x402]": "https://threat-intel-providers.onrender.com/v1/kev",
+        "description": "CISA Known Exploited Vulnerabilities, served as a paid x402 API."
+      }
+    },
+    {
+      "label": "cve",
+      "name": "cve.chirag126.eth",
+      "resolver": "0xda1517cfB2e616E8cE8620B6E78c75d5C560ECFb",
+      "expiry": "1824574308",
+      "operator": "0x615837b3c0e6A976f0e5c27d4fc5a313D28a1226",
+      "operatorKeys": [
+        "agent.endpoint",
+        "agent.capabilities",
+        "agent.price",
+        "agent.status",
+        "agent-context",
+        "agent-endpoint[x402]",
+        "description"
+      ],
+      "adminKeys": [
+        "x402.payTo",
+        "x402.network",
+        "x402.asset"
+      ],
+      "records": {
+        "agent.endpoint": "https://threat-intel-providers.onrender.com/v1/cve",
+        "agent.capabilities": "cve-details,cvss-scores",
+        "agent.price": "150000",
+        "x402.payTo": "0.0.11183141",
+        "x402.network": "hedera:testnet",
+        "x402.asset": "0.0.0",
+        "agent.status": "active",
+        "agent-context": "Source: NIST National Vulnerability Database CVE API 2.0 (nvd.nist.gov).\nReturns: CVE descriptions, CVSS v3/v4 metrics, CWE and references for requested CVE IDs.\nLicense: NVD data is public; this product uses the NVD API but is not endorsed or certified by the NVD.\nPayment: x402 exact scheme on Hedera; see x402.* records. Pay only the account in x402.payTo.",
+        "agent-endpoint[x402]": "https://threat-intel-providers.onrender.com/v1/cve",
+        "description": "NVD CVE records with CVSS scores, served as a paid x402 API."
+      }
+    },
+    {
+      "label": "osv",
+      "name": "osv.chirag126.eth",
+      "resolver": "0x806DB7F7576D941833063aE49B987948e51A5Daa",
+      "expiry": "1824574308",
+      "operator": "0x974f20eef1Df26c1FF6e9fdBcb83bF5A18469DC4",
+      "operatorKeys": [
+        "agent.endpoint",
+        "agent.capabilities",
+        "agent.price",
+        "agent.status",
+        "agent-context",
+        "agent-endpoint[x402]",
+        "description"
+      ],
+      "adminKeys": [
+        "x402.payTo",
+        "x402.network",
+        "x402.asset"
+      ],
+      "records": {
+        "agent.endpoint": "https://threat-intel-providers.onrender.com/v1/osv",
+        "agent.capabilities": "ecosystem-advisories,package-vulns",
+        "agent.price": "120000",
+        "x402.payTo": "0.0.11183142",
+        "x402.network": "hedera:testnet",
+        "x402.asset": "0.0.0",
+        "agent.status": "active",
+        "agent-context": "Source: OSV.dev vulnerability database (osv.dev).\nReturns: advisories affecting requested packages and versions across npm, PyPI, Go, Maven and more.\nLicense: OSV data is CC-BY 4.0 unless an advisory states otherwise.\nPayment: x402 exact scheme on Hedera; see x402.* records. Pay only the account in x402.payTo.",
+        "agent-endpoint[x402]": "https://threat-intel-providers.onrender.com/v1/osv",
+        "description": "OSV open-source package advisories, served as a paid x402 API."
+      }
+    }
+  ]
+}

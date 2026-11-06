@@ -1,0 +1,28 @@
+{
+  "kind": "erc8004-deployment",
+  "version": 1,
+  "chainId": 11155111,
+  "identityRegistry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+  "agents": {
+    "agent": {
+      "agentId": "11233",
+      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/agent.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    },
+    "cve": {
+      "agentId": "11231",
+      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/cve.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    },
+    "kev": {
+      "agentId": "11230",
+      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/kev.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    },
+    "osv": {
+      "agentId": "11232",
+      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/osv.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    }
+  }
+}

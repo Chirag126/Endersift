@@ -1,0 +1,44 @@
+{
+  "kind": "ens-setups",
+  "version": 1,
+  "parent": "chirag126.eth",
+  "subregistry": "0x3F54Fcd9ea71D96db6e66aaecCB5B20c3C003758",
+  "parentResolver": "0x10698316B4C5e0d714CCC50cBAB6B9de80843F7c",
+  "setups": [
+    {
+      "kind": "expiring",
+      "name": "trial-20261029t055742z.chirag126.eth",
+      "expiry": "1793255256",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+      "proof": "Registered with a short expiry; the registry treats it as available once the expiry passes, and discovery skips it."
+    },
+    {
+      "kind": "transferable",
+      "name": "movable-20261029t055742z.chirag126.eth",
+      "expiry": "1824574308",
+      "owner": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "proof": "Registered with the transfer right and moved to kev's operator with unsafeTransfer."
+    },
+    {
+      "kind": "locked",
+      "name": "locked-20261029t055742z.chirag126.eth",
+      "expiry": "1824574308",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+      "proof": "Registered without the transfer right; a transfer reverts TransferDisallowed."
+    },
+    {
+      "kind": "wildcard",
+      "name": "unlisted-20261029t055742z.chirag126.eth",
+      "expiry": null,
+      "owner": null,
+      "proof": "Not registered; resolves to the parent resolver's default record through the Universal Resolver."
+    },
+    {
+      "kind": "alias",
+      "name": "directory-20261029t055742z.chirag126.eth",
+      "expiry": null,
+      "owner": null,
+      "proof": "Linked with linkToNode; resolves to the parent's own records."
+    }
+  ]
+}
