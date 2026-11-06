@@ -1,0 +1,19 @@
+{
+  "name": "@agent-economy/ens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ENSv2 on Sepolia: parent-name registration through ETHRegistrar (MockUSDC), per-account PermissionedResolver, resolution through the Universal Resolver.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./agents": "./src/agents.ts",
+    "./viem": "./src/viem.ts",
+    "./erc8004": "./src/erc8004.ts",
+    "./setups": "./src/setups.ts"
+  },
+  "dependencies": {
+    "@agent-economy/core": "workspace:*",
+    "viem": "2.57.8"
+  }
+}
