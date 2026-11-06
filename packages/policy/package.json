@@ -1,0 +1,15 @@
+{
+  "name": "@agent-economy/policy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Spending firewall: a pure, deterministic authorize() for x402 purchases with reason codes. Model output is an untrusted request; ENS records, the 402 quote, the policy and the spend ledger decide.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@agent-economy/core": "workspace:*",
+    "zod": "4.6.7"
+  }
+}
