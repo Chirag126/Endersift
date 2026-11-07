@@ -1,7 +1,7 @@
 # Render Blueprint (plan row 33, D-062). Two free web services:
 #
-#   threat-intel-agent       the agent: API, scheduler and the web app on one origin
-#   threat-intel-providers   the x402 data providers (kev, cve, osv) that the agent buys from
+#   endersift                the agent: API, scheduler and the web app on one origin
+#   endersift-providers      the x402 data providers (kev, cve, osv) that the agent buys from
 #
 # Free plan facts this file is built around (render.com/docs/free, checked 2026-10-28):
 #   - a service sleeps after 15 minutes without inbound traffic and takes about a minute to wake;
@@ -15,7 +15,7 @@
 
 services:
   - type: web
-    name: enderpay
+    name: endersift
     runtime: node
     plan: free
     region: singapore
@@ -50,7 +50,7 @@ services:
         value: '180'
       # the web app wakes the provider host from the visitor's browser (D-085)
       - key: PROVIDER_WAKE_ORIGIN
-        value: https://threat-intel-providers.onrender.com
+        value: https://endersift-providers.onrender.com
       - key: DAILY_BRIEF_WATCHLIST
         value: OpenSSL, lodash@4.17.21 (npm)
       - key: DAILY_BRIEF_RUN_AFTER
@@ -105,33 +105,32 @@ services:
         value: mainnet
       - key: ZG_ROUTER_BASE_URL
         value: https://router-api.0g.ai/v1
-      # 0gm-1.0-35b-a3b came back on 2026-11-06 but its upstream failed again (D-088);
-      # qwen2.5-vl-72b-instruct is verified end to end (D-081)
+      # 0G's own model; fallback qwen2.5-vl-72b-instruct (verified end to end, D-081)
       - key: ZG_MODEL
         value: 0gm-1.0-35b-a3b
       - key: ZG_OUTPUT_LIMIT
         value: '256'
       - key: ZG_MAX_CALL_COST_NEURON
         value: '5000000000000000'
-      # 0.1 0G a day while voice is off (D-088); 0.6 0G covers two voice clips at their worst case
+      # 0.6 0G a day: two voice clips at their worst case, plus typed tasks
       - key: ZG_DAILY_CAP_NEURON
         value: '600000000000000000'
       - key: ZG_TIMEOUT_MS
         value: '60000'
       - key: ZG_SNAPSHOT_INTERVAL_MIN
         value: '60'
-      # the voice task (D-076): off while 0G's Whisper upstream answers 502 (D-088). To turn it on:
-      # whisper-large-v3, ZG_STT_MAX_NEURON=284000000000000000 (one clip may bill up to 448 units
-      # of 0.00063 0G, ~0.28 0G, reserved per clip) and ZG_DAILY_CAP_NEURON of at least 0.6 0G
+      # the voice task (D-076): one Whisper clip may bill up to 448 units of 0.00063 0G (~0.28 0G),
+      # reserved per clip. To switch voice off: ZG_STT_MODEL 'off', ZG_STT_MAX_NEURON 1000000000000000
+      # and ZG_DAILY_CAP_NEURON 100000000000000000
       - key: ZG_STT_MODEL
-        value: 'whisper-large-v3'
+        value: whisper-large-v3
       - key: ZG_STT_MAX_NEURON
         value: '284000000000000000'
       - key: ZG_API_KEY
         sync: false
 
   - type: web
-    name: enderpay
+    name: endersift-providers
     runtime: node
     plan: free
     region: singapore
