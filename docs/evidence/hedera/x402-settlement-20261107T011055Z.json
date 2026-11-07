@@ -1,0 +1,85 @@
+{
+  "kind": "x402-payment",
+  "asset": "0.0.0",
+  "startedAt": "2026-11-07T01:10:50.367Z",
+  "finishedAt": "2026-11-07T01:10:55.911Z",
+  "network": "hedera:testnet",
+  "url": "https://endersift-providers.onrender.com/v1/kev/ping",
+  "payer": "0.0.11044318",
+  "capTinybars": "1000000",
+  "requirements": {
+    "scheme": "exact",
+    "network": "hedera:testnet",
+    "amount": "100000",
+    "asset": "0.0.0",
+    "payTo": "0.0.11044329",
+    "maxTimeoutSeconds": 300,
+    "extra": {
+      "feePayer": "0.0.7162784"
+    }
+  },
+  "guard": {
+    "ok": true,
+    "amount": "100000"
+  },
+  "transactionId": "0.0.7162784@1794013845.097491617",
+  "mirrorTransactionId": "0.0.7162784-1794013845-097491617",
+  "facilitatorSettle": {
+    "success": true,
+    "payer": "0.0.11044318",
+    "transaction": "0.0.7162784@1794013845.097491617",
+    "network": "hedera:testnet"
+  },
+  "facilitatorError": null,
+  "httpStatus": 200,
+  "responseBody": {
+    "provider": "kev",
+    "paidRoute": "/v1/kev/ping",
+    "priceTinybars": "100000",
+    "servedAt": "2026-11-07T01:10:51.381Z"
+  },
+  "intelSummary": null,
+  "requestError": null,
+  "mirrorVerification": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "transaction ID matches",
+        "ok": true,
+        "detail": "mirror 0.0.7162784-1794013845-097491617, expected 0.0.7162784-1794013845-097491617"
+      },
+      {
+        "name": "result is SUCCESS",
+        "ok": true,
+        "detail": "SUCCESS"
+      },
+      {
+        "name": "no token transfers (HBAR payment)",
+        "ok": true,
+        "detail": "0 token transfer(s)"
+      },
+      {
+        "name": "reached consensus after its valid start",
+        "ok": true,
+        "detail": "valid start 1794013845.097491617, consensus 1794013852.534934104"
+      },
+      {
+        "name": "is a crypto transfer",
+        "ok": true,
+        "detail": "CRYPTOTRANSFER"
+      },
+      {
+        "name": "payee credited exactly the quoted amount",
+        "ok": true,
+        "detail": "0.0.11044329 net 100000 tinybars, expected +100000"
+      },
+      {
+        "name": "payer debited exactly the quoted amount",
+        "ok": true,
+        "detail": "0.0.11044318 net -100000 tinybars, expected -100000"
+      }
+    ]
+  },
+  "settledAndVerified": true,
+  "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013845.097491617"
+}

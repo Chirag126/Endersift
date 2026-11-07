@@ -1,0 +1,167 @@
+{
+  "kind": "net-guard-live-check",
+  "startedAt": "2026-11-07T01:24:52.037Z",
+  "finishedAt": "2026-11-07T01:24:53.347Z",
+  "node": "v26.8.2",
+  "results": [
+    {
+      "name": "public https API (OSV), pinned",
+      "url": "https://api.osv.dev/v1/query",
+      "expect": [
+        "OK"
+      ],
+      "got": "OK",
+      "ok": true,
+      "status": 200,
+      "pinned": "192.178.174.121",
+      "detail": "HTTP 200, 22476 bytes, pinned to 192.178.174.121 (1 address(es) checked)"
+    },
+    {
+      "name": "oversize: CISA KEV catalogue with a 64 KiB cap",
+      "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+      "expect": [
+        "RESPONSE_TOO_LARGE"
+      ],
+      "got": "RESPONSE_TOO_LARGE",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "RESPONSE_TOO_LARGE: more than 65536 bytes"
+    },
+    {
+      "name": "redirect is not followed (GitHub latest release)",
+      "url": "https://github.com/coinbase/x402/releases/latest",
+      "expect": [
+        "REDIRECT_REFUSED"
+      ],
+      "got": "REDIRECT_REFUSED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "REDIRECT_REFUSED: HTTP 302 to https://github.com/coinbase/x402/releases was not followed"
+    },
+    {
+      "name": "time cap (1 ms)",
+      "url": "https://api.osv.dev/v1/query",
+      "expect": [
+        "TIMEOUT"
+      ],
+      "got": "TIMEOUT",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "TIMEOUT: no complete response within 1 ms"
+    },
+    {
+      "name": "plain http",
+      "url": "http://example.com/",
+      "expect": [
+        "SCHEME_NOT_ALLOWED"
+      ],
+      "got": "SCHEME_NOT_ALLOWED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "SCHEME_NOT_ALLOWED: http: is not allowed (https only)"
+    },
+    {
+      "name": "cloud metadata IP literal",
+      "url": "https://169.254.169.254/latest/meta-data/",
+      "expect": [
+        "ADDRESS_BLOCKED"
+      ],
+      "got": "ADDRESS_BLOCKED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "ADDRESS_BLOCKED: 169.254.169.254 resolves to 169.254.169.254 (METADATA)"
+    },
+    {
+      "name": "loopback IP literal",
+      "url": "https://127.0.0.1/",
+      "expect": [
+        "ADDRESS_BLOCKED"
+      ],
+      "got": "ADDRESS_BLOCKED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "ADDRESS_BLOCKED: 127.0.0.1 resolves to 127.0.0.1 (LOOPBACK)"
+    },
+    {
+      "name": "IPv6 loopback literal",
+      "url": "https://[::1]/",
+      "expect": [
+        "ADDRESS_BLOCKED"
+      ],
+      "got": "ADDRESS_BLOCKED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "ADDRESS_BLOCKED: ::1 resolves to ::1 (LOOPBACK)"
+    },
+    {
+      "name": "IPv4-mapped IPv6 metadata",
+      "url": "https://[::ffff:169.254.169.254]/",
+      "expect": [
+        "ADDRESS_BLOCKED"
+      ],
+      "got": "ADDRESS_BLOCKED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "ADDRESS_BLOCKED: ::ffff:a9fe:a9fe resolves to ::ffff:a9fe:a9fe (METADATA via 169.254.169.254)"
+    },
+    {
+      "name": "public name → 127.0.0.1 (localtest.me)",
+      "url": "https://localtest.me/",
+      "expect": [
+        "ADDRESS_BLOCKED",
+        "DNS_FAILED"
+      ],
+      "got": "ADDRESS_BLOCKED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "ADDRESS_BLOCKED: localtest.me resolves to 127.0.0.1 (LOOPBACK)"
+    },
+    {
+      "name": "public name → metadata IP (169.254.169.254.nip.io)",
+      "url": "https://169.254.169.254.nip.io/latest/meta-data/",
+      "expect": [
+        "ADDRESS_BLOCKED",
+        "DNS_FAILED"
+      ],
+      "got": "DNS_FAILED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "DNS_FAILED: 169.254.169.254.nip.io: getaddrinfo ENOENT 169.254.169.254.nip.io"
+    },
+    {
+      "name": "credentials in URL",
+      "url": "https://user:pass@api.osv.dev/",
+      "expect": [
+        "CREDENTIALS_IN_URL"
+      ],
+      "got": "CREDENTIALS_IN_URL",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "CREDENTIALS_IN_URL: URLs with user:password are refused"
+    },
+    {
+      "name": "non-443 port",
+      "url": "https://api.osv.dev:8443/",
+      "expect": [
+        "PORT_NOT_ALLOWED"
+      ],
+      "got": "PORT_NOT_ALLOWED",
+      "ok": true,
+      "status": null,
+      "pinned": null,
+      "detail": "PORT_NOT_ALLOWED: port 8443 is not in [443]"
+    }
+  ],
+  "verified": true
+}

@@ -1,0 +1,191 @@
+{
+  "kind": "hcs-audit-live",
+  "verified": true,
+  "generatedAt": "2026-11-07T01:15:05.909Z",
+  "network": "testnet",
+  "topicId": "0.0.11201005",
+  "topic": "https://hashscan.io/testnet/topic/0.0.11201005",
+  "run": {
+    "id": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+    "status": "SUCCEEDED",
+    "trigger": "manual"
+  },
+  "settledPayments": [
+    {
+      "provider": "osv.chirag126.eth",
+      "amountAtomic": "120000",
+      "transactionId": "0.0.7162784@1794013964.928530428"
+    },
+    {
+      "provider": "osv.chirag126.eth",
+      "amountAtomic": "120000",
+      "transactionId": "0.0.7162784@1794013974.058062743"
+    }
+  ],
+  "checks": [
+    {
+      "name": "settlement osv.chirag126.eth #54: CONFIRMED on 0.0.11201005",
+      "ok": true,
+      "detail": "CONFIRMED"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #54: Mirror Node bytes equal the record (SHA-256)",
+      "ok": true,
+      "detail": "67884b36d45b2a39"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #54: posted by the payer",
+      "ok": true,
+      "detail": "0.0.11044318"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #54: names the settled payment (tx, payee, amount)",
+      "ok": true,
+      "detail": "0.0.7162784@1794013964.928530428"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #55: CONFIRMED on 0.0.11201005",
+      "ok": true,
+      "detail": "CONFIRMED"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #55: Mirror Node bytes equal the record (SHA-256)",
+      "ok": true,
+      "detail": "8d81e9af4ce4c19e"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #55: posted by the payer",
+      "ok": true,
+      "detail": "0.0.11044318"
+    },
+    {
+      "name": "settlement osv.chirag126.eth #55: names the settled payment (tx, payee, amount)",
+      "ok": true,
+      "detail": "0.0.7162784@1794013974.058062743"
+    },
+    {
+      "name": "task #56: CONFIRMED on 0.0.11201005",
+      "ok": true,
+      "detail": "CONFIRMED"
+    },
+    {
+      "name": "task #56: Mirror Node bytes equal the record (SHA-256)",
+      "ok": true,
+      "detail": "fe7376f8ffbb8c00"
+    },
+    {
+      "name": "task #56: posted by the payer",
+      "ok": true,
+      "detail": "0.0.11044318"
+    },
+    {
+      "name": "task #56: digest lists the settled transactions and the brief's SHA-256",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "every settled payment has a settlement message",
+      "ok": true,
+      "detail": "2 settled"
+    },
+    {
+      "name": "the run has a task digest",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "the run settled at least one payment, so settlement messages are shown too",
+      "ok": true,
+      "detail": "2 settled; choose a run with --run <id>"
+    }
+  ],
+  "messages": [
+    {
+      "kind": "settlement",
+      "status": "CONFIRMED",
+      "sequenceNumber": "54",
+      "consensusTimestamp": "1794013995.875148778",
+      "transactionId": "0.0.11044318@1794013991.682257701",
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.11044318%401794013991.682257701",
+      "payloadSha256": "67884b36d45b2a39f092160c07d24402c69c9a8a1853d9a9fc7b1145ce803e19",
+      "payload": {
+        "v": 1,
+        "type": "settlement",
+        "agent": "chirag126.eth",
+        "run": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+        "payment": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+        "provider": "osv.chirag126.eth",
+        "payTo": "0.0.11183142",
+        "amount": "120000",
+        "asset": "0.0.0",
+        "network": "hedera:testnet",
+        "tx": "0.0.7162784@1794013964.928530428",
+        "consensus": "1794013972.605932104",
+        "verifiedBy": "mirror-node"
+      }
+    },
+    {
+      "kind": "settlement",
+      "status": "CONFIRMED",
+      "sequenceNumber": "55",
+      "consensusTimestamp": "1794013997.735230104",
+      "transactionId": "0.0.11044318@1794013989.760907160",
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.11044318%401794013989.760907160",
+      "payloadSha256": "8d81e9af4ce4c19e3b5557d1f1d314699069f8e634dbab44d1acb927c4fafe3f",
+      "payload": {
+        "v": 1,
+        "type": "settlement",
+        "agent": "chirag126.eth",
+        "run": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+        "payment": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+        "provider": "osv.chirag126.eth",
+        "payTo": "0.0.11183142",
+        "amount": "120000",
+        "asset": "0.0.0",
+        "network": "hedera:testnet",
+        "tx": "0.0.7162784@1794013974.058062743",
+        "consensus": "1794013979.015358038",
+        "verifiedBy": "mirror-node"
+      }
+    },
+    {
+      "kind": "task",
+      "status": "CONFIRMED",
+      "sequenceNumber": "56",
+      "consensusTimestamp": "1794013998.455104104",
+      "transactionId": "0.0.11044318@1794013993.406324195",
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.11044318%401794013993.406324195",
+      "payloadSha256": "fe7376f8ffbb8c00b399aaeb028d3997d86be57c601e71b35981f16456ae3797",
+      "payload": {
+        "v": 1,
+        "type": "task",
+        "agent": "chirag126.eth",
+        "run": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+        "trigger": "manual",
+        "status": "SUCCEEDED",
+        "verdict": "e2e-verified",
+        "finishedAt": "2026-11-07T01:13:15.553Z",
+        "ensBlock": "12080326",
+        "policyVersion": null,
+        "reportSha256": "070eee019a0c0347c48bad5401c9e5f57d8ef53c9fd6761b701d15ef5138d13f",
+        "settled": [
+          "0.0.7162784@1794013964.928530428",
+          "0.0.7162784@1794013974.058062743"
+        ],
+        "refused": 0,
+        "inference": [
+          {
+            "purpose": "PLAN",
+            "requestId": "2791d949-7722-4341-912d-c2d81a9a78ea",
+            "cost": "81"
+          },
+          {
+            "purpose": "ANALYZE",
+            "requestId": "06d37e37-49a8-43fb-a215-cdb6737859c9",
+            "cost": "78"
+          }
+        ]
+      }
+    }
+  ]
+}

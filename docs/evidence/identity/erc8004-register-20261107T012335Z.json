@@ -1,0 +1,94 @@
+{
+  "kind": "erc8004-registration",
+  "startedAt": "2026-11-07T01:23:35.373Z",
+  "finishedAt": "2026-11-07T01:23:35.647Z",
+  "chainId": 11155111,
+  "identityRegistry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+  "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+  "files": {
+    "kev": {
+      "ok": true,
+      "detail": "200, kev.chirag126.eth"
+    },
+    "cve": {
+      "ok": true,
+      "detail": "200, cve.chirag126.eth"
+    },
+    "osv": {
+      "ok": true,
+      "detail": "200, osv.chirag126.eth"
+    },
+    "agent": {
+      "ok": true,
+      "detail": "200, chirag126.eth threat-intel agent"
+    }
+  },
+  "plan": [
+    {
+      "label": "kev",
+      "kind": "ok"
+    },
+    {
+      "label": "cve",
+      "kind": "ok"
+    },
+    {
+      "label": "osv",
+      "kind": "ok"
+    },
+    {
+      "label": "agent",
+      "kind": "ok"
+    }
+  ],
+  "sentThisRun": [],
+  "agents": {
+    "kev": {
+      "agentId": "11230",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/kev.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    },
+    "cve": {
+      "agentId": "11231",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/cve.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    },
+    "osv": {
+      "agentId": "11232",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/osv.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    },
+    "agent": {
+      "agentId": "11233",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/agent.json",
+      "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
+    }
+  },
+  "checks": [
+    {
+      "label": "kev",
+      "agentId": "11230",
+      "owner": true,
+      "uri": true
+    },
+    {
+      "label": "cve",
+      "agentId": "11231",
+      "owner": true,
+      "uri": true
+    },
+    {
+      "label": "osv",
+      "agentId": "11232",
+      "owner": true,
+      "uri": true
+    },
+    {
+      "label": "agent",
+      "agentId": "11233",
+      "owner": true,
+      "uri": true
+    }
+  ],
+  "verified": true
+}

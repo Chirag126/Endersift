@@ -1,0 +1,876 @@
+{
+  "kind": "agent-run-live",
+  "startedAt": "2026-11-07T01:11:29.044Z",
+  "finishedAt": "2026-11-07T01:13:22.862Z",
+  "networks": {
+    "ens": "sepolia",
+    "hedera": "hedera:testnet",
+    "zg": "mainnet"
+  },
+  "database": {
+    "migration": 10
+  },
+  "input": {
+    "watchlist": [
+      "OpenSSL",
+      "lodash@4.17.21 (npm)"
+    ],
+    "budget": "300000",
+    "allowLocalHttp": false,
+    "maxPurchases": 3
+  },
+  "policy": {
+    "network": "hedera:testnet",
+    "asset": "0.0.0",
+    "payer": "0.0.11044318",
+    "maxPerPayment": "300000",
+    "maxPerRun": "300000",
+    "maxPerDay": "10000000",
+    "maxPaymentsPerRun": 10,
+    "maxSnapshotAgeMs": 600000,
+    "allowedProviders": null,
+    "blockedProviders": [],
+    "allowedCapabilities": null,
+    "paymentsPaused": false
+  },
+  "zg": {
+    "model": "qwen2.5-vl-72b-instruct",
+    "capNeuron": "5000000000000000",
+    "dailyCapNeuron": "10000000000000000",
+    "planTokens": 768,
+    "analyzeTokens": 1024,
+    "analyzePromptTokens": 11106,
+    "spentTodayBefore": "0"
+  },
+  "ens": {
+    "parent": "chirag126.eth",
+    "subregistry": "0x3F54Fcd9ea71D96db6e66aaecCB5B20c3C003758",
+    "blockNumber": "12080326",
+    "blockHash": "0x77637280b900ad06f7eb03783c7f06130871cc812b3f128893381c1b58c74883",
+    "fromBlock": "11999808",
+    "observedAt": "2026-11-07T01:12:39.258Z",
+    "providers": [
+      {
+        "ensName": "cve.chirag126.eth",
+        "label": "cve",
+        "chain": "sepolia",
+        "resolver": "0xda1517cfB2e616E8cE8620B6E78c75d5C560ECFb",
+        "endpoint": "https://endersift-providers.onrender.com/v1/cve",
+        "capabilities": [
+          "cve-details",
+          "cvss-scores"
+        ],
+        "payTo": "0.0.11183141",
+        "network": "hedera:testnet",
+        "asset": "0.0.0",
+        "priceAtomic": "150000",
+        "discoveredAt": "2026-11-07T01:12:24.000Z"
+      },
+      {
+        "ensName": "kev.chirag126.eth",
+        "label": "kev",
+        "chain": "sepolia",
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "endpoint": "https://endersift-providers.onrender.com/v1/kev",
+        "capabilities": [
+          "known-exploited-vulns",
+          "ransomware-use"
+        ],
+        "payTo": "0.0.11044329",
+        "network": "hedera:testnet",
+        "asset": "0.0.0",
+        "priceAtomic": "100000",
+        "discoveredAt": "2026-11-07T01:12:24.000Z"
+      },
+      {
+        "ensName": "osv.chirag126.eth",
+        "label": "osv",
+        "chain": "sepolia",
+        "resolver": "0x806DB7F7576D941833063aE49B987948e51A5Daa",
+        "endpoint": "https://endersift-providers.onrender.com/v1/osv",
+        "capabilities": [
+          "ecosystem-advisories",
+          "package-vulns"
+        ],
+        "payTo": "0.0.11183142",
+        "network": "hedera:testnet",
+        "asset": "0.0.0",
+        "priceAtomic": "120000",
+        "discoveredAt": "2026-11-07T01:12:24.000Z"
+      }
+    ],
+    "skipped": [
+      {
+        "label": "locked-20261029t055742z",
+        "code": "NO_RESOLVER",
+        "reason": "no resolver is set",
+        "registeredAtBlock": "12017558"
+      },
+      {
+        "label": "movable-20261029t055742z",
+        "code": "NO_RESOLVER",
+        "reason": "no resolver is set",
+        "registeredAtBlock": "12017557"
+      },
+      {
+        "label": "probe-20261026t205911z",
+        "code": "NOT_REGISTERED",
+        "reason": "unregistered or expired",
+        "registeredAtBlock": "12000536"
+      },
+      {
+        "label": "trial-20261029t055742z",
+        "code": "NOT_REGISTERED",
+        "reason": "unregistered or expired",
+        "registeredAtBlock": "12017556"
+      }
+    ]
+  },
+  "run": {
+    "id": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+    "trigger": "manual",
+    "watchlist": [
+      "OpenSSL",
+      "lodash@4.17.21 (npm)"
+    ],
+    "status": "SUCCEEDED",
+    "createdAt": "2026-11-07T01:11:31.689Z",
+    "startedAt": "2026-11-07T01:11:31.693Z",
+    "finishedAt": "2026-11-07T01:13:15.553Z",
+    "error": null
+  },
+  "events": [
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 0,
+      "type": "RUN_STARTED",
+      "payload": {
+        "trigger": "manual",
+        "watchlist": [
+          "OpenSSL",
+          "lodash@4.17.21 (npm)"
+        ],
+        "environment": "live",
+        "origin": "cli",
+        "policy": {
+          "network": "hedera:testnet",
+          "asset": "0.0.0",
+          "maxPerPayment": "300000",
+          "maxPerRun": "300000",
+          "maxPerDay": "10000000",
+          "maxPaymentsPerRun": 10,
+          "paymentsPaused": false,
+          "version": null,
+          "approvalMode": "autonomous",
+          "approvalAboveTinybars": "0",
+          "providerDailyCaps": {}
+        },
+        "limits": {
+          "maxPurchases": 3,
+          "maxItems": 30,
+          "planMaxTokens": 768,
+          "analyzeMaxTokens": 1024,
+          "analyzePromptTokens": 11106,
+          "catalogWakeMs": 0
+        }
+      },
+      "at": "2026-11-07T01:11:31.694Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 1,
+      "type": "PROVIDERS_DISCOVERED",
+      "payload": {
+        "parent": "chirag126.eth",
+        "blockNumber": "12080326",
+        "observedAt": "2026-11-07T01:12:39.258Z",
+        "providers": [
+          {
+            "ensName": "cve.chirag126.eth",
+            "endpoint": "https://endersift-providers.onrender.com/v1/cve",
+            "capabilities": [
+              "cve-details",
+              "cvss-scores"
+            ],
+            "priceAtomic": "150000",
+            "payTo": "0.0.11183141"
+          },
+          {
+            "ensName": "kev.chirag126.eth",
+            "endpoint": "https://endersift-providers.onrender.com/v1/kev",
+            "capabilities": [
+              "known-exploited-vulns",
+              "ransomware-use"
+            ],
+            "priceAtomic": "100000",
+            "payTo": "0.0.11044329"
+          },
+          {
+            "ensName": "osv.chirag126.eth",
+            "endpoint": "https://endersift-providers.onrender.com/v1/osv",
+            "capabilities": [
+              "ecosystem-advisories",
+              "package-vulns"
+            ],
+            "priceAtomic": "120000",
+            "payTo": "0.0.11183142"
+          }
+        ],
+        "skipped": [
+          {
+            "label": "locked-20261029t055742z",
+            "code": "NO_RESOLVER",
+            "reason": "no resolver is set"
+          },
+          {
+            "label": "movable-20261029t055742z",
+            "code": "NO_RESOLVER",
+            "reason": "no resolver is set"
+          },
+          {
+            "label": "probe-20261026t205911z",
+            "code": "NOT_REGISTERED",
+            "reason": "unregistered or expired"
+          },
+          {
+            "label": "trial-20261029t055742z",
+            "code": "NOT_REGISTERED",
+            "reason": "unregistered or expired"
+          }
+        ]
+      },
+      "at": "2026-11-07T01:12:39.260Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 2,
+      "type": "CATALOG_READ",
+      "payload": {
+        "provider": "cve.chirag126.eth",
+        "ok": true,
+        "operations": [
+          {
+            "name": "lookup",
+            "path": "/v1/cve/lookup",
+            "params": [
+              "ids"
+            ]
+          }
+        ],
+        "dropped": []
+      },
+      "at": "2026-11-07T01:12:39.529Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 3,
+      "type": "CATALOG_READ",
+      "payload": {
+        "provider": "kev.chirag126.eth",
+        "ok": true,
+        "operations": [
+          {
+            "name": "recent",
+            "path": "/v1/kev/recent",
+            "params": [
+              "since",
+              "limit"
+            ]
+          }
+        ],
+        "dropped": []
+      },
+      "at": "2026-11-07T01:12:39.682Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 4,
+      "type": "CATALOG_READ",
+      "payload": {
+        "provider": "osv.chirag126.eth",
+        "ok": true,
+        "operations": [
+          {
+            "name": "query",
+            "path": "/v1/osv/query",
+            "params": [
+              "ecosystem",
+              "package",
+              "version"
+            ]
+          }
+        ],
+        "dropped": []
+      },
+      "at": "2026-11-07T01:12:39.823Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 5,
+      "type": "INFERENCE_CALLED",
+      "payload": {
+        "callId": "2d77b735-a221-44ce-9f7c-d01d982246cf",
+        "purpose": "PLAN",
+        "status": "SUCCEEDED",
+        "model": "qwen2.5-vl-72b-instruct",
+        "requestId": "2791d949-7722-4341-912d-c2d81a9a78ea",
+        "costNeuron": "81",
+        "worstCaseNeuron": "1891070573613612",
+        "funding": "unknown",
+        "teeVerified": null,
+        "errorCode": null
+      },
+      "at": "2026-11-07T01:12:50.554Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 6,
+      "type": "PLAN_CREATED",
+      "payload": {
+        "callId": "2d77b735-a221-44ce-9f7c-d01d982246cf",
+        "focus": "Covering specific versions and packages mentioned in the watchlist using available operations.",
+        "purchases": [
+          {
+            "provider": "osv.chirag126.eth",
+            "capability": "ecosystem-advisories",
+            "operation": "query",
+            "params": {
+              "ecosystem": "npm",
+              "package": "lodash",
+              "version": "4.17.21"
+            },
+            "rationale": "This purchase covers vulnerabilities specifically for lodash version 4.17.21 in the npm ecosystem."
+          },
+          {
+            "provider": "osv.chirag126.eth",
+            "capability": "package-vulns",
+            "operation": "query",
+            "params": {
+              "ecosystem": "Maven",
+              "package": "OpenSSL"
+            },
+            "rationale": "This purchase aims to find vulnerabilities related to OpenSSL within the Maven ecosystem, covering the general package without specifying a version."
+          }
+        ],
+        "maxPurchases": 3
+      },
+      "at": "2026-11-07T01:12:50.555Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 7,
+      "type": "PAYMENT_AUTHORIZED",
+      "payload": {
+        "index": 0,
+        "intentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+        "provider": "osv.chirag126.eth",
+        "capability": "ecosystem-advisories",
+        "amountAtomic": "120000",
+        "payTo": "0.0.11183142",
+        "url": "https://endersift-providers.onrender.com/v1/osv/query?ecosystem=npm&package=lodash&version=4.17.21"
+      },
+      "at": "2026-11-07T01:12:57.020Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 8,
+      "type": "PAYMENT_SETTLED",
+      "payload": {
+        "index": 0,
+        "intentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+        "transactionId": "0.0.7162784@1794013964.928530428",
+        "consensusTimestamp": "1794013972.605932104",
+        "verificationId": "694acfa0-2efa-4b9f-b32d-cc37845b8cce",
+        "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013964.928530428"
+      },
+      "at": "2026-11-07T01:12:57.021Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 9,
+      "type": "DATA_FETCHED",
+      "payload": {
+        "index": 0,
+        "intentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+        "provider": "osv.chirag126.eth",
+        "paid": true,
+        "url": "https://endersift-providers.onrender.com/v1/osv/query?ecosystem=npm&package=lodash&version=4.17.21",
+        "operation": "query",
+        "source": "OSV.dev vulnerability database",
+        "count": 2,
+        "truncated": false,
+        "notFound": [],
+        "ids": [
+          "GHSA-xxjr-mmjv-4gpg",
+          "GHSA-r5fr-rjxr-66jc"
+        ]
+      },
+      "at": "2026-11-07T01:12:57.028Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 10,
+      "type": "PAYMENT_AUTHORIZED",
+      "payload": {
+        "index": 1,
+        "intentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+        "provider": "osv.chirag126.eth",
+        "capability": "package-vulns",
+        "amountAtomic": "120000",
+        "payTo": "0.0.11183142",
+        "url": "https://endersift-providers.onrender.com/v1/osv/query?ecosystem=Maven&package=OpenSSL"
+      },
+      "at": "2026-11-07T01:13:03.607Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 11,
+      "type": "PAYMENT_SETTLED",
+      "payload": {
+        "index": 1,
+        "intentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+        "transactionId": "0.0.7162784@1794013974.058062743",
+        "consensusTimestamp": "1794013979.015358038",
+        "verificationId": "e6f4d980-4075-4909-aad4-91828c906dcd",
+        "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013974.058062743"
+      },
+      "at": "2026-11-07T01:13:03.608Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 12,
+      "type": "DATA_FETCHED",
+      "payload": {
+        "index": 1,
+        "intentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+        "provider": "osv.chirag126.eth",
+        "paid": true,
+        "url": "https://endersift-providers.onrender.com/v1/osv/query?ecosystem=Maven&package=OpenSSL",
+        "operation": "query",
+        "source": "OSV.dev vulnerability database",
+        "count": 0,
+        "truncated": false,
+        "notFound": [],
+        "ids": []
+      },
+      "at": "2026-11-07T01:13:03.609Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 13,
+      "type": "INFERENCE_CALLED",
+      "payload": {
+        "callId": "d052bb35-e305-4e7f-8c0f-e87ff146d368",
+        "purpose": "ANALYZE",
+        "status": "SUCCEEDED",
+        "model": "qwen2.5-vl-72b-instruct",
+        "requestId": "06d37e37-49a8-43fb-a215-cdb6737859c9",
+        "costNeuron": "78",
+        "worstCaseNeuron": "2216281470662032",
+        "funding": "unknown",
+        "teeVerified": null,
+        "errorCode": null
+      },
+      "at": "2026-11-07T01:13:15.546Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 14,
+      "type": "ANALYSIS_COMPLETED",
+      "payload": {
+        "accepted": true,
+        "callId": "d052bb35-e305-4e7f-8c0f-e87ff146d368",
+        "items": 2,
+        "ranked": 2,
+        "offered": 2,
+        "relevant": 2,
+        "assessments": 2,
+        "p1": [
+          "GHSA-r5fr-rjxr-66jc"
+        ],
+        "digest": {
+          "items": [
+            {
+              "id": "GHSA-r5fr-rjxr-66jc",
+              "severity": "high",
+              "exploited": false,
+              "priority": "p1"
+            },
+            {
+              "id": "GHSA-xxjr-mmjv-4gpg",
+              "severity": "medium",
+              "exploited": false,
+              "priority": "p2"
+            }
+          ]
+        }
+      },
+      "at": "2026-11-07T01:13:15.547Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 15,
+      "type": "REPORT_WRITTEN",
+      "payload": {
+        "chars": 2157,
+        "advisories": 2,
+        "analysed": true,
+        "delta": null
+      },
+      "at": "2026-11-07T01:13:15.551Z"
+    },
+    {
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "seq": 16,
+      "type": "RUN_FINISHED",
+      "payload": {
+        "payments": {
+          "settled": 2,
+          "refused": 0,
+          "unknown": 0,
+          "failed": 0,
+          "settledAtomic": "240000"
+        },
+        "inference": {
+          "calls": 2,
+          "succeeded": 2,
+          "costNeuron": "159"
+        }
+      },
+      "at": "2026-11-07T01:13:15.552Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "provider": "osv.chirag126.eth",
+      "payTo": "0.0.11183142",
+      "network": "hedera:testnet",
+      "asset": "0.0.0",
+      "amountAtomic": "120000",
+      "idempotencyKey": "788c4fdf66647f1ff2cefd97bd948e5d1d5fdc6eccc69166f39a935f38cd71a0",
+      "capability": "ecosystem-advisories",
+      "requestUrl": "https://endersift-providers.onrender.com/v1/osv/query?ecosystem=npm&package=lodash&version=4.17.21",
+      "status": "SETTLED",
+      "refusalCode": null,
+      "transactionId": "0.0.7162784@1794013964.928530428",
+      "facilitator": "https://api.testnet.blocky402.com",
+      "errorCode": null,
+      "settledAt": "2026-11-07T01:12:57.017Z",
+      "reconcileAttempts": 0,
+      "lastCheckedAt": "2026-11-07T01:12:57.018Z",
+      "createdAt": "2026-11-07T01:12:50.702Z",
+      "updatedAt": "2026-11-07T01:12:57.018Z",
+      "history": [
+        {
+          "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+          "seq": 0,
+          "from": null,
+          "to": "CREATED",
+          "detail": {
+            "amount": "120000",
+            "payTo": "0.0.11183142",
+            "provider": "osv.chirag126.eth"
+          },
+          "at": "2026-11-07T01:12:50.702Z"
+        },
+        {
+          "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+          "seq": 1,
+          "from": "CREATED",
+          "to": "AUTHORIZED",
+          "detail": {
+            "amount": "120000",
+            "payTo": "0.0.11183142"
+          },
+          "at": "2026-11-07T01:12:50.706Z"
+        },
+        {
+          "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+          "seq": 2,
+          "from": "AUTHORIZED",
+          "to": "SIGNED",
+          "detail": {
+            "transactionId": "0.0.7162784@1794013964.928530428",
+            "facilitator": "https://api.testnet.blocky402.com"
+          },
+          "at": "2026-11-07T01:12:50.735Z"
+        },
+        {
+          "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+          "seq": 3,
+          "from": "SIGNED",
+          "to": "SUBMITTED",
+          "detail": {},
+          "at": "2026-11-07T01:12:50.737Z"
+        },
+        {
+          "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+          "seq": 4,
+          "from": "SUBMITTED",
+          "to": "SETTLED",
+          "detail": {
+            "consensusTimestamp": "1794013972.605932104",
+            "checks": [
+              "OK transaction ID matches: mirror 0.0.7162784-1794013964-928530428, expected 0.0.7162784-1794013964-928530428",
+              "OK result is SUCCESS: SUCCESS",
+              "OK no token transfers (HBAR payment): 0 token transfer(s)",
+              "OK reached consensus after its valid start: valid start 1794013964.928530428, consensus 1794013972.605932104",
+              "OK is a crypto transfer: CRYPTOTRANSFER",
+              "OK payee credited exactly the quoted amount: 0.0.11183142 net 120000 tinybars, expected +120000",
+              "OK payer debited exactly the quoted amount: 0.0.11044318 net -120000 tinybars, expected -120000"
+            ]
+          },
+          "at": "2026-11-07T01:12:57.018Z"
+        }
+      ],
+      "verifications": [
+        {
+          "id": "694acfa0-2efa-4b9f-b32d-cc37845b8cce",
+          "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+          "transactionId": "0.0.7162784@1794013964.928530428",
+          "mirrorNode": "https://testnet.mirrornode.hedera.com",
+          "outcome": "SETTLED",
+          "code": null,
+          "consensusTimestamp": "1794013972.605932104",
+          "checks": [
+            "OK transaction ID matches: mirror 0.0.7162784-1794013964-928530428, expected 0.0.7162784-1794013964-928530428",
+            "OK result is SUCCESS: SUCCESS",
+            "OK no token transfers (HBAR payment): 0 token transfer(s)",
+            "OK reached consensus after its valid start: valid start 1794013964.928530428, consensus 1794013972.605932104",
+            "OK is a crypto transfer: CRYPTOTRANSFER",
+            "OK payee credited exactly the quoted amount: 0.0.11183142 net 120000 tinybars, expected +120000",
+            "OK payer debited exactly the quoted amount: 0.0.11044318 net -120000 tinybars, expected -120000"
+          ],
+          "entries": 1,
+          "verifiedAt": "2026-11-07T01:12:57.017Z"
+        }
+      ],
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013964.928530428"
+    },
+    {
+      "id": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "provider": "osv.chirag126.eth",
+      "payTo": "0.0.11183142",
+      "network": "hedera:testnet",
+      "asset": "0.0.0",
+      "amountAtomic": "120000",
+      "idempotencyKey": "0bb7f8e9c8a2a6213c7a3c47c121803e28e5dc60354b3827a3d4c55804f88334",
+      "capability": "package-vulns",
+      "requestUrl": "https://endersift-providers.onrender.com/v1/osv/query?ecosystem=Maven&package=OpenSSL",
+      "status": "SETTLED",
+      "refusalCode": null,
+      "transactionId": "0.0.7162784@1794013974.058062743",
+      "facilitator": "https://api.testnet.blocky402.com",
+      "errorCode": null,
+      "settledAt": "2026-11-07T01:13:03.604Z",
+      "reconcileAttempts": 0,
+      "lastCheckedAt": "2026-11-07T01:13:03.604Z",
+      "createdAt": "2026-11-07T01:12:57.193Z",
+      "updatedAt": "2026-11-07T01:13:03.604Z",
+      "history": [
+        {
+          "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+          "seq": 0,
+          "from": null,
+          "to": "CREATED",
+          "detail": {
+            "amount": "120000",
+            "payTo": "0.0.11183142",
+            "provider": "osv.chirag126.eth"
+          },
+          "at": "2026-11-07T01:12:57.193Z"
+        },
+        {
+          "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+          "seq": 1,
+          "from": "CREATED",
+          "to": "AUTHORIZED",
+          "detail": {
+            "amount": "120000",
+            "payTo": "0.0.11183142"
+          },
+          "at": "2026-11-07T01:12:57.195Z"
+        },
+        {
+          "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+          "seq": 2,
+          "from": "AUTHORIZED",
+          "to": "SIGNED",
+          "detail": {
+            "transactionId": "0.0.7162784@1794013974.058062743",
+            "facilitator": "https://api.testnet.blocky402.com"
+          },
+          "at": "2026-11-07T01:12:57.208Z"
+        },
+        {
+          "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+          "seq": 3,
+          "from": "SIGNED",
+          "to": "SUBMITTED",
+          "detail": {},
+          "at": "2026-11-07T01:12:57.209Z"
+        },
+        {
+          "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+          "seq": 4,
+          "from": "SUBMITTED",
+          "to": "SETTLED",
+          "detail": {
+            "consensusTimestamp": "1794013979.015358038",
+            "checks": [
+              "OK transaction ID matches: mirror 0.0.7162784-1794013974-058062743, expected 0.0.7162784-1794013974-058062743",
+              "OK result is SUCCESS: SUCCESS",
+              "OK no token transfers (HBAR payment): 0 token transfer(s)",
+              "OK reached consensus after its valid start: valid start 1794013974.058062743, consensus 1794013979.015358038",
+              "OK is a crypto transfer: CRYPTOTRANSFER",
+              "OK payee credited exactly the quoted amount: 0.0.11183142 net 120000 tinybars, expected +120000",
+              "OK payer debited exactly the quoted amount: 0.0.11044318 net -120000 tinybars, expected -120000"
+            ]
+          },
+          "at": "2026-11-07T01:13:03.604Z"
+        }
+      ],
+      "verifications": [
+        {
+          "id": "e6f4d980-4075-4909-aad4-91828c906dcd",
+          "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+          "transactionId": "0.0.7162784@1794013974.058062743",
+          "mirrorNode": "https://testnet.mirrornode.hedera.com",
+          "outcome": "SETTLED",
+          "code": null,
+          "consensusTimestamp": "1794013979.015358038",
+          "checks": [
+            "OK transaction ID matches: mirror 0.0.7162784-1794013974-058062743, expected 0.0.7162784-1794013974-058062743",
+            "OK result is SUCCESS: SUCCESS",
+            "OK no token transfers (HBAR payment): 0 token transfer(s)",
+            "OK reached consensus after its valid start: valid start 1794013974.058062743, consensus 1794013979.015358038",
+            "OK is a crypto transfer: CRYPTOTRANSFER",
+            "OK payee credited exactly the quoted amount: 0.0.11183142 net 120000 tinybars, expected +120000",
+            "OK payer debited exactly the quoted amount: 0.0.11044318 net -120000 tinybars, expected -120000"
+          ],
+          "entries": 1,
+          "verifiedAt": "2026-11-07T01:13:03.604Z"
+        }
+      ],
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013974.058062743"
+    }
+  ],
+  "inference": [
+    {
+      "id": "2d77b735-a221-44ce-9f7c-d01d982246cf",
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "purpose": "PLAN",
+      "network": "mainnet",
+      "model": "qwen2.5-vl-72b-instruct",
+      "status": "SUCCEEDED",
+      "requestId": "2791d949-7722-4341-912d-c2d81a9a78ea",
+      "provider": "0x000000003f486c7198d6203568a98d02b91f8044",
+      "promptTokens": 822,
+      "completionTokens": 222,
+      "worstCaseNeuron": "1891070573613612",
+      "costNeuron": "81",
+      "creditUsedNeuron": null,
+      "depositUsedNeuron": null,
+      "funding": "unknown",
+      "teeVerified": null,
+      "errorCode": null,
+      "createdAt": "2026-11-07T01:12:41.529Z",
+      "settledAt": "2026-11-07T01:12:50.553Z",
+      "reconciledAt": null
+    },
+    {
+      "id": "d052bb35-e305-4e7f-8c0f-e87ff146d368",
+      "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+      "purpose": "ANALYZE",
+      "network": "mainnet",
+      "model": "qwen2.5-vl-72b-instruct",
+      "status": "SUCCEEDED",
+      "requestId": "06d37e37-49a8-43fb-a215-cdb6737859c9",
+      "provider": "0x000000003f486c7198d6203568a98d02b91f8044",
+      "promptTokens": 837,
+      "completionTokens": 204,
+      "worstCaseNeuron": "2216281470662032",
+      "costNeuron": "78",
+      "creditUsedNeuron": null,
+      "depositUsedNeuron": null,
+      "funding": "unknown",
+      "teeVerified": null,
+      "errorCode": null,
+      "createdAt": "2026-11-07T01:13:03.612Z",
+      "settledAt": "2026-11-07T01:13:15.543Z",
+      "reconciledAt": null
+    }
+  ],
+  "report": "# Threat brief · 2026-11-07\n\nRun `dbd91bac-e63d-4d03-a0ac-006be63d726d` · generated 2026-11-07T01:13:15.548Z\n\n**Watchlist:** OpenSSL, lodash@4.17.21 (npm)\n\n**Plan (model):** Covering specific versions and packages mentioned in the watchlist using available operations.\n\n## Priorities\n\n| Priority | Advisory | Severity | In CISA KEV | Source | Rationale (model) |\n| --- | --- | --- | --- | --- | --- |\n| P1 | GHSA-r5fr-rjxr-66jc | high | no | osv.chirag126.eth | The current version of lodash used by the stack is vulnerable to code injection, requiring immediate upgrade. |\n| P2 | GHSA-xxjr-mmjv-4gpg | medium | no | osv.chirag126.eth | Prototype pollution vulnerabilities in lodash could be exploited if untrusted data is passed, necessitating a timely update. |\n\n**Summary (model):** Two advisories impact the stack, both concerning lodash. GHSA-r5fr-rjxr-66jc requires urgent action due to code injection risks, while GHSA-xxjr-mmjv-4gpg should be addressed within the week to mitigate prototype pollution vulnerabilities.\n\n## Since the previous brief\n\nNo comparison: first brief for this watchlist with a recorded digest: nothing to compare with yet.\n\n## Paid data\n\n| Provider | Capability | Amount (tinybars) | Status | Transaction |\n| --- | --- | --- | --- | --- |\n| osv.chirag126.eth | ecosystem-advisories | 120000 | SETTLED | [0.0.7162784@1794013964.928530428](https://hashscan.io/testnet/transaction/0.0.7162784%401794013964.928530428) |\n| osv.chirag126.eth | package-vulns | 120000 | SETTLED | [0.0.7162784@1794013974.058062743](https://hashscan.io/testnet/transaction/0.0.7162784%401794013974.058062743) |\n\nSettled and verified on the Mirror Node: 240000 tinybars.\n\n## Inference (0G)\n\n| Purpose | Status | Request ID | Cost (neuron) | Funding |\n| --- | --- | --- | --- | --- |\n| PLAN | SUCCEEDED | 2791d949-7722-4341-912d-c2d81a9a78ea | 81 | unknown |\n| ANALYZE | SUCCEEDED | 06d37e37-49a8-43fb-a215-cdb6737859c9 | 78 | unknown |\n\n## Provenance\n\nProviders discovered on ENS (chirag126.eth) at Sepolia block 12080326: 3.\nAdvisories analysed: 2. Priorities, rationales, the plan and the summary are model output; everything else is recorded data.\n",
+  "checks": [
+    {
+      "name": "run SUCCEEDED",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "events gapless from RUN_STARTED to RUN_FINISHED",
+      "ok": true,
+      "detail": "17 events"
+    },
+    {
+      "name": "providers discovered on ENS at the pinned block",
+      "ok": true,
+      "detail": "block 12080326, 3 providers"
+    },
+    {
+      "name": "at least one provider catalog agrees with ENS",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "0G PLAN call SUCCEEDED with a request ID in the events",
+      "ok": true,
+      "detail": "2791d949-7722-4341-912d-c2d81a9a78ea"
+    },
+    {
+      "name": "0G ANALYZE call SUCCEEDED with a request ID in the events",
+      "ok": true,
+      "detail": "06d37e37-49a8-43fb-a215-cdb6737859c9"
+    },
+    {
+      "name": "at least one payment SETTLED",
+      "ok": true,
+      "detail": "2 settled"
+    },
+    {
+      "name": "osv.chirag126.eth: tx ID persisted before sending, SETTLED from a Mirror Node verification",
+      "ok": true,
+      "detail": "0.0.7162784@1794013964.928530428"
+    },
+    {
+      "name": "osv.chirag126.eth: tx ID persisted before sending, SETTLED from a Mirror Node verification",
+      "ok": true,
+      "detail": "0.0.7162784@1794013974.058062743"
+    },
+    {
+      "name": "committed spend within the run budget",
+      "ok": true,
+      "detail": "240000 of 300000 tinybars"
+    },
+    {
+      "name": "paid data fetched from a SETTLED purchase",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "analysis accepted (no invented advisory IDs)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "brief written, citing every settled tx ID and 0G request ID",
+      "ok": true,
+      "detail": "2157 chars"
+    }
+  ],
+  "verified": true
+}

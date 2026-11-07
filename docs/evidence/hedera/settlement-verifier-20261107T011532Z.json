@@ -1,0 +1,119 @@
+{
+  "kind": "settlement-verifier-audit",
+  "startedAt": "2026-11-07T01:15:31.854Z",
+  "finishedAt": "2026-11-07T01:15:32.132Z",
+  "network": "hedera:testnet",
+  "mirrorNode": "https://testnet.mirrornode.hedera.com",
+  "payer": "0.0.11044318",
+  "reconciledOpen": [],
+  "audit": [
+    {
+      "id": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+      "provider": "osv.chirag126.eth",
+      "payTo": "0.0.11183142",
+      "amount": "120000",
+      "transactionId": "0.0.7162784@1794013964.928530428",
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013964.928530428",
+      "settledAt": "2026-11-07T01:12:57.017Z",
+      "confirmed": true,
+      "verification": {
+        "id": "aa056e39-691d-4aa5-9cff-c6b9fb3b7616",
+        "paymentId": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+        "transactionId": "0.0.7162784@1794013964.928530428",
+        "mirrorNode": "https://testnet.mirrornode.hedera.com",
+        "outcome": "SETTLED",
+        "code": null,
+        "consensusTimestamp": "1794013972.605932104",
+        "checks": [
+          "OK transaction ID matches: mirror 0.0.7162784-1794013964-928530428, expected 0.0.7162784-1794013964-928530428",
+          "OK result is SUCCESS: SUCCESS",
+          "OK no token transfers (HBAR payment): 0 token transfer(s)",
+          "OK reached consensus after its valid start: valid start 1794013964.928530428, consensus 1794013972.605932104",
+          "OK is a crypto transfer: CRYPTOTRANSFER",
+          "OK payee credited exactly the quoted amount: 0.0.11183142 net 120000 tinybars, expected +120000",
+          "OK payer debited exactly the quoted amount: 0.0.11044318 net -120000 tinybars, expected -120000"
+        ],
+        "entries": 1,
+        "verifiedAt": "2026-11-07T01:15:31.955Z"
+      }
+    },
+    {
+      "id": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+      "provider": "osv.chirag126.eth",
+      "payTo": "0.0.11183142",
+      "amount": "120000",
+      "transactionId": "0.0.7162784@1794013974.058062743",
+      "hashscan": "https://hashscan.io/testnet/transaction/0.0.7162784%401794013974.058062743",
+      "settledAt": "2026-11-07T01:13:03.604Z",
+      "confirmed": true,
+      "verification": {
+        "id": "fcc95c77-340b-4cf3-b843-eb16b6991f88",
+        "paymentId": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+        "transactionId": "0.0.7162784@1794013974.058062743",
+        "mirrorNode": "https://testnet.mirrornode.hedera.com",
+        "outcome": "SETTLED",
+        "code": null,
+        "consensusTimestamp": "1794013979.015358038",
+        "checks": [
+          "OK transaction ID matches: mirror 0.0.7162784-1794013974-058062743, expected 0.0.7162784-1794013974-058062743",
+          "OK result is SUCCESS: SUCCESS",
+          "OK no token transfers (HBAR payment): 0 token transfer(s)",
+          "OK reached consensus after its valid start: valid start 1794013974.058062743, consensus 1794013979.015358038",
+          "OK is a crypto transfer: CRYPTOTRANSFER",
+          "OK payee credited exactly the quoted amount: 0.0.11183142 net 120000 tinybars, expected +120000",
+          "OK payer debited exactly the quoted amount: 0.0.11044318 net -120000 tinybars, expected -120000"
+        ],
+        "entries": 1,
+        "verifiedAt": "2026-11-07T01:15:32.017Z"
+      }
+    }
+  ],
+  "invariant": [
+    {
+      "id": "f452f2f6-656f-4e59-8b08-5e0a13c30b0b",
+      "transactionId": "0.0.7162784@1794013964.928530428",
+      "ok": true,
+      "verifiedBeforeSettled": true
+    },
+    {
+      "id": "8da2d79c-e036-4245-8d86-aa2ac58550ed",
+      "transactionId": "0.0.7162784@1794013974.058062743",
+      "ok": true,
+      "verifiedBeforeSettled": true
+    }
+  ],
+  "probes": [
+    {
+      "name": "true expectation",
+      "expect": "SETTLED",
+      "got": "SETTLED",
+      "ok": true
+    },
+    {
+      "name": "wrong payee",
+      "expect": "SUBMITTED SETTLEMENT_MISMATCH",
+      "got": "SUBMITTED SETTLEMENT_MISMATCH",
+      "ok": true
+    },
+    {
+      "name": "wrong amount",
+      "expect": "SUBMITTED SETTLEMENT_MISMATCH",
+      "got": "SUBMITTED SETTLEMENT_MISMATCH",
+      "ok": true
+    },
+    {
+      "name": "Mirror Node of the other network",
+      "expect": "SUBMITTED NETWORK_MISMATCH",
+      "got": "SUBMITTED NETWORK_MISMATCH",
+      "ok": true
+    },
+    {
+      "name": "SETTLED without a verification (raw SQL)",
+      "expect": "refused",
+      "got": "refused",
+      "ok": true
+    }
+  ],
+  "signedAnything": false,
+  "verified": true
+}

@@ -6,22 +6,22 @@
   "agents": {
     "agent": {
       "agentId": "11233",
-      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/agent.json",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/agent.json",
       "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
     },
     "cve": {
       "agentId": "11231",
-      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/cve.json",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/cve.json",
       "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
     },
     "kev": {
       "agentId": "11230",
-      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/kev.json",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/kev.json",
       "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
     },
     "osv": {
       "agentId": "11232",
-      "agentURI": "https://threat-intel-providers.onrender.com/.well-known/erc-8004/osv.json",
+      "agentURI": "https://endersift-providers.onrender.com/.well-known/erc-8004/osv.json",
       "owner": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5"
     }
   }

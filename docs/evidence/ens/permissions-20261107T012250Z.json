@@ -1,0 +1,527 @@
+{
+  "kind": "ens-permissions",
+  "startedAt": "2026-11-07T01:21:14.723Z",
+  "finishedAt": "2026-11-07T01:22:50.691Z",
+  "chain": "sepolia",
+  "chainId": 11155111,
+  "parent": "chirag126.eth",
+  "admin": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+  "agentA": {
+    "label": "kev",
+    "name": "kev.chirag126.eth",
+    "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+    "operator": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+  },
+  "agentB": {
+    "label": "cve",
+    "name": "cve.chirag126.eth",
+    "resolver": "0xda1517cfB2e616E8cE8620B6E78c75d5C560ECFb",
+    "operator": "0x615837b3c0e6A976f0e5c27d4fc5a313D28a1226"
+  },
+  "confirm": true,
+  "funding": null,
+  "roleMatrixBefore": {
+    "kev": {
+      "operator": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "roles": {
+        "kev": {
+          "ROOT": "0",
+          "agent.endpoint": "16",
+          "agent.capabilities": "16",
+          "agent.price": "16",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "16",
+          "agent-context": "16",
+          "agent-endpoint[x402]": "16",
+          "description": "16"
+        },
+        "cve": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "osv": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        }
+      },
+      "problems": []
+    },
+    "cve": {
+      "operator": "0x615837b3c0e6A976f0e5c27d4fc5a313D28a1226",
+      "roles": {
+        "kev": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "cve": {
+          "ROOT": "0",
+          "agent.endpoint": "16",
+          "agent.capabilities": "16",
+          "agent.price": "16",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "16",
+          "agent-context": "16",
+          "agent-endpoint[x402]": "16",
+          "description": "16"
+        },
+        "osv": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        }
+      },
+      "problems": []
+    },
+    "osv": {
+      "operator": "0x974f20eef1Df26c1FF6e9fdBcb83bF5A18469DC4",
+      "roles": {
+        "kev": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "cve": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "osv": {
+          "ROOT": "0",
+          "agent.endpoint": "16",
+          "agent.capabilities": "16",
+          "agent.price": "16",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "16",
+          "agent-context": "16",
+          "agent-endpoint[x402]": "16",
+          "description": "16"
+        }
+      },
+      "problems": []
+    }
+  },
+  "cases": [
+    {
+      "id": "A_EDITS_A",
+      "title": "operator A edits a delegated key on resolver A",
+      "actor": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "expect": "allow",
+      "target": {
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "name": "kev.chirag126.eth",
+        "function": "setText",
+        "key": "description"
+      },
+      "expectedDenial": null,
+      "simulation": {
+        "ok": true
+      },
+      "tx": {
+        "hash": "0x480946160d7b0ba4d37d68e4532dad5c8f2609e812c6242e649f84f9b4d16db1",
+        "status": "success",
+        "block": "12080372",
+        "url": "https://sepolia.etherscan.io/tx/0x480946160d7b0ba4d37d68e4532dad5c8f2609e812c6242e649f84f9b4d16db1"
+      },
+      "effectVerified": true,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "transaction succeeded and the read-back matches"
+      }
+    },
+    {
+      "id": "A_RESTORES_A",
+      "title": "operator A restores that key",
+      "actor": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "expect": "allow",
+      "target": {
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "name": "kev.chirag126.eth",
+        "function": "setText",
+        "key": "description"
+      },
+      "expectedDenial": null,
+      "simulation": {
+        "ok": true
+      },
+      "tx": {
+        "hash": "0x8520040518f84884f07b50e6606c1454e450f3a9325aebdfaab85bdcef568ad8",
+        "status": "success",
+        "block": "12080373",
+        "url": "https://sepolia.etherscan.io/tx/0x8520040518f84884f07b50e6606c1454e450f3a9325aebdfaab85bdcef568ad8"
+      },
+      "effectVerified": true,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "transaction succeeded and the read-back matches"
+      }
+    },
+    {
+      "id": "A_EDITS_B",
+      "title": "operator A edits the same key on resolver B",
+      "actor": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "expect": "deny",
+      "target": {
+        "resolver": "0xda1517cfB2e616E8cE8620B6E78c75d5C560ECFb",
+        "name": "cve.chirag126.eth",
+        "function": "setText",
+        "key": "description"
+      },
+      "expectedDenial": {
+        "resource": "9765116797790139016836562972326110245461934396900545726927381399153059216270",
+        "roleBitmap": "16",
+        "account": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+      },
+      "simulation": {
+        "ok": false,
+        "errorName": "EACUnauthorizedAccountRoles",
+        "args": [
+          "9765116797790139016836562972326110245461934396900545726927381399153059216270",
+          "16",
+          "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+        ]
+      },
+      "tx": {
+        "hash": "0x06be18b0c9f0aa7824d705e5adb603a39250a7571adf769d7bd7eb64b3039a10",
+        "status": "reverted",
+        "block": "12080374",
+        "url": "https://sepolia.etherscan.io/tx/0x06be18b0c9f0aa7824d705e5adb603a39250a7571adf769d7bd7eb64b3039a10"
+      },
+      "effectVerified": null,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "reverted on chain; simulation decoded EACUnauthorizedAccountRoles"
+      }
+    },
+    {
+      "id": "A_EDITS_PAYTO",
+      "title": "operator A edits x402.payTo on resolver A",
+      "actor": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "expect": "deny",
+      "target": {
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "name": "kev.chirag126.eth",
+        "function": "setText",
+        "key": "x402.payTo"
+      },
+      "expectedDenial": {
+        "resource": "20459870401326220626156124913908404861920560638954318070013819869847861323666",
+        "roleBitmap": "16",
+        "account": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+      },
+      "simulation": {
+        "ok": false,
+        "errorName": "EACUnauthorizedAccountRoles",
+        "args": [
+          "20459870401326220626156124913908404861920560638954318070013819869847861323666",
+          "16",
+          "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+        ]
+      },
+      "tx": {
+        "hash": "0x266d29047ef372eddadf6ea77bd1b5a320a7c4586bda4c28530e2ccdbdaa1bc2",
+        "status": "reverted",
+        "block": "12080375",
+        "url": "https://sepolia.etherscan.io/tx/0x266d29047ef372eddadf6ea77bd1b5a320a7c4586bda4c28530e2ccdbdaa1bc2"
+      },
+      "effectVerified": null,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "reverted on chain; simulation decoded EACUnauthorizedAccountRoles"
+      }
+    },
+    {
+      "id": "ADMIN_REVOKES_A",
+      "title": "admin revokes operator A's delegated keys",
+      "actor": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+      "expect": "allow",
+      "target": {
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "name": "kev.chirag126.eth",
+        "function": "multicall",
+        "key": null
+      },
+      "expectedDenial": null,
+      "simulation": {
+        "ok": true
+      },
+      "tx": {
+        "hash": "0xefaf768aa254303e24ec094bc4fac4df671cb4f3671f1e67511a939a587f07ad",
+        "status": "success",
+        "block": "12080376",
+        "url": "https://sepolia.etherscan.io/tx/0xefaf768aa254303e24ec094bc4fac4df671cb4f3671f1e67511a939a587f07ad"
+      },
+      "effectVerified": true,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "transaction succeeded and the read-back matches"
+      }
+    },
+    {
+      "id": "A_EDITS_A_AFTER_REVOKE",
+      "title": "operator A edits resolver A after revocation",
+      "actor": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "expect": "deny",
+      "target": {
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "name": "kev.chirag126.eth",
+        "function": "setText",
+        "key": "description"
+      },
+      "expectedDenial": {
+        "resource": "9765116797790139016836562972326110245461934396900545726927381399153059216270",
+        "roleBitmap": "16",
+        "account": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+      },
+      "simulation": {
+        "ok": false,
+        "errorName": "EACUnauthorizedAccountRoles",
+        "args": [
+          "9765116797790139016836562972326110245461934396900545726927381399153059216270",
+          "16",
+          "0x4CEB63E87696133814B9122bDc057dd4B204b1EC"
+        ]
+      },
+      "tx": {
+        "hash": "0xcd675cde57890a7d5f9c89f457a0200d6d3cb371786f4db129558efbef907636",
+        "status": "reverted",
+        "block": "12080377",
+        "url": "https://sepolia.etherscan.io/tx/0xcd675cde57890a7d5f9c89f457a0200d6d3cb371786f4db129558efbef907636"
+      },
+      "effectVerified": null,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "reverted on chain; simulation decoded EACUnauthorizedAccountRoles"
+      }
+    },
+    {
+      "id": "ADMIN_RESTORES_A",
+      "title": "admin re-grants operator A's delegated keys",
+      "actor": "0x66359fa8d11365B71bCB9e7324Bf73c5487a77F5",
+      "expect": "allow",
+      "target": {
+        "resolver": "0x1993BB58708a630AF1CC01304Dd851BDEccF9261",
+        "name": "kev.chirag126.eth",
+        "function": "multicall",
+        "key": null
+      },
+      "expectedDenial": null,
+      "simulation": {
+        "ok": true
+      },
+      "tx": {
+        "hash": "0x33d4b62b6154429f05e0b6aa9fe110a2dd3faf51b655a58c87c917befb277061",
+        "status": "success",
+        "block": "12080378",
+        "url": "https://sepolia.etherscan.io/tx/0x33d4b62b6154429f05e0b6aa9fe110a2dd3faf51b655a58c87c917befb277061"
+      },
+      "effectVerified": true,
+      "skipped": null,
+      "verdict": {
+        "pass": true,
+        "reason": "transaction succeeded and the read-back matches"
+      }
+    }
+  ],
+  "roleMatrixAfter": {
+    "kev": {
+      "operator": "0x4CEB63E87696133814B9122bDc057dd4B204b1EC",
+      "roles": {
+        "kev": {
+          "ROOT": "0",
+          "agent.endpoint": "16",
+          "agent.capabilities": "16",
+          "agent.price": "16",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "16",
+          "agent-context": "16",
+          "agent-endpoint[x402]": "16",
+          "description": "16"
+        },
+        "cve": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "osv": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        }
+      },
+      "problems": []
+    },
+    "cve": {
+      "operator": "0x615837b3c0e6A976f0e5c27d4fc5a313D28a1226",
+      "roles": {
+        "kev": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "cve": {
+          "ROOT": "0",
+          "agent.endpoint": "16",
+          "agent.capabilities": "16",
+          "agent.price": "16",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "16",
+          "agent-context": "16",
+          "agent-endpoint[x402]": "16",
+          "description": "16"
+        },
+        "osv": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        }
+      },
+      "problems": []
+    },
+    "osv": {
+      "operator": "0x974f20eef1Df26c1FF6e9fdBcb83bF5A18469DC4",
+      "roles": {
+        "kev": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "cve": {
+          "ROOT": "0",
+          "agent.endpoint": "0",
+          "agent.capabilities": "0",
+          "agent.price": "0",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "0",
+          "agent-context": "0",
+          "agent-endpoint[x402]": "0",
+          "description": "0"
+        },
+        "osv": {
+          "ROOT": "0",
+          "agent.endpoint": "16",
+          "agent.capabilities": "16",
+          "agent.price": "16",
+          "x402.payTo": "0",
+          "x402.network": "0",
+          "x402.asset": "0",
+          "agent.status": "16",
+          "agent-context": "16",
+          "agent-endpoint[x402]": "16",
+          "description": "16"
+        }
+      },
+      "problems": []
+    }
+  },
+  "restored": true,
+  "verified": true
+}

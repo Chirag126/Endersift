@@ -1,0 +1,137 @@
+{
+  "kind": "zg-ledger-reconciliation",
+  "startedAt": "2026-11-07T01:24:33.296Z",
+  "finishedAt": "2026-11-07T01:24:34.814Z",
+  "network": "mainnet",
+  "baseUrl": "https://router-api.0g.ai/v1",
+  "model": "qwen2.5-vl-72b-instruct",
+  "perCallCapNeuron": "5000000000000000",
+  "dailyCapNeuron": "10000000000000000",
+  "strict": false,
+  "windowStart": "2026-11-05T20:36:11.898Z",
+  "counts": {
+    "MATCH": 2,
+    "MISMATCH": 0,
+    "BILLED_UNRECORDED": 0,
+    "MISSING_IN_ROUTER": 0,
+    "OUT_OF_WINDOW": 0,
+    "UNRESOLVED": 0,
+    "NOT_BILLED": 0
+  },
+  "rows": [
+    {
+      "outcome": "MATCH",
+      "diffs": [],
+      "ledger": {
+        "id": "2d77b735-a221-44ce-9f7c-d01d982246cf",
+        "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+        "purpose": "PLAN",
+        "network": "mainnet",
+        "model": "qwen2.5-vl-72b-instruct",
+        "status": "SUCCEEDED",
+        "requestId": "2791d949-7722-4341-912d-c2d81a9a78ea",
+        "provider": "0x000000003f486c7198d6203568a98d02b91f8044",
+        "promptTokens": 822,
+        "completionTokens": 222,
+        "worstCaseNeuron": "1891070573613612",
+        "costNeuron": "81",
+        "creditUsedNeuron": "81",
+        "depositUsedNeuron": "0",
+        "funding": "credits",
+        "teeVerified": null,
+        "errorCode": null,
+        "createdAt": "2026-11-07T01:12:41.529Z",
+        "settledAt": "2026-11-07T01:12:50.553Z",
+        "reconciledAt": "2026-11-07T01:24:34.810Z"
+      },
+      "router": {
+        "id": 35162159,
+        "request_id": "2791d949-7722-4341-912d-c2d81a9a78ea",
+        "provider_address": "0x000000003f486c7198d6203568a98d02b91f8044",
+        "provider_identity": "anonymous1",
+        "model_id": "qwen2.5-vl-72b-instruct",
+        "canonical_id": "qwen2.5-vl-72b-instruct",
+        "api_key_id": "02411451-1de2-41c1-b50f-391e34492da2",
+        "input_tokens": 822,
+        "output_tokens": 222,
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cost": "81",
+        "credit_used": "81",
+        "deposit_used": "0",
+        "created_at": "2026-11-07T01:12:50.212Z",
+        "trust_mode": "standard",
+        "pendingPortion": "0"
+      }
+    },
+    {
+      "outcome": "MATCH",
+      "diffs": [],
+      "ledger": {
+        "id": "d052bb35-e305-4e7f-8c0f-e87ff146d368",
+        "runId": "dbd91bac-e63d-4d03-a0ac-006be63d726d",
+        "purpose": "ANALYZE",
+        "network": "mainnet",
+        "model": "qwen2.5-vl-72b-instruct",
+        "status": "SUCCEEDED",
+        "requestId": "06d37e37-49a8-43fb-a215-cdb6737859c9",
+        "provider": "0x000000003f486c7198d6203568a98d02b91f8044",
+        "promptTokens": 837,
+        "completionTokens": 204,
+        "worstCaseNeuron": "2216281470662032",
+        "costNeuron": "78",
+        "creditUsedNeuron": "78",
+        "depositUsedNeuron": "0",
+        "funding": "credits",
+        "teeVerified": null,
+        "errorCode": null,
+        "createdAt": "2026-11-07T01:13:03.612Z",
+        "settledAt": "2026-11-07T01:13:15.543Z",
+        "reconciledAt": "2026-11-07T01:24:34.810Z"
+      },
+      "router": {
+        "id": 35162204,
+        "request_id": "06d37e37-49a8-43fb-a215-cdb6737859c9",
+        "provider_address": "0x000000003f486c7198d6203568a98d02b91f8044",
+        "provider_identity": "anonymous1",
+        "model_id": "qwen2.5-vl-72b-instruct",
+        "canonical_id": "qwen2.5-vl-72b-instruct",
+        "api_key_id": "02411451-1de2-41c1-b50f-391e34492da2",
+        "input_tokens": 837,
+        "output_tokens": 204,
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cost": "78",
+        "credit_used": "78",
+        "deposit_used": "0",
+        "created_at": "2026-11-07T01:13:15.203Z",
+        "trust_mode": "standard",
+        "pendingPortion": "0"
+      }
+    }
+  ],
+  "unledgered": [
+    {
+      "requestId": "fe54d6b1-a697-400d-8f2e-525db938eb7a",
+      "cost": "64",
+      "createdAt": "2026-11-07T01:24:05.767Z"
+    }
+  ],
+  "daySpend": {
+    "day": "2026-11-07",
+    "spentNeuron": "159",
+    "calls": 2,
+    "byStatus": {
+      "PENDING": 0,
+      "SUCCEEDED": 2,
+      "FAILED": 0,
+      "UNKNOWN": 0,
+      "REFUSED": 0
+    }
+  },
+  "balanceSnapshots": [],
+  "verdict": "MATCH",
+  "ledgerMatchesRouterUsage": true
+}

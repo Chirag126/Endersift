@@ -35,7 +35,7 @@
         "x402.asset"
       ],
       "records": {
-        "agent.endpoint": "https://threat-intel-providers.onrender.com/v1/kev",
+        "agent.endpoint": "https://endersift-providers.onrender.com/v1/kev",
         "agent.capabilities": "known-exploited-vulns,ransomware-use",
         "agent.price": "100000",
         "x402.payTo": "0.0.11044329",
@@ -43,7 +43,7 @@
         "x402.asset": "0.0.0",
         "agent.status": "active",
         "agent-context": "Source: CISA Known Exploited Vulnerabilities catalog (cisa.gov/known-exploited-vulnerabilities-catalog).\nReturns: KEV entries added or changed since a date, with vendor, product, due date and ransomware use.\nLicense: public domain (US government work).\nPayment: x402 exact scheme on Hedera; see x402.* records. Pay only the account in x402.payTo.",
-        "agent-endpoint[x402]": "https://threat-intel-providers.onrender.com/v1/kev",
+        "agent-endpoint[x402]": "https://endersift-providers.onrender.com/v1/kev",
         "description": "CISA Known Exploited Vulnerabilities, served as a paid x402 API."
       }
     },
@@ -68,7 +68,7 @@
         "x402.asset"
       ],
       "records": {
-        "agent.endpoint": "https://threat-intel-providers.onrender.com/v1/cve",
+        "agent.endpoint": "https://endersift-providers.onrender.com/v1/cve",
         "agent.capabilities": "cve-details,cvss-scores",
         "agent.price": "150000",
         "x402.payTo": "0.0.11183141",
@@ -76,7 +76,7 @@
         "x402.asset": "0.0.0",
         "agent.status": "active",
         "agent-context": "Source: NIST National Vulnerability Database CVE API 2.0 (nvd.nist.gov).\nReturns: CVE descriptions, CVSS v3/v4 metrics, CWE and references for requested CVE IDs.\nLicense: NVD data is public; this product uses the NVD API but is not endorsed or certified by the NVD.\nPayment: x402 exact scheme on Hedera; see x402.* records. Pay only the account in x402.payTo.",
-        "agent-endpoint[x402]": "https://threat-intel-providers.onrender.com/v1/cve",
+        "agent-endpoint[x402]": "https://endersift-providers.onrender.com/v1/cve",
         "description": "NVD CVE records with CVSS scores, served as a paid x402 API."
       }
     },
@@ -101,7 +101,7 @@
         "x402.asset"
       ],
       "records": {
-        "agent.endpoint": "https://threat-intel-providers.onrender.com/v1/osv",
+        "agent.endpoint": "https://endersift-providers.onrender.com/v1/osv",
         "agent.capabilities": "ecosystem-advisories,package-vulns",
         "agent.price": "120000",
         "x402.payTo": "0.0.11183142",
@@ -109,7 +109,7 @@
         "x402.asset": "0.0.0",
         "agent.status": "active",
         "agent-context": "Source: OSV.dev vulnerability database (osv.dev).\nReturns: advisories affecting requested packages and versions across npm, PyPI, Go, Maven and more.\nLicense: OSV data is CC-BY 4.0 unless an advisory states otherwise.\nPayment: x402 exact scheme on Hedera; see x402.* records. Pay only the account in x402.payTo.",
-        "agent-endpoint[x402]": "https://threat-intel-providers.onrender.com/v1/osv",
+        "agent-endpoint[x402]": "https://endersift-providers.onrender.com/v1/osv",
         "description": "OSV open-source package advisories, served as a paid x402 API."
       }
     }
