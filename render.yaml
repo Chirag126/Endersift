@@ -131,7 +131,7 @@ services:
         sync: false
 
   - type: web
-    name: threat-intel-providers
+    name: enderpay
     runtime: node
     plan: free
     region: singapore
