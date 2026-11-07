@@ -15,7 +15,7 @@
 
 services:
   - type: web
-    name: threat-intel-agent
+    name: enderpay
     runtime: node
     plan: free
     region: singapore
@@ -108,14 +108,14 @@ services:
       # 0gm-1.0-35b-a3b came back on 2026-11-06 but its upstream failed again (D-088);
       # qwen2.5-vl-72b-instruct is verified end to end (D-081)
       - key: ZG_MODEL
-        value: qwen2.5-vl-72b-instruct
+        value: 0gm-1.0-35b-a3b
       - key: ZG_OUTPUT_LIMIT
         value: '256'
       - key: ZG_MAX_CALL_COST_NEURON
         value: '5000000000000000'
       # 0.1 0G a day while voice is off (D-088); 0.6 0G covers two voice clips at their worst case
       - key: ZG_DAILY_CAP_NEURON
-        value: '100000000000000000'
+        value: '600000000000000000'
       - key: ZG_TIMEOUT_MS
         value: '60000'
       - key: ZG_SNAPSHOT_INTERVAL_MIN
@@ -124,9 +124,9 @@ services:
       # whisper-large-v3, ZG_STT_MAX_NEURON=284000000000000000 (one clip may bill up to 448 units
       # of 0.00063 0G, ~0.28 0G, reserved per clip) and ZG_DAILY_CAP_NEURON of at least 0.6 0G
       - key: ZG_STT_MODEL
-        value: 'off'
+        value: 'whisper-large-v3'
       - key: ZG_STT_MAX_NEURON
-        value: '1000000000000000'
+        value: '284000000000000000'
       - key: ZG_API_KEY
         sync: false
 
