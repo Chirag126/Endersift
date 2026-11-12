@@ -1,0 +1,74 @@
+name: NEAR contract
+
+# Tests the spending guard and builds its WebAssembly file. The built file is
+# kept as a workflow artifact (`endersift-guard-wasm`) for deployment.
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'contracts/**'
+      - '.github/workflows/near-contract.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'contracts/**'
+      - '.github/workflows/near-contract.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: near-contract-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    name: Guard contract tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: contracts/guard
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Rust toolchain
+        run: |
+          rustup toolchain install stable --profile minimal --component rustfmt
+          rustup default stable
+          rustup target add wasm32-unknown-unknown
+          rustc --version
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            contracts/guard/target
+          key: guard-${{ runner.os }}-${{ hashFiles('contracts/guard/Cargo.toml', 'contracts/guard/Cargo.lock') }}
+
+      - name: Format check
+        run: cargo fmt --check
+
+      - name: Unit tests
+        run: cargo test
+
+      - name: Install cargo-near
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/cargo-near/releases/latest/download/cargo-near-installer.sh | sh
+          cargo near --version
+
+      - name: Build the contract
+        run: cargo near build non-reproducible-wasm
+
+      - name: Show the built file
+        run: |
+          ls -l target/near/
+          sha256sum target/near/*.wasm
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: endersift-guard-wasm
+          path: contracts/guard/target/near/*.wasm
+          if-no-files-found: error
