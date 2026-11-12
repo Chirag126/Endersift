@@ -7,3 +7,5 @@ export * from './rpc.ts';
 export * from './guard.ts';
 export * from './counterparty.ts';
 export * from './guarded-pay.ts';
+export * from './pay-lane.ts';
+export * from './buy.ts';

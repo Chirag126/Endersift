@@ -1,12 +1,18 @@
 /**
  * NEAR transactions, serialised with Borsh by hand (nomicon: Transactions).
- * Only the two actions the agent side needs: FunctionCall and Transfer. Pure
- * apart from signing.
+ * The agent side needs only FunctionCall; the owner's setup script also uses
+ * CreateAccount, DeployContract, Transfer and AddKey. Pure apart from signing.
  *
  *   Transaction { signer_id, public_key, nonce: u64, receiver_id,
  *                 block_hash: [u8; 32], actions: Vec<Action> }
- *   Action      enum index 2 = FunctionCall { method_name, args, gas: u64, deposit: u128 }
+ *   Action      enum index 0 = CreateAccount
+ *               enum index 1 = DeployContract { code: Vec<u8> }
+ *               enum index 2 = FunctionCall { method_name, args, gas: u64, deposit: u128 }
  *               enum index 3 = Transfer { deposit: u128 }
+ *               enum index 5 = AddKey { public_key, access_key: { nonce: u64, permission } }
+ *   permission  enum index 0 = FunctionCall { allowance: Option<u128>, receiver_id,
+ *                                             method_names: Vec<String> }
+ *               enum index 1 = FullAccess
  *   SignedTransaction { transaction, signature }
  *
  * The signature is ed25519 over sha256(borsh(transaction)); that hash, in
@@ -24,7 +30,24 @@ export type NearAction =
       readonly gas: bigint;
       readonly deposit: bigint;
     }
-  | { readonly kind: 'transfer'; readonly deposit: bigint };
+  | { readonly kind: 'transfer'; readonly deposit: bigint }
+  | { readonly kind: 'createAccount' }
+  | { readonly kind: 'deployContract'; readonly code: Uint8Array }
+  | {
+      readonly kind: 'addKey';
+      /** Raw 32-byte ed25519 public key. */
+      readonly publicKey: Uint8Array;
+      readonly permission:
+        | { readonly kind: 'fullAccess' }
+        | {
+            readonly kind: 'functionCall';
+            readonly receiverId: string;
+            /** Empty = every method of the receiver. */
+            readonly methodNames: readonly string[];
+            /** Gas allowance in yoctoNEAR, or null (unlimited). */
+            readonly allowance: bigint | null;
+          };
+    };
 
 export interface NearTransaction {
   readonly signerId: string;
@@ -96,9 +119,34 @@ export function encodeTransaction(tx: NearTransaction): Uint8Array {
       w.vec(a.args);
       w.uint(a.gas, 8);
       w.uint(a.deposit, 16);
-    } else {
+    } else if (a.kind === 'transfer') {
       w.u8(3);
       w.uint(a.deposit, 16);
+    } else if (a.kind === 'createAccount') {
+      w.u8(0);
+    } else if (a.kind === 'deployContract') {
+      w.u8(1);
+      w.vec(a.code);
+    } else {
+      if (a.publicKey.length !== 32) throw new Error('public key must be 32 bytes');
+      w.u8(5);
+      w.u8(0); // key type: ed25519
+      w.bytes(a.publicKey);
+      w.uint(0n, 8); // the new key's nonce
+      if (a.permission.kind === 'fullAccess') {
+        w.u8(1);
+      } else {
+        w.u8(0);
+        if (a.permission.allowance === null) {
+          w.u8(0);
+        } else {
+          w.u8(1);
+          w.uint(a.permission.allowance, 16);
+        }
+        w.text(a.permission.receiverId);
+        w.u32(a.permission.methodNames.length);
+        for (const name of a.permission.methodNames) w.text(name);
+      }
     }
   }
   return w.done();
