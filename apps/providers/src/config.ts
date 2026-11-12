@@ -2,9 +2,15 @@
  * Provider service configuration, built only from secret-free env groups:
  * the provider server never sees the payer's private key.
  */
-import { loadEnv, parseLabelledAccounts, type EnvSource } from '@agent-economy/core';
+import {
+  loadEnv,
+  parseLabelledAccounts,
+  parseNearLabelledAccounts,
+  type EnvSource,
+} from '@agent-economy/core';
 import { AGENTS } from '@agent-economy/ens/agents';
 import { USDC_TOKEN_ID } from '@agent-economy/hedera/units';
+import { parseNear, type NearNetwork } from '@agent-economy/near';
 import type { HederaCaip2 } from '@agent-economy/hedera/x402';
 
 export interface ProviderConfig {
@@ -137,5 +143,33 @@ export function loadIntelConfig(source: EnvSource): IntelServiceConfig {
         throw new Error('AGENT_EARNINGS_ACCOUNT must not be a provider payout account');
       return { priceTinybars: BigInt(price), payTo, agentUrl };
     })(),
+  };
+}
+
+export interface NearLaneConfig {
+  readonly network: NearNetwork;
+  readonly nodeUrl: string;
+  readonly guard: string;
+  readonly priceYocto: bigint;
+  /** label → NEAR payout account. */
+  readonly accounts: Readonly<Record<string, string>>;
+}
+
+/**
+ * The NEAR pay lane's settings, or null when it is not configured (no
+ * NEAR_GUARD_CONTRACT_ID): the service then runs exactly as before.
+ */
+export function loadNearLaneConfig(source: EnvSource): NearLaneConfig | null {
+  const guard = source['NEAR_GUARD_CONTRACT_ID'];
+  if (guard === undefined || guard.trim() === '') return null;
+  const env = loadEnv(['near-providers'], source);
+  const accounts = parseNearLabelledAccounts(env.require('NEAR_PROVIDER_ACCOUNTS'));
+  if (typeof accounts === 'string') throw new Error(`NEAR_PROVIDER_ACCOUNTS ${accounts}`);
+  return {
+    network: `near:${env.require('NEAR_NETWORK')}` as NearNetwork,
+    nodeUrl: env.require('NEAR_NODE_URL'),
+    guard: env.require('NEAR_GUARD_CONTRACT_ID'),
+    priceYocto: parseNear(env.require('NEAR_PRICE')),
+    accounts: Object.fromEntries(accounts.map((a) => [a.label, a.accountId])),
   };
 }

@@ -29,6 +29,7 @@ import {
 import { createPublicClient, http, sepolia } from '@agent-economy/ens/viem';
 import { formatHbar } from '@agent-economy/hedera';
 import { facilitatorsFromEnv } from '@agent-economy/hedera/x402-server';
+import { GuardReader, NearRpc, formatNear } from '@agent-economy/near';
 import { readFileSync } from 'node:fs';
 import { AGENTS } from '@agent-economy/ens/agents';
 import {
@@ -37,7 +38,7 @@ import {
   parseErc8004Deployment,
 } from '@agent-economy/ens/erc8004';
 import { handleScriptErrors, hasFlag, loadLocalEnvSource } from '../../../scripts/lib/cli.ts';
-import { loadIntelConfig } from './config.ts';
+import { loadIntelConfig, loadNearLaneConfig } from './config.ts';
 import { KevFeed } from './feeds/kev.ts';
 import { NvdClient } from './feeds/nvd.ts';
 import { OsvClient } from './feeds/osv.ts';
@@ -117,9 +118,27 @@ const identity = (() => {
   };
 })();
 
+// the NEAR pay lane: on only when NEAR_GUARD_CONTRACT_ID is set
+const nearConfig = loadNearLaneConfig(source);
+const nearGuard =
+  nearConfig === null
+    ? null
+    : new GuardReader(new NearRpc({ url: nearConfig.nodeUrl }), nearConfig.guard);
+
 console.log('x402 threat-intel providers: starting');
 const { service, report } = await prepareProviderService({
   ...(identity === undefined ? {} : { identity }),
+  ...(nearConfig === null || nearGuard === null
+    ? {}
+    : {
+        near: {
+          network: nearConfig.network,
+          guard: nearConfig.guard,
+          priceYocto: nearConfig.priceYocto,
+          accounts: nearConfig.accounts,
+          receipt: (id: number) => nearGuard.receipt(id),
+        },
+      }),
   config,
   facilitators: facilitatorsFromEnv(config.facilitatorUrl, config.fallbackFacilitatorUrl),
   discover,
@@ -166,6 +185,10 @@ serve({ fetch: fetchPublic, hostname, port: config.port }, (info) => {
   if (identity !== undefined)
     console.log(
       `  ERC-8004 registration files: ${base}/.well-known/erc-8004/<label>.json (${Object.keys(identity.agentIds).length} registered)`,
+    );
+  if (nearConfig !== null)
+    console.log(
+      `  NEAR lane: ${base}/near/v1/<label>/<operation> · ${formatNear(nearConfig.priceYocto)} NEAR per request · guard ${nearConfig.guard} (${nearConfig.network})`,
     );
   console.log(
     `\n  NVD: ${config.nvdApiKey === undefined ? '5 requests / 30 s (no API key)' : '50 requests / 30 s (API key set)'}`,

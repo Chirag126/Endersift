@@ -64,6 +64,11 @@ export const SECRET_RULES: readonly SecretRule[] = [
     pattern: /eyJ[A-Za-z0-9_-]{8,}\.eyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/,
   },
   {
+    id: 'near-secret-key',
+    description: 'NEAR ed25519 secret key (64 bytes in base58; a public key is half as long)',
+    pattern: /ed25519:[1-9A-HJ-NP-Za-km-z]{80,90}/,
+  },
+  {
     id: 'rpc-url-with-key',
     description: 'Ethereum RPC URL embedding a provider API key',
     pattern: /(?:alchemy\.com\/v2\/[A-Za-z0-9_-]{16,}|infura\.io\/v3\/[0-9a-f]{32})/,

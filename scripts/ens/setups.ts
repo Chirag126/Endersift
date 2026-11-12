@@ -109,7 +109,8 @@ if ((await client.getChainId()) !== SEPOLIA_CHAIN_ID)
 const deployment = parseDeployment(readFileSync('deployments/sepolia.json', 'utf8'));
 const registry = deployment.subregistry as Address;
 const kevOperator = deployment.agents.find((a) => a.label === 'kev')?.operator as
-  Address | undefined;
+  | Address
+  | undefined;
 if (kevOperator === undefined)
   throw new SetupsError('deployments/sepolia.json has no kev operator');
 const parentResolver = (await client.getEnsResolver({

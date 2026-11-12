@@ -15,7 +15,7 @@ import {
   type FacilitatorEntry,
   type FacilitatorProbe,
 } from '@agent-economy/hedera/x402-server';
-import { createIntelService, type IntelApp, type ProviderIdentity } from './app.ts';
+import { createIntelService, type IntelApp, type NearLane, type ProviderIdentity } from './app.ts';
 import { briefReader, type AgentBrief } from './brief.ts';
 import type { IntelServiceConfig } from './config.ts';
 import { EnsMismatchError, compareWithEns } from './ens-check.ts';
@@ -65,6 +65,8 @@ export async function prepareProviderService(deps: {
   readonly briefRead?: () => Promise<AgentBrief>;
   /** Waits before each new ENS read after a failed one (D-082); tests pass short ones. */
   readonly ensRetryDelaysMs?: readonly number[];
+  /** The NEAR pay lane; absent = off. */
+  readonly near?: NearLane;
 }): Promise<{ service: IntelApp; report: StartupReport }> {
   const { config } = deps;
 
@@ -127,6 +129,7 @@ export async function prepareProviderService(deps: {
           },
         }),
     ...(deps.identity === undefined ? {} : { identity: deps.identity }),
+    ...(deps.near === undefined ? {} : { near: deps.near }),
     feeds: deps.feeds,
     ...(deps.now === undefined ? {} : { now: deps.now }),
   });

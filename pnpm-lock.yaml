@@ -74,6 +74,9 @@ importers:
       '@agent-economy/hedera':
         specifier: workspace:*
         version: link:../../packages/hedera
+      '@agent-economy/near':
+        specifier: workspace:*
+        version: link:../../packages/near
       '@agent-economy/net-guard':
         specifier: workspace:*
         version: link:../../packages/net-guard
