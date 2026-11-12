@@ -1,0 +1,11 @@
+{
+  "name": "@agent-economy/near",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NEAR integration with no SDK: JSON-RPC client, transaction signing with a function-call access key, the spending guard contract client, and a counterparty check (allow, warn, block) that runs before the agent signs.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
