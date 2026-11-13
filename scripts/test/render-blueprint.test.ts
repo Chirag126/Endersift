@@ -61,15 +61,15 @@ const RENDER_ONLY = new Set(['NODE_VERSION', 'PORT']);
 const NEVER_DEPLOYED = ['ENS_ADMIN_PRIVATE_KEY', 'ENS_AGENT_ENDPOINT_BASE', 'ZG_MANAGEMENT_KEY'];
 /** The groups each process loads: apps/server LIVE_ENV_GROUPS; apps/providers core+providers+ens. */
 const GROUPS: Readonly<Record<string, readonly EnvGroup[]>> = {
-  'threat-intel-agent': ['core', 'hedera', 'ens', 'x402', 'zg'],
-  'threat-intel-providers': ['core', 'providers', 'ens'],
+  endersift: ['core', 'hedera', 'ens', 'x402', 'zg'],
+  'endersift-providers': ['core', 'providers', 'ens'],
 };
 
 describe('render.yaml (D-062)', () => {
   it('declares the two free web services with health checks', () => {
     assert.deepEqual(
       services.map((s) => s.name),
-      ['threat-intel-agent', 'threat-intel-providers'],
+      ['endersift', 'endersift-providers'],
     );
     for (const s of services) {
       assert.equal(s.fields.get('type'), 'web', s.name);
@@ -77,8 +77,8 @@ describe('render.yaml (D-062)', () => {
       assert.equal(s.fields.get('plan'), 'free', s.name);
       assert.ok(s.env.size > 0, `${s.name} has no envVars`);
     }
-    assert.equal(byName('threat-intel-agent').fields.get('healthCheckPath'), '/api/health');
-    assert.equal(byName('threat-intel-providers').fields.get('healthCheckPath'), '/health');
+    assert.equal(byName('endersift').fields.get('healthCheckPath'), '/api/health');
+    assert.equal(byName('endersift-providers').fields.get('healthCheckPath'), '/health');
   });
 
   it('every variable is in the env spec (or read by Render itself)', () => {
@@ -99,7 +99,7 @@ describe('render.yaml (D-062)', () => {
   it('the keys that are never deployed are absent; the providers never get the payer or 0G key', () => {
     for (const s of services)
       for (const key of NEVER_DEPLOYED) assert.ok(!s.env.has(key), `${s.name} has ${key}`);
-    const providers = byName('threat-intel-providers');
+    const providers = byName('endersift-providers');
     for (const key of ['HEDERA_PAYER_PRIVATE_KEY', 'ZG_API_KEY', 'DEMO_ACCESS_CODE'])
       assert.ok(!providers.env.has(key), `providers have ${key}`);
   });
@@ -118,7 +118,7 @@ describe('render.yaml (D-062)', () => {
   });
 
   it('the agent runs as deployed without a disk: production, one origin, wake-up, seeded brief', () => {
-    const env = byName('threat-intel-agent').env;
+    const env = byName('endersift').env;
     assert.equal(env.get('NODE_ENV'), 'production');
     assert.equal(env.get('DATABASE_EPHEMERAL'), 'true');
     assert.equal(env.get('WEB_DIST_DIR'), 'apps/web/dist');
@@ -129,7 +129,7 @@ describe('render.yaml (D-062)', () => {
       'a free provider host needs about a minute',
     );
     assert.ok(!env.has('API_CORS_ORIGIN'), 'same origin: no CORS');
-    const providers = byName('threat-intel-providers').env;
+    const providers = byName('endersift-providers').env;
     assert.equal(providers.get('NODE_ENV'), 'production');
     assert.equal(providers.get('PORT'), providers.get('PROVIDERS_PORT'));
     assert.equal(
