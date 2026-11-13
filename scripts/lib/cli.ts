@@ -139,6 +139,9 @@ const EXPECTED_ERROR_NAMES = new Set([
   'NetGuardError',
   'SeedScheduleError',
   'StaticSiteError',
+  'NearRpcError',
+  'GuardKeyError',
+  'NearSetupError',
 ]);
 
 /**

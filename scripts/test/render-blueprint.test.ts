@@ -58,7 +58,12 @@ const byName = (name: string) => {
 const SPEC = new Map(ENV_SPEC.map((v) => [v.name, v]));
 /** Variables Render itself reads; not part of the app's env spec. */
 const RENDER_ONLY = new Set(['NODE_VERSION', 'PORT']);
-const NEVER_DEPLOYED = ['ENS_ADMIN_PRIVATE_KEY', 'ENS_AGENT_ENDPOINT_BASE', 'ZG_MANAGEMENT_KEY'];
+const NEVER_DEPLOYED = [
+  'ENS_ADMIN_PRIVATE_KEY',
+  'ENS_AGENT_ENDPOINT_BASE',
+  'ZG_MANAGEMENT_KEY',
+  'NEAR_OWNER_PRIVATE_KEY',
+];
 /** The groups each process loads: apps/server LIVE_ENV_GROUPS; apps/providers core+providers+ens. */
 const GROUPS: Readonly<Record<string, readonly EnvGroup[]>> = {
   endersift: ['core', 'hedera', 'ens', 'x402', 'zg'],

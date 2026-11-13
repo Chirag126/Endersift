@@ -15,6 +15,10 @@ import {
   hederaPrivateKey,
   labelledAccounts,
   minLength,
+  nearAccountId,
+  nearAmount,
+  nearLabelledAccounts,
+  nearSecretKey,
   nonEmpty,
   oneOf,
   origin,
@@ -38,6 +42,10 @@ export const ENV_GROUPS = [
   'ens-admin',
   'zg-network',
   'zg',
+  'near',
+  'near-agent',
+  'near-providers',
+  'near-admin',
   'web',
 ] as const;
 export type EnvGroup = (typeof ENV_GROUPS)[number];
@@ -53,6 +61,9 @@ export const GROUP_DEPENDENCIES: Readonly<Partial<Record<EnvGroup, readonly EnvG
   providers: ['x402', 'hedera-providers'],
   'ens-admin': ['ens'],
   zg: ['zg-network'],
+  'near-agent': ['near'],
+  'near-providers': ['near'],
+  'near-admin': ['near'],
 };
 
 /** The requested groups plus everything they depend on, in ENV_GROUPS order. */
@@ -628,6 +639,105 @@ export const ENV_SPEC = [
     description:
       'Worst case reserved against the daily cap for one voice transcription (neuron; default 0.001 0G). The catalog gives no per-clip price, so this fixed amount is reserved; the real cost from the Router is recorded. Must be <= ZG_DAILY_CAP_NEURON.',
     validate: positiveIntegerString,
+  },
+
+  // ── near (no secrets: which NEAR network and which guard contract) ────
+  {
+    name: 'NEAR_NETWORK',
+    group: 'near',
+    required: true,
+    secret: false,
+    default: 'testnet',
+    description: 'NEAR network the guard contract is deployed on.',
+    validate: oneOf(['testnet', 'mainnet']),
+  },
+  {
+    name: 'NEAR_NODE_URL',
+    group: 'near',
+    required: true,
+    secret: false,
+    default: 'https://test.rpc.fastnear.com',
+    description:
+      'NEAR JSON-RPC endpoint (docs.near.org/api/rpc/providers). The default is a free public testnet node.',
+    validate: url({ allowLocalHttp: true }),
+  },
+  {
+    name: 'NEAR_GUARD_CONTRACT_ID',
+    group: 'near',
+    required: true,
+    secret: false,
+    description:
+      'Account of the spending guard contract (contracts/guard): the provider registry, the caps and the receipts.',
+    validate: nearAccountId,
+  },
+
+  // ── near-agent (the agent's function-call key) ────────────────────────
+  {
+    name: 'NEAR_AGENT_ACCOUNT_ID',
+    group: 'near-agent',
+    required: true,
+    secret: false,
+    description: 'The agent account the guard contract accepts pay() from.',
+    validate: nearAccountId,
+  },
+  {
+    name: 'NEAR_AGENT_PRIVATE_KEY',
+    group: 'near-agent',
+    required: true,
+    secret: true,
+    description:
+      "The agent's function-call access key, scoped to the guard contract. It cannot transfer NEAR, add keys or call another contract. The agent refuses to start with a full-access key.",
+    validate: nearSecretKey,
+  },
+  {
+    name: 'NEAR_MIN_ACCOUNT_AGE_BLOCKS',
+    group: 'near-agent',
+    required: true,
+    secret: false,
+    default: '86400',
+    description:
+      'Counterparty check: a receiver that has held a key for fewer blocks than this, with no passed delivery yet, is a warning (about one block per second).',
+    validate: integerInRange(0, 100000000),
+  },
+
+  // ── near-providers (the NEAR pay lane of the provider service) ────────
+  {
+    name: 'NEAR_PROVIDER_ACCOUNTS',
+    group: 'near-providers',
+    required: true,
+    secret: false,
+    description:
+      'NEAR payout account of each provider, by label: kev:kev.example.testnet,cve:... The same accounts the guard registry lists.',
+    validate: nearLabelledAccounts,
+  },
+  {
+    name: 'NEAR_PRICE',
+    group: 'near-providers',
+    required: true,
+    secret: false,
+    default: '0.001',
+    description: 'Price of one paid request on the NEAR lane, in NEAR.',
+    validate: nearAmount,
+  },
+
+  // ── near-admin (local only: the owner key that sets everything up) ────
+  {
+    name: 'NEAR_OWNER_ACCOUNT_ID',
+    group: 'near-admin',
+    required: true,
+    secret: false,
+    description:
+      'The owner account: it creates the guard, agent and provider sub-accounts and owns the guard contract.',
+    validate: nearAccountId,
+  },
+  {
+    name: 'NEAR_OWNER_PRIVATE_KEY',
+    group: 'near-admin',
+    required: true,
+    secret: true,
+    description:
+      "The owner's full-access key. Used only by pnpm near:setup on your machine. Never deployed.",
+    validate: nearSecretKey,
   },
 
   // ── web (public; bundled into the browser) ────────────────────────────

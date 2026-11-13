@@ -63,6 +63,10 @@
     "ens:discovery-proof": "node scripts/ens/discovery-proof.ts",
     "ens:setups": "node scripts/ens/setups.ts",
     "erc8004:register": "node scripts/ens/erc8004-register.ts",
+    "near:setup": "node scripts/near/setup.ts",
+    "near:status": "node scripts/near/status.ts",
+    "near:buy": "node scripts/near/buy.ts",
+    "near:attack-demo": "node scripts/near/attack-demo.ts",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm web:build && pnpm test && pnpm env:example:check && pnpm secrets:scan"
   },
   "simple-git-hooks": {

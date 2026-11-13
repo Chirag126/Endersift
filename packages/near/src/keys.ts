@@ -3,7 +3,13 @@
  * The secret never leaves this object: it is not enumerable, not printed and
  * not part of any error.
  */
-import { createPrivateKey, createPublicKey, sign, type KeyObject } from 'node:crypto';
+import {
+  createPrivateKey,
+  createPublicKey,
+  generateKeyPairSync,
+  sign,
+  type KeyObject,
+} from 'node:crypto';
 import { base58Decode, base58Encode } from './base58.ts';
 
 /** PKCS#8 header for an ed25519 private key; the 32-byte seed follows. */
@@ -52,4 +58,23 @@ export function signerFromSecretKey(secretKey: string): NearSigner {
     sign: (message) => Uint8Array.from(sign(null, message, key)),
   };
   return Object.freeze(signer);
+}
+
+/**
+ * A new ed25519 key pair in NEAR's text form. The secret is returned once, to
+ * be written to a local file that is never committed.
+ */
+export function generateKeyPair(): { readonly publicKey: string; readonly secretKey: string } {
+  const { privateKey, publicKey } = generateKeyPairSync('ed25519');
+  const pkcs8 = privateKey.export({ format: 'der', type: 'pkcs8' });
+  const spki = publicKey.export({ format: 'der', type: 'spki' });
+  const seed = Uint8Array.from(pkcs8.subarray(pkcs8.length - 32));
+  const pub = Uint8Array.from(spki.subarray(spki.length - 32));
+  const both = new Uint8Array(64);
+  both.set(seed, 0);
+  both.set(pub, 32);
+  return {
+    publicKey: `ed25519:${base58Encode(pub)}`,
+    secretKey: `ed25519:${base58Encode(both)}`,
+  };
 }

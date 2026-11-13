@@ -9,6 +9,7 @@
     "@agent-economy/core": "workspace:*",
     "@agent-economy/ens": "workspace:*",
     "@agent-economy/hedera": "workspace:*",
+    "@agent-economy/near": "workspace:*",
     "@agent-economy/net-guard": "workspace:*",
     "@hono/node-server": "^1.19.0",
     "@x402/core": "2.28.0",

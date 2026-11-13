@@ -36,6 +36,13 @@ describe('scanText', () => {
     assert.ok(rules(infura).includes('rpc-url-with-key'));
   });
 
+  it('flags NEAR secret keys but not NEAR public keys', () => {
+    const secret = 'ed25519:' + '4Zx7'.repeat(22);
+    const publicKey = 'ed25519:' + '4Zx7'.repeat(11);
+    assert.ok(rules(`{"secretKey": "${secret}"}`).includes('near-secret-key'));
+    assert.ok(!rules(`{"publicKey": "${publicKey}"}`).includes('near-secret-key'));
+  });
+
   it('flags sk-/mk- keys anywhere, but not short prefixes in prose', () => {
     const sk = 'sk-' + 'A1b2C3d4'.repeat(4);
     const mk = 'mk-' + 'z9_y8-x7'.repeat(4);

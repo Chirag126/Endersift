@@ -19,8 +19,18 @@ import {
   type PaidRoute,
   type PaymentLayer,
 } from '@agent-economy/hedera/x402-server';
+import {
+  NEAR_GUARD_SCHEME,
+  NEAR_PAYMENT_HEADER,
+  QuoteBook,
+  parsePaymentHeader,
+  quoteJson,
+  type GuardReceipt,
+  type NearNetwork,
+} from '@agent-economy/near';
 import type { FacilitatorClient } from '@x402/core/server';
-import { Hono } from 'hono';
+import { Hono, type Context } from 'hono';
+import { randomBytes } from 'node:crypto';
 import { registrationFile, agentRegistryId } from '@agent-economy/ens/erc8004';
 import { NoBriefError, type BriefSale } from './brief.ts';
 import { UpstreamError } from './feeds/http.ts';
@@ -59,6 +69,27 @@ export interface IntelAppOptions {
   readonly briefSale?: BriefSale;
   /** ERC-8004 registration files for the agents (D-066). Absent = not served. */
   readonly identity?: ProviderIdentity;
+  /** The NEAR pay lane: the same operations under /near, paid through the guard contract. */
+  readonly near?: NearLane;
+}
+
+/**
+ * The NEAR pay lane. An unpaid request gets HTTP 402 with a quote; the buyer
+ * pays the quote through the guard contract and asks again with the receipt
+ * id; the receipt is read back from the contract before any data is served.
+ */
+export interface NearLane {
+  readonly network: NearNetwork;
+  /** The guard contract account. */
+  readonly guard: string;
+  /** Price of one paid request (yoctoNEAR). */
+  readonly priceYocto: bigint;
+  /** label → NEAR payout account (the accounts the guard registry lists). */
+  readonly accounts: Readonly<Record<string, string>>;
+  /** Reads one receipt from the guard contract; null = no such receipt. */
+  readonly receipt: (id: number) => Promise<GuardReceipt | null>;
+  /** Tests replace the random nonce. */
+  readonly nonce?: () => string;
 }
 
 /** What the ERC-8004 registration files say (D-066). */
@@ -152,6 +183,7 @@ export function createIntelService(options: IntelAppOptions): IntelApp {
       status: 'ok',
       providers: bound.map((b) => b.provider.label),
       briefForSale: brief !== undefined,
+      nearLane: options.near !== undefined,
     });
   });
 
@@ -269,41 +301,111 @@ export function createIntelService(options: IntelAppOptions): IntelApp {
     });
   }
 
+  // The answer to a paid request, shared by both pay lanes: fetch, normalise, validate.
+  const answer = async (c: Context, provider: IntelProvider, op: Operation): Promise<Response> => {
+    const result = op.validate(new URL(c.req.url).searchParams, now());
+    if (!result.ok) return c.json({ error: result.error }, 400);
+    try {
+      const out = await op.run(result.query, options.feeds);
+      const body = {
+        provider: provider.label,
+        operation: op.name,
+        source: out.source,
+        query: result.query,
+        count: out.items.length,
+        truncated: out.truncated,
+        notFound: out.notFound,
+        items: out.items,
+        servedAt: now().toISOString(),
+      };
+      const checked = IntelResponse.safeParse(body);
+      if (!checked.success) {
+        return c.json({ error: 'upstream data failed validation; not charged' }, 502);
+      }
+      return c.json(checked.data);
+    } catch (error) {
+      if (error instanceof UpstreamError) {
+        if (error.retryAfterSeconds !== null)
+          c.header('Retry-After', String(error.retryAfterSeconds));
+        return c.json({ error: `${error.message}; not charged` }, error.status);
+      }
+      return c.json({ error: 'internal error; not charged' }, 500);
+    }
+  };
+
+  // The NEAR pay lane, mounted before the x402 middleware (which only knows the Hedera routes).
+  const near = options.near;
+  if (near !== undefined) {
+    const quotes = new QuoteBook({
+      network: near.network,
+      guard: near.guard,
+      nonce: near.nonce ?? (() => randomBytes(16).toString('hex')),
+      now: () => now().getTime(),
+    });
+    for (const { provider, op, path } of bound) {
+      const payTo = near.accounts[provider.label];
+      if (payTo === undefined) continue;
+      const nearPath = `/near${path}`;
+      app.get(`/near/v1/${provider.label}`, (c) =>
+        c.json({
+          provider: provider.label,
+          operations: [
+            {
+              name: op.name,
+              method: 'GET',
+              path: nearPath,
+              description: op.description,
+              params: op.params,
+              payment: {
+                scheme: NEAR_GUARD_SCHEME,
+                network: near.network,
+                guard: near.guard,
+                amount: near.priceYocto.toString(),
+                payTo,
+              },
+            },
+          ],
+        }),
+      );
+      app.get(nearPath, async (c) => {
+        const url = new URL(c.req.url);
+        // 1. validation before payment: a malformed query is never priced
+        const valid = op.validate(url.searchParams, now());
+        if (!valid.ok) return c.json({ error: valid.error }, 400);
+        const resource = `${url.pathname}${url.search}`;
+        const quote = (error: string) =>
+          c.json(
+            { error, accepts: [quoteJson(quotes.issue(resource, payTo, near.priceYocto))] },
+            402,
+          );
+        // 2. payment: the receipt named in the header, read back from the guard contract
+        const payment = parsePaymentHeader(c.req.header(NEAR_PAYMENT_HEADER));
+        if (payment === null) return quote('payment required');
+        let receipt: GuardReceipt | null;
+        try {
+          receipt = await near.receipt(payment.receiptId);
+        } catch {
+          return c.json(
+            { error: 'could not read the guard contract; ask again with the same payment' },
+            503,
+          );
+        }
+        const paid = quotes.check(payment.nonce, resource, receipt);
+        if (!paid.ok) return quote(paid.reason);
+        // 3. the answer; the quote is used up only once the data has been served
+        const response = await answer(c, provider, op);
+        if (response.status === 200) quotes.consume(payment.nonce);
+        return response;
+      });
+    }
+  }
+
   // 2. Payment.
   app.use(payment.middleware);
 
   // 3. Paid handlers.
   for (const { provider, op, path } of bound) {
-    app.get(path, async (c) => {
-      const result = op.validate(new URL(c.req.url).searchParams, now());
-      if (!result.ok) return c.json({ error: result.error }, 400);
-      try {
-        const out = await op.run(result.query, options.feeds);
-        const body = {
-          provider: provider.label,
-          operation: op.name,
-          source: out.source,
-          query: result.query,
-          count: out.items.length,
-          truncated: out.truncated,
-          notFound: out.notFound,
-          items: out.items,
-          servedAt: now().toISOString(),
-        };
-        const checked = IntelResponse.safeParse(body);
-        if (!checked.success) {
-          return c.json({ error: 'upstream data failed validation; not charged' }, 502);
-        }
-        return c.json(checked.data);
-      } catch (error) {
-        if (error instanceof UpstreamError) {
-          if (error.retryAfterSeconds !== null)
-            c.header('Retry-After', String(error.retryAfterSeconds));
-          return c.json({ error: `${error.message}; not charged` }, error.status);
-        }
-        return c.json({ error: 'internal error; not charged' }, 500);
-      }
-    });
+    app.get(path, (c) => answer(c, provider, op));
     if (options.pingPriceTinybars !== undefined) {
       const price = options.pingPriceTinybars;
       app.get(`/v1/${provider.label}/ping`, (c) =>

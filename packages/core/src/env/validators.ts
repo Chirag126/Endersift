@@ -195,3 +195,58 @@ export const uuid: Validator = (value) =>
   /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(value)
     ? null
     : 'must be a UUID (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)';
+
+const NEAR_ACCOUNT_ID = /^(([a-z\d]+[-_])*[a-z\d]+\.)*([a-z\d]+[-_])*[a-z\d]+$/;
+
+/** A NEAR account id: 2-64 characters, lowercase parts joined by dots. */
+export function isNearAccountId(value: string): boolean {
+  return value.length >= 2 && value.length <= 64 && NEAR_ACCOUNT_ID.test(value);
+}
+
+export const nearAccountId: Validator = (value) =>
+  isNearAccountId(value) ? null : 'must be a NEAR account ID like agent.example.testnet';
+
+/** NEAR's secret key text: ed25519:<base58>, as near-cli and wallets export it. */
+export const nearSecretKey: Validator = (value) =>
+  /^ed25519:[1-9A-HJ-NP-Za-km-z]{43,88}$/.test(value)
+    ? null
+    : 'must be a NEAR ed25519 secret key (ed25519:<base58>)';
+
+/**
+ * Parse `label:account.testnet,label:account.testnet` (NEAR payout accounts
+ * by provider label). Returns the parsed list or a reason string.
+ */
+export function parseNearLabelledAccounts(value: string): LabelledAccount[] | string {
+  const trimmed = value.trim();
+  if (trimmed === '') return [];
+  const result: LabelledAccount[] = [];
+  const labels = new Set<string>();
+  const ids = new Set<string>();
+  for (const part of trimmed.split(',')) {
+    const pieces = part.split(':').map((piece) => piece.trim());
+    const [label, accountId] = pieces;
+    if (pieces.length !== 2 || label === undefined || accountId === undefined)
+      return 'entries must look like label:account.testnet, separated by commas';
+    if (!PROVIDER_LABEL.test(label))
+      return 'labels must be 2-31 chars: lowercase letters, digits, hyphens, starting with a letter';
+    if (!isNearAccountId(accountId)) return 'account IDs must be NEAR account IDs';
+    if (labels.has(label)) return 'labels must be unique';
+    if (ids.has(accountId)) return 'account IDs must be unique';
+    labels.add(label);
+    ids.add(accountId);
+    result.push({ label, accountId });
+  }
+  return result;
+}
+
+export const nearLabelledAccounts: Validator = (value) => {
+  const parsed = parseNearLabelledAccounts(value);
+  if (typeof parsed === 'string') return parsed;
+  return parsed.length === 0 ? 'must list at least one label:account entry' : null;
+};
+
+/** A positive NEAR amount in decimal form, e.g. 0.001 (at most 24 decimals). */
+export const nearAmount: Validator = (value) =>
+  /^\d{1,15}(\.\d{1,24})?$/.test(value) && /[1-9]/.test(value)
+    ? null
+    : 'must be a positive NEAR amount like 0.001';
